@@ -1,9 +1,10 @@
 package fr.jsmadja.antredesdragons;
 
-public class AntreDesDragons {
-    private Pip pip = new Pip();
+class AntreDesDragons {
+    private Dice dice = new Dice();
+    private Pip pip = new Pip(dice);
 
-    public Pip getPip() {
+    Pip getPip() {
         return pip;
     }
 }
