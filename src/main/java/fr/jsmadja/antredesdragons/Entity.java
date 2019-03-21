@@ -30,7 +30,14 @@ abstract class Entity {
     }
 
     private int computeDamages(int roll) {
-        return roll - getTouchCap() < 0 ? 0 : roll - getTouchCap();
+        if (roll - getTouchCap() < 0) {
+            return 0;
+        }
+        return roll - getTouchCap() + getAdditionalDamagePoints();
+    }
+
+    int getAdditionalDamagePoints() {
+        return 0;
     }
 
     private boolean touchOpponent(int roll) {

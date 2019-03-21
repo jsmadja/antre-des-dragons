@@ -30,7 +30,7 @@ class PipTest {
         when(dice.roll(2)).thenReturn(10);
         Attack attack = pip.attacks();
         assertEquals(attack.getStatus(), Attack.Status.TOUCHED);
-        assertEquals(attack.getDamagePoints(), 4);
+        assertEquals(4, attack.getDamagePoints());
     }
 
     @Test
@@ -43,9 +43,18 @@ class PipTest {
 
     @Test
     void should_set_touch_cap_to_4_when_EJ_is_equiped() {
-        Pip pip = new Pip(dice);
         pip.setSword(Armory.getExcaliburJunior());
         assertEquals(4, pip.getTouchCap());
+    }
+
+    @Test
+    void should_set_additional_damage_points_to_5_when_EJ_is_equiped() {
+        pip.setSword(Armory.getExcaliburJunior());
+        assertEquals(5, pip.getAdditionalDamagePoints());
+
+        when(dice.roll(2)).thenReturn(10);
+        Attack attack = pip.attacks();
+        assertEquals(11, attack.getDamagePoints());
     }
 
 }

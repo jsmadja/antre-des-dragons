@@ -21,4 +21,8 @@ class Pip extends Entity {
     int getTouchCap() {
         return this.sword == null ? super.getTouchCap() : this.sword.getTouchCap();
     }
+
+    public int getAdditionalDamagePoints() {
+        return this.sword == null ? 0 : this.sword.getDamagePoints();
+    }
 }
