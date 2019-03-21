@@ -11,6 +11,19 @@ import static org.mockito.Mockito.when;
 class BattleTest {
 
     @Test
+    void should_know_if_foe_is_friendly() {
+        Dice pipDice = mock(Dice.class);
+        Dice foeDice = mock(Dice.class);
+
+        when(pipDice.roll(3)).thenReturn(3);
+        when(pipDice.roll()).thenReturn(6);
+        Pip pip = new Pip(pipDice);
+        Entity foe = new Foe(foeDice, 10);
+
+        assertTrue(foe.isFriendlyWith(pip));
+    }
+
+    @Test
     void should_kill_an_opponent_in_a_battle() {
         Dice pipDice = mock(Dice.class);
         Dice foeDice = mock(Dice.class);

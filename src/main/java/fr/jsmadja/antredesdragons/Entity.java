@@ -4,16 +4,26 @@ abstract class Entity {
     private final Dice dice;
     private final int initialHealthPoints;
     private int healthPoints;
+    private int maximumHealthPoints;
 
     private static final int DEFAULT_TOUCH_CAP = 6;
 
     Entity(Dice dice, int initialHealthPoints) {
         this.dice = dice;
         this.initialHealthPoints = this.healthPoints = initialHealthPoints;
+        this.maximumHealthPoints = this.initialHealthPoints;
+    }
+
+    int roll1Dice() {
+        return this.dice.roll();
     }
 
     int roll2Dices() {
         return this.dice.roll(2);
+    }
+
+    int roll3Dices() {
+        return this.dice.roll(3);
     }
 
     int getInitialHealthPoints() {
@@ -64,4 +74,13 @@ abstract class Entity {
     int getTouchCap() {
         return DEFAULT_TOUCH_CAP;
     }
+
+    boolean isFriendlyWith(Pip pip) {
+        return this.dice.roll() < pip.roll3Dices();
+    }
+
+    void restoreHealthPoints(int restoredHealthPoints) {
+        this.healthPoints = Math.min(this.healthPoints + restoredHealthPoints, this.maximumHealthPoints);
+    }
+
 }

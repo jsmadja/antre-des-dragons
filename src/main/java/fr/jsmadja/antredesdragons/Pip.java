@@ -25,4 +25,12 @@ class Pip extends Entity {
     public int getAdditionalDamagePoints() {
         return this.sword == null ? 0 : this.sword.getDamagePoints();
     }
+
+    void sleep() {
+        int face = this.roll1Dice();
+        if (face >= 5) {
+            int restoredHealthPoints = this.roll2Dices();
+            this.restoreHealthPoints(restoredHealthPoints);
+        }
+    }
 }

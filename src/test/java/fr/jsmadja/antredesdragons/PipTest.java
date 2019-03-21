@@ -15,6 +15,7 @@ class PipTest {
     @BeforeEach
     void setUp() {
         dice = mock(Dice.class);
+        when(dice.roll(2)).thenReturn(10);
         pip = new Pip(dice);
     }
 
@@ -55,6 +56,19 @@ class PipTest {
         when(dice.roll(2)).thenReturn(10);
         Attack attack = pip.attacks();
         assertEquals(11, attack.getDamagePoints());
+    }
+
+    @Test
+    void should_sleep_well_and_restore_health_points() {
+        pip.wounds(10);
+        assertEquals(30, pip.getHealthPoints());
+
+        when(dice.roll()).thenReturn(5);
+        when(dice.roll(2)).thenReturn(10);
+
+        pip.sleep();
+
+        assertEquals(40, pip.getHealthPoints());
     }
 
 }
