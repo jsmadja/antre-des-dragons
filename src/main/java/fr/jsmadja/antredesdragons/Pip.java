@@ -1,13 +1,9 @@
 package fr.jsmadja.antredesdragons;
 
-class Pip {
-    private final Dice dice;
+class Pip extends Entity {
 
     Pip(Dice dice) {
-        this.dice = dice;
+        super(dice, dice.roll(2) * 4);
     }
 
-    int getInitialHealthPoints() {
-        return this.dice.roll(2) * 4;
-    }
 }
