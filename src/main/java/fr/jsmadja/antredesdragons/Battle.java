@@ -26,7 +26,7 @@ class Battle {
     }
 
     List<Entity> getTargets() {
-        return this.opponents.stream().filter(entity -> !entity.equals(getNextAttacker())).collect(toList());
+        return this.opponentsOrderedByFirstRollDesc.stream().filter(entity -> !entity.equals(getNextAttacker())).collect(toList());
     }
 
     void attack(Entity attacker, Entity target) {
@@ -42,6 +42,14 @@ class Battle {
     }
 
     boolean isOver() {
-        return this.opponentsOrderedByFirstRollDesc.size() <= 1;
+        return this.opponentsOrderedByFirstRollDesc.size() <= 1 || this.foesAreStuned();
+    }
+
+    private boolean foesAreStuned() {
+        return this.getFoes().stream().allMatch(Entity::isStuned);
+    }
+
+    private List<Entity> getFoes() {
+        return this.opponentsOrderedByFirstRollDesc.stream().filter(Entity::isFoe).collect(toList());
     }
 }

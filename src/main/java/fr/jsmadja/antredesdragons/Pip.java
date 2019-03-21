@@ -6,4 +6,8 @@ class Pip extends Entity {
         super(dice, dice.roll(2) * 4);
     }
 
+    @Override
+    boolean isFoe() {
+        return false;
+    }
 }

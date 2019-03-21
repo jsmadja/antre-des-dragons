@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons;
 
-class Entity {
+abstract class Entity {
     private final Dice dice;
     private final int initialHealthPoints;
     private int healthPoints;
 
-    private static final int TOUCH_CAP = 6;
+    private static final int DEFAULT_TOUCH_CAP = 6;
 
     Entity(Dice dice, int initialHealthPoints) {
         this.dice = dice;
@@ -30,11 +30,11 @@ class Entity {
     }
 
     private int computeDamages(int roll) {
-        return roll - TOUCH_CAP < 0 ? 0 : roll - TOUCH_CAP;
+        return roll - DEFAULT_TOUCH_CAP < 0 ? 0 : roll - DEFAULT_TOUCH_CAP;
     }
 
     private boolean touchOpponent(int roll) {
-        return roll > TOUCH_CAP;
+        return roll > DEFAULT_TOUCH_CAP;
     }
 
     void wounds(int damagePoints) {
@@ -47,4 +47,10 @@ class Entity {
     boolean isDead() {
         return this.healthPoints <= 0;
     }
+
+    boolean isStuned() {
+        return this.initialHealthPoints > 5 && this.healthPoints == 5;
+    }
+
+    abstract boolean isFoe();
 }
