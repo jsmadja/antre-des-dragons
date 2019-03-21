@@ -41,4 +41,11 @@ class PipTest {
         assertEquals(attack.getDamagePoints(), 0);
     }
 
+    @Test
+    void should_set_touch_cap_to_4_when_EJ_is_equiped() {
+        Pip pip = new Pip(dice);
+        pip.setSword(Armory.getExcaliburJunior());
+        assertEquals(4, pip.getTouchCap());
+    }
+
 }

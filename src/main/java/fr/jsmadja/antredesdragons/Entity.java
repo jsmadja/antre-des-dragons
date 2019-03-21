@@ -30,11 +30,11 @@ abstract class Entity {
     }
 
     private int computeDamages(int roll) {
-        return roll - DEFAULT_TOUCH_CAP < 0 ? 0 : roll - DEFAULT_TOUCH_CAP;
+        return roll - getTouchCap() < 0 ? 0 : roll - getTouchCap();
     }
 
     private boolean touchOpponent(int roll) {
-        return roll > DEFAULT_TOUCH_CAP;
+        return roll > getTouchCap();
     }
 
     void wounds(int damagePoints) {
@@ -53,4 +53,8 @@ abstract class Entity {
     }
 
     abstract boolean isFoe();
+
+    int getTouchCap() {
+        return DEFAULT_TOUCH_CAP;
+    }
 }
