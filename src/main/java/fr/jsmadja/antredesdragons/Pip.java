@@ -5,7 +5,7 @@ class Pip extends Entity {
     private Sword sword;
 
     Pip(Dice dice) {
-        super(dice, dice.roll(2) * 4);
+        super("Pip", dice, dice.roll(2) * 4);
     }
 
     @Override

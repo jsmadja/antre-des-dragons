@@ -86,12 +86,12 @@ class BattleTest {
 
     @Test
     void should_stun_an_opponent_in_a_battle() {
-        Dice dice1 = mock(Dice.class);
-        Dice dice2 = mock(Dice.class);
+        Dice pipDice = mock(Dice.class);
+        Dice foeDice = mock(Dice.class);
 
-        when(dice1.roll(2)).thenReturn(10);
-        Entity entity1 = new Pip(dice1);
-        Entity entity2 = new Foe(dice2, 10);
+        when(pipDice.roll(2)).thenReturn(10);
+        Entity entity1 = new Pip(pipDice);
+        Entity entity2 = new Foe(foeDice, 10);
 
         Battle battle = new Battle();
         battle.addOpponent(entity1);
@@ -116,6 +116,26 @@ class BattleTest {
         assertEquals(5, entity2.getHealthPoints());
 
         assertTrue(battle.isOver());
+    }
+
+    @Test
+    void should_be_killed_by_a_powerful_vampire() {
+        Dice pipDice = mock(Dice.class);
+        Dice vampireDice = mock(Dice.class);
+
+        when(pipDice.roll(2)).thenReturn(10, 2);
+        Entity pip = new Pip(pipDice);
+
+        when(vampireDice.roll(2)).thenReturn(10);
+        Entity vampire = new Vampire(vampireDice, 10);
+
+        Battle battle = new Battle();
+        battle.addOpponent(pip);
+        battle.addOpponent(vampire);
+        battle.start();
+
+        assertTrue(battle.isOver());
+        assertTrue(pip.isDead());
     }
 
 }

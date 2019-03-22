@@ -3,12 +3,15 @@ package fr.jsmadja.antredesdragons;
 abstract class Entity {
     private final Dice dice;
     private final int initialHealthPoints;
+    private final String name;
     private int healthPoints;
     private int maximumHealthPoints;
+    int strength;
 
     private static final int DEFAULT_TOUCH_CAP = 6;
 
-    Entity(Dice dice, int initialHealthPoints) {
+    Entity(String name, Dice dice, int initialHealthPoints) {
+        this.name = name;
         this.dice = dice;
         this.initialHealthPoints = this.healthPoints = initialHealthPoints;
         this.maximumHealthPoints = this.initialHealthPoints;
@@ -71,6 +74,10 @@ abstract class Entity {
 
     abstract boolean isFoe();
 
+    boolean canInstantKill() {
+        return false;
+    }
+
     int getTouchCap() {
         return DEFAULT_TOUCH_CAP;
     }
@@ -83,4 +90,16 @@ abstract class Entity {
         this.healthPoints = Math.min(this.healthPoints + restoredHealthPoints, this.maximumHealthPoints);
     }
 
+    int getStrength() {
+        return this.strength;
+    }
+
+    void kill() {
+        this.healthPoints = 0;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

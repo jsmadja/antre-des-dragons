@@ -42,7 +42,7 @@ class Battle {
     }
 
     boolean isOver() {
-        return this.opponentsOrderedByFirstRollDesc.size() <= 1 || this.foesAreStuned();
+        return this.opponentsOrderedByFirstRollDesc.size() <= 1 || this.foesAreStuned() || getPip().isDead();
     }
 
     private boolean foesAreStuned() {
@@ -51,5 +51,18 @@ class Battle {
 
     private List<Entity> getFoes() {
         return this.opponentsOrderedByFirstRollDesc.stream().filter(Entity::isFoe).collect(toList());
+    }
+
+    void start() {
+        getFoes().stream().filter(Entity::canInstantKill).forEach(foe -> {
+            Entity pip = getPip();
+            if (foe.getStrength() > pip.getStrength()) {
+                pip.kill();
+            }
+        });
+    }
+
+    private Entity getPip() {
+        return this.opponentsOrderedByFirstRollDesc.stream().filter(e -> e instanceof Pip).findFirst().get();
     }
 }
