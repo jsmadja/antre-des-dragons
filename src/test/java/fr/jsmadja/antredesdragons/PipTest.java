@@ -1,5 +1,11 @@
 package fr.jsmadja.antredesdragons;
 
+import fr.jsmadja.antredesdragons.dices.Dice;
+import fr.jsmadja.antredesdragons.entities.Entity;
+import fr.jsmadja.antredesdragons.entities.Foe;
+import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
+import fr.jsmadja.antredesdragons.stuff.Armory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,23 +35,25 @@ class PipTest {
     @Test
     void should_do_damage_if_roll_is_greather_than_6() {
         when(dice.roll(2)).thenReturn(10);
-        Attack attack = pip.attacks();
-        assertEquals(attack.getStatus(), Attack.Status.TOUCHED);
-        assertEquals(4, attack.getDamagePoints());
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(10).build();
+        PhysicalAttack physicalAttack = pip.attacks(target);
+        assertEquals(physicalAttack.getStatus(), PhysicalAttack.Status.TOUCHED);
+        assertEquals(4, physicalAttack.getDamagePoints());
     }
 
     @Test
     void should_not_do_damage_if_roll_is_lesser_or_equal_than_6() {
         when(dice.roll(2)).thenReturn(1);
-        Attack attack = pip.attacks();
-        assertEquals(attack.getStatus(), Attack.Status.MISSED);
-        assertEquals(attack.getDamagePoints(), 0);
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(10).build();
+        PhysicalAttack physicalAttack = pip.attacks(target);
+        assertEquals(physicalAttack.getStatus(), PhysicalAttack.Status.MISSED);
+        assertEquals(physicalAttack.getDamagePoints(), 0);
     }
 
     @Test
     void should_set_touch_cap_to_4_when_EJ_is_equiped() {
         pip.setSword(Armory.getExcaliburJunior());
-        assertEquals(4, pip.getTouchCap());
+        assertEquals(4, pip.getAdjustedHitRollRange().getMin());
     }
 
     @Test
@@ -54,8 +62,9 @@ class PipTest {
         assertEquals(5, pip.getAdditionalDamagePoints());
 
         when(dice.roll(2)).thenReturn(10);
-        Attack attack = pip.attacks();
-        assertEquals(11, attack.getDamagePoints());
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(10).build();
+        PhysicalAttack physicalAttack = pip.attacks(target);
+        assertEquals(11, physicalAttack.getDamagePoints());
     }
 
     @Test

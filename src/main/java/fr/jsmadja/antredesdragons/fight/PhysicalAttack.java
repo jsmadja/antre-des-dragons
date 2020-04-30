@@ -1,23 +1,23 @@
-package fr.jsmadja.antredesdragons;
+package fr.jsmadja.antredesdragons.fight;
 
-class Attack {
+public class PhysicalAttack {
     private final int damagePoints;
     private Status status;
 
-    Attack(int damagePoints, Status status) {
+    public PhysicalAttack(int damagePoints, Status status) {
         this.damagePoints = damagePoints;
         this.status = status;
     }
 
-    Status getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    int getDamagePoints() {
+    public int getDamagePoints() {
         return damagePoints;
     }
 
-    enum Status {
+    public enum Status {
         TOUCHED, MISSED
     }
 }
