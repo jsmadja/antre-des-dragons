@@ -13,7 +13,7 @@ import static java.text.MessageFormat.format;
 
 public abstract class Entity {
     private Sword sword;
-    private final Dice dice;
+    private Dice dice;
     private final int initialHealthPoints;
     private final int armor;
     private final String name;
@@ -66,7 +66,7 @@ public abstract class Entity {
         if (this.constantHitDamage != null) {
             return constantHitDamage;
         }
-        System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
+        // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
         int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmor() + getAdditionalDamagePoints();
         return Math.max(0, damages);
     }
@@ -80,7 +80,7 @@ public abstract class Entity {
             Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
             return false;
         }
-        return target.getAdjustedHitRollRange().contains(roll);
+        return this.getAdjustedHitRollRange().contains(roll);
     }
 
     public void wounds(int damagePoints) {
@@ -114,7 +114,7 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}", this.name, this.healthPoints, this.getAdditionalDamagePoints(), this.hitRollRange, this.armor);
+        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}", this.name, this.healthPoints, this.getAdditionalDamagePoints(), this.hitRollRange.getMin(), this.armor);
     }
 
     public String getName() {
@@ -142,4 +142,17 @@ public abstract class Entity {
         return this.getSword() == null ? 0 : this.getSword().getDamagePoints();
     }
 
+    public Sword unequipSword() {
+        Sword sword = getSword();
+        setSword(null);
+        return sword;
+    }
+
+    public HitRollRange getHitRollRange() {
+        return hitRollRange;
+    }
+
+    public void setHitRollRange(HitRollRange hitRollRange) {
+        this.hitRollRange = hitRollRange;
+    }
 }

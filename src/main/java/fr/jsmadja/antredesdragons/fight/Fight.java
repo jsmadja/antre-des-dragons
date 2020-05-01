@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.fight;
 
 import fr.jsmadja.antredesdragons.Events;
+import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.dices.Roll;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +20,8 @@ public class Fight {
     private Foe foe;
     private List<Foe> foes;
     private Entity firstAttacker;
+    private int turn = 1;
+    private int maxTurns = Integer.MAX_VALUE;
 
     public Fight(Pip pip, Foe foe) {
         this.pip = pip;
@@ -29,6 +31,12 @@ public class Fight {
     public Fight(Pip pip, List<Foe> foes) {
         this.pip = pip;
         this.foes = foes;
+    }
+
+    public Fight(Pip pip, Foe foe, int maxTurns) {
+        this.pip = pip;
+        this.foe = foe;
+        this.maxTurns = maxTurns;
     }
 
     public void start() {
@@ -73,6 +81,7 @@ public class Fight {
         }
 
         while (!this.isOver()) {
+            showTurn();
             opponents.stream().filter(Entity::canFight).forEach(attacker -> {
                 Entity other = this.getFromOthers(attacker);
                 if (!other.isDead()) {
@@ -80,7 +89,17 @@ public class Fight {
                 }
                 Events.statusEvent(attacker.toString());
             });
+            this.turn++;
         }
+
+        if(this.isMaxTurnReached()) {
+            pip.kill();
+        }
+    }
+
+    private void showTurn() {
+        Events.event("\n");
+        fightEvent(format("Tour no {0}", this.turn));
     }
 
     private void singleFight() {
@@ -101,13 +120,19 @@ public class Fight {
         }
 
         while (!this.isOver()) {
+            showTurn();
             opponents.forEach(attacker -> {
                 Entity other = this.getOther(attacker);
                 if (!other.isDead()) {
                     this.attack(attacker, other);
                 }
-                Events.statusEvent(attacker.toString());
             });
+            Events.statusEvent(pip.toString());
+            Events.statusEvent(foe.toString());
+            this.turn++;
+        }
+        if(this.isMaxTurnReached()) {
+            pip.kill();
         }
     }
 
@@ -145,6 +170,9 @@ public class Fight {
     }
 
     private boolean isOver() {
+        if(isMaxTurnReached()) {
+            return true;
+        }
         if (this.pip.isDead()) {
             return true;
         }
@@ -152,6 +180,10 @@ public class Fight {
             return this.foe.isDead() || this.foe.isStuned();
         }
         return this.foes.stream().allMatch(foe -> foe.isStuned() || foe.isDead());
+    }
+
+    private boolean isMaxTurnReached() {
+        return this.turn > this.maxTurns;
     }
 
     public void setFirstAttacker(Entity firstAttacker) {

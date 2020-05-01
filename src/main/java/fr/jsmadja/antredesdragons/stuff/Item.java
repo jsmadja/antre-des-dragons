@@ -8,7 +8,10 @@ import lombok.Getter;
 public enum Item {
     FER_A_CHEVAL("Fer à cheval"),
     GHOST_RING("Anneau du fantôme"),
-    FIREBALL("Boule de feu");
+    FIREBALL("Boule de feu"),
+    TINKLE_RING("Anneau tintant"),
+    ROPE("Corde"),
+    CLEATS("Crampons");
 
     private String name;
 }

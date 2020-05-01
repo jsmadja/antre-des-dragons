@@ -22,6 +22,7 @@ public class Pip extends Entity {
     private final Pages pages = new Pages();
     private Inventory inventory = new Inventory();
     private List<Spell> spells = new ArrayList<>();
+    private List<Skill> skills = new ArrayList<>();
 
     public Pip(Dice dice) {
         super("Pip", dice, dice.roll(2) * 4, 0, DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
@@ -44,7 +45,9 @@ public class Pip extends Entity {
         pageEvent("Pip se rend à la page " + pageNumber.getValue());
         Page page = pages.get(pageNumber.getValue());
         System.out.println(page.getText() + "\n");
-        return page.execute(this);
+        Execution execution = page.execute(this);
+        page.setVisited(true);
+        return execution;
     }
 
     public Execution rollAndGo(DiceWay... diceWays) {
@@ -92,5 +95,13 @@ public class Pip extends Entity {
 
     public void removeOne(Item item) {
         this.inventory.removeOne(item);
+    }
+
+    public void use(Spell spell) {
+        Events.spellEvent(this.getName()+" utilise le sort "+spell.name());
+    }
+
+    public boolean hasSkill(Skill skill) {
+        return this.skills.contains(skill);
     }
 }

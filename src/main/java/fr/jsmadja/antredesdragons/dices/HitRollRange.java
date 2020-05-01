@@ -9,9 +9,9 @@ public class HitRollRange {
     private final int min;
     private final int max;
 
-    public HitRollRange(int exact) {
-        this.min = exact;
-        this.max = exact;
+    public HitRollRange(int min) {
+        this.min = min;
+        this.max = 12;
     }
 
     public boolean contains(int roll) {

@@ -55,8 +55,19 @@ public class Pages {
         put(98, new Page98());
         put(99, new Page99());
         put(102, new Page102());
+        put(105, new Page105());
         put(108, new Page108());
-
+        put(111, new Page111());
+        put(114, new Page114());
+        put(120, new Page120());
+        put(123, new Page123());
+        put(124, new Page124());
+        put(126, new Page126());
+        put(128, new Page128());
+        put(129, new Page129());
+        put(130, new Page130());
+        put(135, new Page135());
+        put(138, new Page138());
     }};
 
     public Pages() {
