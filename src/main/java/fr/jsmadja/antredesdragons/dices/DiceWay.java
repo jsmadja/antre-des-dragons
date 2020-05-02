@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class DiceWay {
-    private Integer from;
-    private Integer to;
-    private PageNumber pageNumber;
+    private final Integer from;
+    private final Integer to;
+    private final PageNumber pageNumber;
 
     public boolean matches(Roll roll) {
         return roll.isBetween(from, to);

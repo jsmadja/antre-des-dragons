@@ -9,9 +9,9 @@ public abstract class FightPage extends Page {
     public Execution execute(Pip pip) {
         pip.fight(getFoe());
         if(pip.isDead()) {
-            return pip.goToPage(PageNumber.of(14));
+            return pip.goToPage(PageNumber.page(14));
         }
-        return pip.goToPage(PageNumber.of(getSuccessPage()));
+        return pip.goToPage(PageNumber.page(getSuccessPage()));
     }
 
     protected abstract int getSuccessPage();

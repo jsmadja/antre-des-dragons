@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.stuff;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor(staticName = "armor")
+@RequiredArgsConstructor(staticName = "armor")
 public class ArmorPoint {
-    private int value;
+    private final int value;
 }

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class Dice {
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public int roll() {
         return random.nextInt(6) + 1;

@@ -21,13 +21,13 @@ public class Page130 extends ManualChoicePage {
     @Override
     public Execution execute(Pip pip) {
         if (pip.hasSpell(INVISIBILITY)) {
-            YesNoAnswer answer = Prompt.question("Voulez-vous utiliser le sort d'invisibilité");
+            YesNoAnswer answer = Prompt.answerTo("Voulez-vous utiliser le sort d'invisibilité");
             if (answer.isYes()) {
                 pip.use(INVISIBILITY);
                 return pip.goToPage(136);
             }
         }
-        YesNoAnswer answer = Prompt.question("Voulez-vous combattre la Méduse");
+        YesNoAnswer answer = Prompt.answerTo("Voulez-vous combattre la Méduse");
         if (answer.isYes()) {
             return pip.goToPage(136);
         }

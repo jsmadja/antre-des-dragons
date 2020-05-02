@@ -29,7 +29,7 @@ public class Page128 extends ManualChoicePage {
         if (pip.isDead()) {
             return pip.goToPage(14);
         }
-        if (pip.hasItem(ROPE) && pip.hasItem(Item.CLEATS)) {
+        if (pip.has(ROPE) && pip.has(Item.CLEATS)) {
             return super.execute(pip);
         }
         return pip.goToPage(14);

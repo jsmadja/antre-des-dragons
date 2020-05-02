@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.market.Market;
-import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.market.Market;
+import fr.jsmadja.antredesdragons.market.SilverCoin;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.ManualChoicePage;
 
@@ -240,18 +240,13 @@ public class Page4 extends ManualChoicePage {
     @Override
     public Execution execute(Pip pip) {
         initializeMoney(pip);
-
         new Market().enter(pip);
-
         pip.equipAll();
-
         return super.execute(pip);
     }
 
     private void initializeMoney(Pip pip) {
-        Roll roll = pip.roll2Dices();
-        int silverCoins = roll.getValue() * DICE_GOLDEN_COIN * GOLDEN_SILVER_COIN;
-        pip.addSilverCoins(silverCoins);
+        pip.addSilverCoins(SilverCoin.of(pip.roll2Dices().getValue() * DICE_GOLDEN_COIN * GOLDEN_SILVER_COIN));
     }
 
     @Override

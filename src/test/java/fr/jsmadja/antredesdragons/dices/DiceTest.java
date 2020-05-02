@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons;
+package fr.jsmadja.antredesdragons.dices;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
 import org.junit.jupiter.api.Test;

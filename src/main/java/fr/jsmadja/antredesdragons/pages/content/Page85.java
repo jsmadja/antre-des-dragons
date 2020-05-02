@@ -13,6 +13,6 @@ public class Page85 extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        return pip.goToPage(PageNumber.of(16));
+        return pip.goToPage(PageNumber.page(16));
     }
 }

@@ -13,9 +13,9 @@ public abstract class MultipleFightPage extends Page {
         pip.fight(getFoes(), true);
         Events.statusEvent(pip.toString());
         if(pip.isDead()) {
-            return pip.goToPage(PageNumber.of(14));
+            return pip.goToPage(PageNumber.page(14));
         }
-        return pip.goToPage(PageNumber.of(getSuccessPage()));
+        return pip.goToPage(PageNumber.page(getSuccessPage()));
     }
 
     protected abstract int getSuccessPage();

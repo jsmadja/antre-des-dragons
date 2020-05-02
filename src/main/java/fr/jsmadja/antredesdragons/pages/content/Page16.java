@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.dices.DiceWay;
-import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.pages.types.Page;
+import fr.jsmadja.antredesdragons.pages.types.RollAndGoPage;
 
-public class Page16 extends Page {
+import java.util.List;
+
+public class Page16 extends RollAndGoPage {
     @Override
     public String getText() {
         return "Vous poursuivez péniblement votre chemin, laissant bientôt la sombre forêt loin " +
@@ -21,10 +21,10 @@ public class Page16 extends Page {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        return pip.rollAndGo(new DiceWay(2, 4, PageNumber.of(5)),
-                new DiceWay(5, 7, PageNumber.of(8)),
-                new DiceWay(8, 12, PageNumber.of(64))
+    protected List<DiceWay> getDiceWays() {
+        return List.of(new DiceWay(2, 4, PageNumber.page(5)),
+                new DiceWay(5, 7, PageNumber.page(8)),
+                new DiceWay(8, 12, PageNumber.page(64))
         );
     }
 }

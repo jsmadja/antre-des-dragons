@@ -18,8 +18,8 @@ public class FightTest {
         Entity entity1 = mock(Entity.class);
         Entity entity2 = mock(Entity.class);
 
-        when(entity1.roll2Dices()).thenReturn(new Roll(2));
-        when(entity2.roll2Dices()).thenReturn(new Roll(4));
+        when(entity1.roll2Dices()).thenReturn(Roll.of(2));
+        when(entity2.roll2Dices()).thenReturn(Roll.of(4));
 
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
@@ -34,8 +34,8 @@ public class FightTest {
         Entity entity1 = mock(Entity.class);
         Entity entity2 = mock(Entity.class);
 
-        when(entity1.roll2Dices()).thenReturn(new Roll(4));
-        when(entity2.roll2Dices()).thenReturn(new Roll(2));
+        when(entity1.roll2Dices()).thenReturn(Roll.of(4));
+        when(entity2.roll2Dices()).thenReturn(Roll.of(2));
 
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
@@ -51,8 +51,8 @@ public class FightTest {
         Entity entity2 = mock(Entity.class);
 
         when(entity1.isLoseInitiative()).thenReturn(true);
-        when(entity1.roll2Dices()).thenReturn(new Roll(10));
-        when(entity2.roll2Dices()).thenReturn(new Roll(4));
+        when(entity1.roll2Dices()).thenReturn(Roll.of(10));
+        when(entity2.roll2Dices()).thenReturn(Roll.of(4));
 
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
@@ -67,8 +67,8 @@ public class FightTest {
         Entity entity1 = mock(Entity.class);
         Entity entity2 = mock(Entity.class);
 
-        when(entity1.roll2Dices()).thenReturn(new Roll(4));
-        when(entity2.roll2Dices()).thenReturn(new Roll(10));
+        when(entity1.roll2Dices()).thenReturn(Roll.of(4));
+        when(entity2.roll2Dices()).thenReturn(Roll.of(10));
         when(entity2.isLoseInitiative()).thenReturn(true);
 
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);

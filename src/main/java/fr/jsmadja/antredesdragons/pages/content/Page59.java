@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.dices.DiceWay;
-import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.pages.types.Page;
+import fr.jsmadja.antredesdragons.pages.types.RollAndGoPage;
 
-public class Page59 extends Page {
+import java.util.List;
+
+public class Page59 extends RollAndGoPage {
     @Override
     public String getText() {
         return "Un vent violent se lève et vous avez de plus en plus de mal à rester cramponné contre " +
@@ -28,9 +28,9 @@ public class Page59 extends Page {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        return pip.rollAndGo(
-                new DiceWay(2, 6, PageNumber.of(68)),
-                new DiceWay(7, 12, PageNumber.of(78)));
+    protected List<DiceWay> getDiceWays() {
+        return List.of(
+                new DiceWay(2, 6, PageNumber.page(68)),
+                new DiceWay(7, 12, PageNumber.page(78)));
     }
 }

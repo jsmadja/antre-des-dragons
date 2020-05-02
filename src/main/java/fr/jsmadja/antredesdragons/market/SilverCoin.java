@@ -14,4 +14,12 @@ public class SilverCoin {
     public String toString() {
         return format("{0} pa", value);
     }
+
+    public SilverCoin plus(SilverCoin silverCoins) {
+        return SilverCoin.of(this.value + silverCoins.value);
+    }
+
+    public SilverCoin minus(SilverCoin silverCoin) {
+        return SilverCoin.of(this.value - silverCoin.value);
+    }
 }

@@ -54,7 +54,7 @@ public class Fight {
         if (this.firstAttacker != null && this.firstAttacker != pip) {
             opponents = opponents.stream()
                     .map(FightOrder.Entity2DiceRoll::new)
-                    .sorted((Comparator<FightOrder.Entity2DiceRoll>) new FightOrder())
+                    .sorted(new FightOrder())
                     .map(FightOrder.Entity2DiceRoll::getEntity)
                     .collect(toList());
         }

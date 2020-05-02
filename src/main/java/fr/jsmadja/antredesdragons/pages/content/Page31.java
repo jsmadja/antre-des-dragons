@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.dices.DiceWay;
-import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.pages.types.Page;
+import fr.jsmadja.antredesdragons.pages.types.RollAndGoPage;
 
-public class Page31 extends Page {
+import java.util.List;
+
+public class Page31 extends RollAndGoPage {
     @Override
     public String getText() {
         return "Rien à faire, encore perdu. Lancez les dés de nouveau.\n" +
@@ -15,10 +15,10 @@ public class Page31 extends Page {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        return pip.rollAndGo(
-                new DiceWay(2, 6, PageNumber.of(17)),
-                new DiceWay(7, 12, PageNumber.of(73))
+    protected List<DiceWay> getDiceWays() {
+        return List.of(
+                new DiceWay(2, 6, PageNumber.page(17)),
+                new DiceWay(7, 12, PageNumber.page(73))
         );
     }
 }

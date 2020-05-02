@@ -24,6 +24,6 @@ public class Page78 extends RollAndGoPage {
 
     @Override
     public List<DiceWay> getDiceWays() {
-        return List.of(new DiceWay(2, 9, PageNumber.of(85)), new DiceWay(10, 12, PageNumber.of(76)));
+        return List.of(new DiceWay(2, 9, PageNumber.page(85)), new DiceWay(10, 12, PageNumber.page(76)));
     }
 }

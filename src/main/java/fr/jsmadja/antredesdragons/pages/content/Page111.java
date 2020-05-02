@@ -15,7 +15,7 @@ public class Page111 extends GoPage {
     @Override
     public Execution execute(Pip pip) {
         if (!this.isVisited()) {
-            pip.addInInventory(TINKLE_RING);
+            pip.add(TINKLE_RING);
         }
         return super.execute(pip);
     }

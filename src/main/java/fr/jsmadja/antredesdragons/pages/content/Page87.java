@@ -23,7 +23,7 @@ public class Page87 extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.addInInventory(Item.GHOST_RING);
+        pip.add(Item.GHOST_RING);
         return pip.goToPage(10);
     }
 }

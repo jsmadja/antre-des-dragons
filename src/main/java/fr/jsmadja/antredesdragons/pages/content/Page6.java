@@ -24,7 +24,7 @@ public class Page6 extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        Prompt.YesNoAnswer answer = Prompt.question("Voulez-vous combattre le Lapin Blanc");
+        Prompt.YesNoAnswer answer = Prompt.answerTo("Voulez-vous combattre le Lapin Blanc");
         if (answer.isNo()) {
             return pip.goToPage(getSuccessPage());
         }

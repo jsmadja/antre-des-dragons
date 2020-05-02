@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons;
+package fr.jsmadja.antredesdragons.utils;
 
 import java.util.stream.Collectors;
 

@@ -9,8 +9,8 @@ public class Page17 extends RollAndGoPage {
     @Override
     protected List<DiceWay> getDiceWays() {
         return List.of(
-                DiceWay.builder().from(2).to(6).pageNumber(PageNumber.of(73)).build(),
-                DiceWay.builder().from(7).to(12).pageNumber(PageNumber.of(82)).build()
+                DiceWay.builder().from(2).to(6).pageNumber(PageNumber.page(73)).build(),
+                DiceWay.builder().from(7).to(12).pageNumber(PageNumber.page(82)).build()
         );
     }
 

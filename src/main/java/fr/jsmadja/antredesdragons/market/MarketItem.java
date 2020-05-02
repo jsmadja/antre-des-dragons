@@ -56,7 +56,7 @@ public enum MarketItem {
     @Getter
     private final Quantity quantity;
 
-    private MarketItem(Item item, SilverCoin price) {
+    MarketItem(Item item, SilverCoin price) {
         this(item, price, Quantity.of(1));
     }
 

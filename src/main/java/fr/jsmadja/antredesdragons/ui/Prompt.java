@@ -9,8 +9,8 @@ import java.util.Scanner;
 import static java.text.MessageFormat.format;
 
 public class Prompt {
-    public static YesNoAnswer question(String sentence) {
-        Events.questionEvent(format("{0} ?", sentence));
+    public static YesNoAnswer answerTo(String question) {
+        Events.questionEvent(format("{0} ?", question));
         return getYesNoAnswer();
     }
 
@@ -25,20 +25,20 @@ public class Prompt {
         return getYesNoAnswer();
     }
 
-    public static NumberAnswer question(String sentence, List<Integer> validValues) {
-        Events.questionEvent(format("{0} ?", sentence));
-        return getNumberAnswer(validValues);
+    public static NumberAnswer answerTo(String question, List<Integer> validAnswers) {
+        Events.questionEvent(format("{0} ?", question));
+        return getNumberAnswer(validAnswers);
     }
 
-    private static NumberAnswer getNumberAnswer(List<Integer> validValues) {
+    private static NumberAnswer getNumberAnswer(List<Integer> validAnswers) {
         Scanner sc = new Scanner(System.in);
         if (sc.hasNextInt()) {
-            NumberAnswer answer = NumberAnswer.of(sc.nextInt(), validValues);
+            NumberAnswer answer = NumberAnswer.of(sc.nextInt(), validAnswers);
             if (answer.isValid()) {
                 return answer;
             }
         }
-        return getNumberAnswer(validValues);
+        return getNumberAnswer(validAnswers);
     }
 
     @AllArgsConstructor(staticName = "of")

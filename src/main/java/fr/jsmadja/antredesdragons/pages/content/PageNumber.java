@@ -1,14 +1,10 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor(staticName = "page")
 public class PageNumber {
-    private Integer value;
-
-    public static PageNumber of(int value) {
-        return new PageNumber(value);
-    }
+    private final Integer page;
 }

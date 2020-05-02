@@ -9,6 +9,6 @@ public class Main {
         int startAt = 4;//Pages.DEBUT;//108;//10;//64;//78;
         Dice dice = new Dice();
         Pip pip = new Pip(dice);
-        pip.goToPage(PageNumber.of(startAt));
+        pip.goToPage(PageNumber.page(startAt));
     }
 }

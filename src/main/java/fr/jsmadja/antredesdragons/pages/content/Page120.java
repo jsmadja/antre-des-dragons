@@ -24,9 +24,7 @@ public class Page120 extends Page {
 
     private Foe minotaure;
     private int initialPipHealthPoints;
-    private HitRollRange initialPipHitRollRange;
     private Pip pip;
-    private Optional<Item> equipedWeapon;
 
     @Override
     public String getText() {
@@ -104,11 +102,11 @@ public class Page120 extends Page {
     public Execution execute(Pip pip) {
         this.pip = pip;
         this.minotaure = Foe.builder().name("Minotaure").dice(new Dice()).hitRollRange(new HitRollRange(6)).initialHealthPoints(10).build();
-        this.initialPipHealthPoints = pip.getHealthPoints();
-        this.initialPipHitRollRange = pip.getHitRollRange();
-        this.equipedWeapon = pip.getEquipedWeapon();
-        if(this.equipedWeapon.isPresent()) {
-            pip.unequip(this.equipedWeapon.get());
+        this.initialPipHealthPoints = pip.getCurrentHealthPoints();
+        HitRollRange initialPipHitRollRange = pip.getHitRollRange();
+        Optional<Item> equipedWeapon = pip.getEquipedWeapon();
+        if (equipedWeapon.isPresent()) {
+            pip.unequip(equipedWeapon.get());
             pip.setHitRollRange(new HitRollRange(6));
         }
 
@@ -122,11 +120,11 @@ public class Page120 extends Page {
                 Events.statusEvent(attacker.toString());
             });
         }
-        if(this.equipedWeapon.isPresent()) {
-            pip.equip(this.equipedWeapon.get());
+        if (equipedWeapon.isPresent()) {
+            pip.equip(equipedWeapon.get());
             pip.setHitRollRange(initialPipHitRollRange);
         }
-        if(minotaure.isDead()) {
+        if (minotaure.isDead()) {
             return pip.goToPage(126);
         }
         return pip.goToPage(133);
@@ -163,7 +161,7 @@ public class Page120 extends Page {
     }
 
     private boolean isOver() {
-        return this.minotaure.isDead() || (this.initialPipHealthPoints-this.pip.getHealthPoints()) >= 10;
+        return this.minotaure.isDead() || (this.initialPipHealthPoints - this.pip.getCurrentHealthPoints()) >= 10;
     }
 
 }

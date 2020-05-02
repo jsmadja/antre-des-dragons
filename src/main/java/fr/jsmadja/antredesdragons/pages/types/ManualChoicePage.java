@@ -22,14 +22,14 @@ public abstract class ManualChoicePage extends Page {
     public Execution askWhichWay(Pip pip) {
         Paths possiblesPath = getPossiblesPath();
         possiblesPath.print();
-        Prompt.NumberAnswer path = Prompt.question("Quel chemin prendre", possiblesPath.getPages());
-        return pip.goToPage(PageNumber.of(path.getAnswer()));
+        Prompt.NumberAnswer path = Prompt.answerTo("Quel chemin prendre", possiblesPath.getPages());
+        return pip.goToPage(PageNumber.page(path.getAnswer()));
     }
 
     public abstract Paths getPossiblesPath();
 
     public static class Paths {
-        private List<Path> paths;
+        private final List<Path> paths;
 
         public Paths(Path... paths) {
             this(List.of(paths));

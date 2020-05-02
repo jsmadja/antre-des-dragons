@@ -7,8 +7,8 @@ import lombok.Builder;
 public class Foe extends Entity {
 
     @Builder
-    public Foe(String name, Dice dice, int initialHealthPoints, int armor, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
-        super(name, dice == null ? new Dice() : dice, initialHealthPoints, armor, hitRollRange, constantHitDamage, immuneToPhysicalDamages);
+    public Foe(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
+        super(name, dice == null ? new Dice() : dice, initialHealthPoints, hitRollRange, constantHitDamage, immuneToPhysicalDamages);
     }
 
     @Override

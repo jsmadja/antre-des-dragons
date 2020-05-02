@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.market;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.ui.Events;
 import fr.jsmadja.antredesdragons.ui.Prompt;
-import fr.jsmadja.antredesdragons.entities.Pip;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -11,12 +11,10 @@ import static java.text.MessageFormat.format;
 
 public class Market {
     public void enter(Pip pip) {
-        Prompt.YesNoAnswer wantBuyAnswer = Prompt.question("Souhaitez-vous acheter un article");
-        if (wantBuyAnswer.isNo()) {
-            this.leave();
-        } else {
+        Prompt.YesNoAnswer wantBuyAnswer = Prompt.answerTo("Souhaitez-vous acheter un article");
+        if (wantBuyAnswer.isYes()) {
             showItems();
-            Prompt.NumberAnswer itemAnswer = Prompt.question("Quel article souhaitez-vous acheter", Arrays.stream(MarketItem.values()).map(Enum::ordinal).collect(Collectors.toList()));
+            Prompt.NumberAnswer itemAnswer = Prompt.answerTo("Quel article souhaitez-vous acheter", Arrays.stream(MarketItem.values()).map(Enum::ordinal).collect(Collectors.toList()));
             MarketItem marketItem = getItem(itemAnswer.getAnswer());
             if (pip.has(marketItem.getPrice())) {
                 pip.buy(marketItem);
@@ -31,12 +29,8 @@ public class Market {
         return Arrays.stream(MarketItem.values()).collect(Collectors.toMap(MarketItem::ordinal, p -> p)).get(ordinal);
     }
 
-    private void leave() {
-
-    }
-
     private void showItems() {
-        System.out.println("\n------- Liste de cours de Pip -------\n");
+        Events.event("\n------- Liste de cours de Pip -------\n");
         Arrays.stream(MarketItem.values()).forEach(x -> System.out.println(format("{0} - {1}", x.ordinal(), x)));
     }
 }

@@ -1,12 +1,17 @@
 package fr.jsmadja.antredesdragons.stuff;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Getter
 public class Inventory {
-    private List<Item> items = new ArrayList<>();
+    private final List<Item> items = new ArrayList<>();
+    private final List<Item> equipedItems = new ArrayList<>();
 
     public void add(Item item) {
         this.items.add(item);
@@ -23,4 +28,21 @@ public class Inventory {
     public List<Item> getAllEquipables() {
         return items.stream().filter(Item::isEquipable).collect(toList());
     }
+
+    public void equipAll() {
+        this.getAllEquipables().forEach(this::equip);
+    }
+
+    public void equip(Item item) {
+        this.equipedItems.add(item);
+    }
+
+    public void unequip(Item item) {
+        this.equipedItems.remove(item);
+    }
+
+    public Optional<Item> getEquipedWeapon() {
+        return this.equipedItems.stream().filter(Item::isWeapon).findFirst();
+    }
+
 }

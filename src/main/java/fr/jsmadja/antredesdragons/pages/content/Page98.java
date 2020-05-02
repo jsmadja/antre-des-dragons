@@ -1,12 +1,9 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
-import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
-import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.types.MultipleFightPage;
@@ -75,20 +72,20 @@ public class Page98 extends MultipleFightPage {
                     Foe foe = Foe.builder()
                             .name("Troll des Rochers #" + operand)
                             .dice(new Dice()).initialHealthPoints(10)
-                            .armor(1)
                             .build();
                     foe.addAndEquip(Item.TROLL_SWORD);
+                    foe.addAndEquip(Item.TROLL_ARMOR);
                     return foe;
                 })
                 .collect(toList());
     }
 
     private boolean talkToTrolls() {
-        return Prompt.question("Parler aux trolls").isYes();
+        return Prompt.answerTo("Parler aux trolls").isYes();
     }
 
     private boolean useInvisibilitySpell() {
-        return Prompt.question("Utiliser le sort d'invisibilité").isYes();
+        return Prompt.answerTo("Utiliser le sort d'invisibilité").isYes();
     }
 
 }

@@ -23,8 +23,8 @@ public class Page58 extends RollAndGoPage {
     @Override
     protected List<DiceWay> getDiceWays() {
         return List.of(
-                new DiceWay(2, 4, PageNumber.of(9)),
-                new DiceWay(5, 8, PageNumber.of(13)),
-                new DiceWay(9, 12, PageNumber.of(19)));
+                new DiceWay(2, 4, PageNumber.page(9)),
+                new DiceWay(5, 8, PageNumber.page(13)),
+                new DiceWay(9, 12, PageNumber.page(19)));
     }
 }

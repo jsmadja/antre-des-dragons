@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.stuff;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor(staticName = "damage")
+@RequiredArgsConstructor(staticName = "damage")
 public class DamagePoint {
-    private int value;
+    private final int value;
 }

@@ -34,14 +34,14 @@ public class Page99 extends ManualChoicePage {
 
     @Override
     public Execution execute(Pip pip) {
-        if (Prompt.question("Voulez vous déplacer le rocher").isYes()) {
+        if (Prompt.answerTo("Voulez vous déplacer le rocher").isYes()) {
             Roll roll = pip.roll2Dices();
             if (roll.isBetween(7, 12)) {
                 return pip.goToPage(102);
             }
         }
-        if (pip.hasItem(Item.FIREBALL)) {
-            if (Prompt.question("Voulez-vous utiliser une boule de feu").isYes()) {
+        if (pip.has(Item.FIREBALL)) {
+            if (Prompt.answerTo("Voulez-vous utiliser une boule de feu").isYes()) {
                 pip.removeOne(Item.FIREBALL);
                 return pip.goToPage(102);
             }

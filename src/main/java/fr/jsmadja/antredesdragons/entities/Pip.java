@@ -23,15 +23,15 @@ import static java.text.MessageFormat.format;
 public class Pip extends Entity {
 
     private final Pages pages = new Pages();
-    private List<Spell> spells = new ArrayList<>();
-    private List<Skill> skills = new ArrayList<>();
-    private int silverCoins = 0;
+    private final List<Spell> spells = new ArrayList<>();
+    private final List<Skill> skills = new ArrayList<>();
+    private SilverCoin silverCoins = SilverCoin.of(0);
 
     @Getter
     private PageNumber previousPage;
 
     public Pip(Dice dice) {
-        super("Pip", dice, dice.roll(2) * 4, 0, DEFAULT_MINIMUM_HIT_ROLL, null, false);
+        super("Pip", dice, dice.roll(2) * 4, DEFAULT_MINIMUM_HIT_ROLL, null, false);
     }
 
     @Override
@@ -48,17 +48,13 @@ public class Pip extends Entity {
     }
 
     public Execution goToPage(PageNumber pageNumber) {
-        pageEvent("Pip se rend à la page " + pageNumber.getValue());
-        Page page = pages.get(pageNumber.getValue());
+        pageEvent("Pip se rend à la page " + pageNumber.getPage());
+        Page page = pages.get(pageNumber.getPage());
         System.out.println(page.getText() + "\n");
         Execution execution = page.execute(this);
         page.setVisited(true);
         this.previousPage = pageNumber;
         return execution;
-    }
-
-    public Execution rollAndGo(DiceWay... diceWays) {
-        return this.rollAndGo(List.of(diceWays));
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
@@ -80,7 +76,7 @@ public class Pip extends Entity {
     }
 
     public Execution goToPage(int page) {
-        return goToPage(PageNumber.of(page));
+        return goToPage(PageNumber.page(page));
     }
 
     public boolean hasSpell(Spell spell) {
@@ -99,25 +95,25 @@ public class Pip extends Entity {
         return this.skills.contains(skill);
     }
 
-    public void addSilverCoins(int silverCoins) {
+    public void addSilverCoins(SilverCoin silverCoins) {
         Events.event("Pip obtient " + silverCoins + " pièces d'argent");
-        this.silverCoins += silverCoins;
+        this.silverCoins = this.silverCoins.plus(silverCoins);
     }
 
     @Override
     public String toString() {
-        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmor(), this.silverCoins);
+        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins);
     }
 
     public boolean has(SilverCoin coins) {
-        return this.silverCoins > coins.getValue();
+        return this.silverCoins.getValue() > coins.getValue();
     }
 
     public void buy(MarketItem marketItem) {
         IntStream.range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {
-                    this.silverCoins -= marketItem.getPrice().getValue();
-                    this.addInInventory(marketItem.getItem());
+                    this.silverCoins = this.silverCoins.minus(marketItem.getPrice());
+                    this.add(marketItem.getItem());
                 });
 
     }

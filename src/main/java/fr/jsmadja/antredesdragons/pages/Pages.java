@@ -15,7 +15,7 @@ public class Pages {
     public static final int MENACE_SUR_AVALAON = -8;
     public static final int DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN = -7;
 
-    private Map<Integer, Page> pages = new HashMap<>() {{
+    private final Map<Integer, Page> pages = new HashMap<>() {{
         put(DEBUT, new PageDebut());
         put(MERLIN, new PageMerlin());
         put(MENACE_SUR_AVALAON, new PageMenaceSurAvalon());

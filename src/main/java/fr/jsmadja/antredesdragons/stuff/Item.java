@@ -50,7 +50,8 @@ public enum Item {
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
-    ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4));
+    ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4)),
+    TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1));
 
     Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon) {
         this.name = name;
