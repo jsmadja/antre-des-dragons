@@ -24,7 +24,6 @@ public abstract class MultipleFightPage extends Page {
     }
 
     protected void onAfterSuccessfulFight(Pip pip) {
-
     }
 
     protected abstract int getSuccessPage();

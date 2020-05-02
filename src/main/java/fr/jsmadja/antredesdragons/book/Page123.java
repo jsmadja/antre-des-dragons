@@ -32,8 +32,7 @@ public class Page123 extends Page {
         weapon.ifPresent(pip::unequip);
         Foe foe = Foe.builder().name("Poisson").initialHealthPoints(10).build();
 
-        Fight fight = new Fight(pip, foe, 3);
-        fight.start();
+        new Fight(pip, foe, 3).start();
 
         if(pip.isDead()) {
             return pip.goToPage(14);

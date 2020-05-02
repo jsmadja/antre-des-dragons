@@ -1,14 +1,14 @@
 package fr.jsmadja.antredesdragons.entities;
 
+import fr.jsmadja.antredesdragons.book.PageNumber;
+import fr.jsmadja.antredesdragons.book.Pages;
 import fr.jsmadja.antredesdragons.dices.Dice;
-import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Fight;
 import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.market.MarketItem;
 import fr.jsmadja.antredesdragons.market.SilverCoins;
-import fr.jsmadja.antredesdragons.book.Pages;
-import fr.jsmadja.antredesdragons.book.PageNumber;
+import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
 import fr.jsmadja.antredesdragons.ui.Events;
@@ -52,6 +52,7 @@ public class Pip extends Entity {
     public void fight(Foe foe) {
         new Fight(this, foe).start();
     }
+
     public void fight(List<Foe> foes) {
         new Fight(this, foes).start();
     }
@@ -60,9 +61,11 @@ public class Pip extends Entity {
     public Execution goToPage(int page) {
         return goToPage(PageNumber.page(page));
     }
+
     public Execution goToPreviousPage() {
         return goToPage(getPreviousPage());
     }
+
     public Execution goToPage(PageNumber pageNumber) {
         pageEvent("Pip se rend à la page " + pageNumber.getPage());
         Page page = pages.get(pageNumber.getPage());
@@ -83,9 +86,11 @@ public class Pip extends Entity {
     public boolean hasSpell(Spell spell) {
         return this.spells.contains(spell);
     }
+
     public void removeSpell(Spell spell) {
         this.spells.remove(spell);
     }
+
     public void use(Spell spell) {
         Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
     }
@@ -105,12 +110,15 @@ public class Pip extends Entity {
         Events.event("Pip obtient " + silverCoins + " pièces d'argent");
         this.silverCoins = this.silverCoins.plus(silverCoins);
     }
+
     public void add(GoldenCoins goldenCoins) {
         this.addSilverCoins(goldenCoins.toSilverCoins());
     }
+
     public boolean has(SilverCoins coins) {
         return this.silverCoins.getValue() > coins.getValue();
     }
+
     public void buy(MarketItem marketItem) {
         IntStream.range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {

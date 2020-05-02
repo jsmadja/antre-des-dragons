@@ -54,8 +54,8 @@ public class Page102 extends ManualChoicePage {
                 .build();
         foe.attacks(10, pip);
 
-        Fight fight = new Fight(pip, foe);
-        fight.start();
+        new Fight(pip, foe).start();
+
         if(pip.isDead()) {
             return pip.goToPage(14);
         }

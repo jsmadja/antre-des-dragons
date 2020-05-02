@@ -5,13 +5,11 @@ import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.fight.FightOrder.Entity2DiceRoll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FightTest {
+public class FightOrderTest {
 
     @Test
     public void entity2_should_be_the_first_to_attack_by_roll() {
@@ -24,7 +22,7 @@ public class FightTest {
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
 
-        int compare = ((Comparator<Entity2DiceRoll>) new FightOrder()).compare(o1, o2);
+        int compare = new FightOrder().compare(o1, o2);
 
         assertThat(compare).isPositive();
     }
@@ -40,7 +38,7 @@ public class FightTest {
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
 
-        int compare = ((Comparator<Entity2DiceRoll>) new FightOrder()).compare(o1, o2);
+        int compare = new FightOrder().compare(o1, o2);
 
         assertThat(compare).isNegative();
     }
@@ -57,7 +55,7 @@ public class FightTest {
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
 
-        int compare = ((Comparator<Entity2DiceRoll>) new FightOrder()).compare(o1, o2);
+        int compare = new FightOrder().compare(o1, o2);
 
         assertThat(compare).isPositive();
     }
@@ -74,7 +72,7 @@ public class FightTest {
         Entity2DiceRoll o1 = new Entity2DiceRoll(entity1);
         Entity2DiceRoll o2 = new Entity2DiceRoll(entity2);
 
-        int compare = ((Comparator<Entity2DiceRoll>) new FightOrder()).compare(o1, o2);
+        int compare = new FightOrder().compare(o1, o2);
 
         assertThat(compare).isNegative();
     }
