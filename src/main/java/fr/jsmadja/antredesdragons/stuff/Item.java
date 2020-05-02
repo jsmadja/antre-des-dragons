@@ -30,6 +30,7 @@ public enum Item {
     STONE_LIGHTER("Briquet à pierre"),
     STAKES("Pieux"),
     SPARE_CLOTHES("Vêtements de rechange"),
+    SPARE_BOOTS("Bottes de rechange"),
     PARCHMENT("Parchemin"),
     PEN_AND_GOOSE_INK("Plume d'oie et encre en poudre"),
     FOOD("Nourriture"),
@@ -54,13 +55,14 @@ public enum Item {
     TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1)),
     WOLF_SKIN("Peau de loup", ArmorPoint.armor(1));
 
-    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon) {
+    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor) {
         this.name = name;
         this.armorPoint = armorPoint;
         this.damagePoint = damagePoint;
         this.equipable = equipable;
         this.hitRollRange = hitRollRange;
         this.weapon = weapon;
+        this.armor = armor;
     }
 
     private final String name;
@@ -69,10 +71,11 @@ public enum Item {
     private final boolean equipable;
     private final HitRollRange hitRollRange;
     private final boolean weapon;
+    private final boolean armor;
 
     // Object Constructor
     Item(String name) {
-        this(name, null, null, false, null, false);
+        this(name, null, null, false, null, false, false);
     }
 
     // Weapon Constructor
@@ -81,12 +84,12 @@ public enum Item {
     }
 
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
-        this(name, null, damagePoint, true, hitRollRange, true);
+        this(name, null, damagePoint, true, hitRollRange, true, false);
     }
 
     // Armor Constructor
     Item(String name, ArmorPoint armorPoint) {
-        this(name, armorPoint, null, true, null, false);
+        this(name, armorPoint, null, true, null, false, true);
     }
 
 }

@@ -60,6 +60,7 @@ public class Pages {
         put(64, new Page64());
         put(68, new Page68());
         put(71, new Page71());
+        put(73, new Page73());
         put(78, new Page78());
         put(80, new Page80());
         put(84, new Page84());

@@ -4,11 +4,13 @@ import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.book.PageNumber;
 
+import java.util.List;
+
 public abstract class SingleFightPage extends Page {
     @Override
     public Execution execute(Pip pip) {
         onBeforeFight(pip);
-        pip.fight(getFoe());
+        pip.fight(List.of(getFoe()));
         if(pip.isDead()) {
             return pip.goToPage(PageNumber.page(14));
         }

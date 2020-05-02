@@ -22,11 +22,15 @@ public abstract class Entity {
 
     private final int initialHealthPoints;
     private int currentHealthPoints;
-    private final int maximumHealthPoints;
+    @Getter
+    @Setter
+    private int maximumHealthPoints;
 
     private HitRollRange hitRollRange = new HitRollRange(6);
     private final Integer constantHitDamage;
     private final boolean immuneToPhysicalDamages;
+
+    @Getter
     private final Inventory inventory = new Inventory();
 
     @Getter
@@ -57,7 +61,7 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}", this.name, this.currentHealthPoints, this.getAdditionalDamagePoints(), this.hitRollRange.getMin(), this.getArmorPoints());
+        return format("{0} ~ HP: {1}/{5}, STR: {2}, TCH: {3}, ARMOR: {4}", this.name, this.currentHealthPoints, this.getAdditionalDamagePoints(), this.hitRollRange.getMin(), this.getArmorPoints(), this.getMaximumHealthPoints());
     }
 
     // Rolling

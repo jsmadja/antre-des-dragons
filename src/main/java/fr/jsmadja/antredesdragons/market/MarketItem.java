@@ -30,6 +30,7 @@ public enum MarketItem {
     STONE_LIGHTER(Item.STONE_LIGHTER, SilverCoins.of(0.5)),
     STAKES(Item.STAKES, SilverCoins.of(0.5), Quantity.of(12)),
     SPARE_CLOTHES(Item.SPARE_CLOTHES, SilverCoins.of(10)),
+    SPARE_BOOTS(Item.SPARE_BOOTS, SilverCoins.of(5)),
     PARCHMENT(Item.PARCHMENT, SilverCoins.of(0.5)),
     PEN_AND_GOOSE_INK(Item.PEN_AND_GOOSE_INK, SilverCoins.of(1)),
     FOOD(Item.FOOD, SilverCoins.of(5), Quantity.of(5)),

@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -46,4 +47,7 @@ public class Inventory {
         return this.equipedItems.stream().filter(Item::isWeapon).findFirst();
     }
 
+    public Stream<Item> stream() {
+        return this.items.stream();
+    }
 }

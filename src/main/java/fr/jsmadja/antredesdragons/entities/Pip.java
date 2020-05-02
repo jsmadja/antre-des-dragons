@@ -23,6 +23,7 @@ import static java.text.MessageFormat.format;
 
 public class Pip extends Entity {
 
+    public static final int NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP = 20;
     private final Pages pages = new Pages();
     private final List<Spell> spells = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
@@ -30,6 +31,8 @@ public class Pip extends Entity {
 
     @Getter
     private PageNumber previousPage;
+    private int experiencePoints;
+    private int level = 1;
 
     public Pip(Dice dice) {
         super("Pip", dice, dice.roll(2) * 4, DEFAULT_MINIMUM_HIT_ROLL, null, false);
@@ -49,12 +52,23 @@ public class Pip extends Entity {
     }
 
     // Fighting
-    public void fight(Foe foe) {
-        new Fight(this, foe).start();
-    }
-
     public void fight(List<Foe> foes) {
         new Fight(this, foes).start();
+        if (!this.isDead()) {
+            this.addExperiencePoints(foes.size());
+        }
+    }
+
+    public void addExperiencePoints(int points) {
+        this.experiencePoints += points;
+        if (this.experiencePoints >= this.level * NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP) {
+            this.level++;
+            this.addMaximumHealthPoints(1);
+        }
+    }
+
+    private void addMaximumHealthPoints(int points) {
+        this.setMaximumHealthPoints(this.getMaximumHealthPoints() + points);
     }
 
     // Navigation
@@ -102,7 +116,7 @@ public class Pip extends Entity {
 
     @Override
     public String toString() {
-        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins);
+        return format("{0} ~ HP: {1}/{6}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins, this.getMaximumHealthPoints());
     }
 
     // Money
