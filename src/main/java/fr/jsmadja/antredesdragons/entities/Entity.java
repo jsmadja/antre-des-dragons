@@ -7,6 +7,8 @@ import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
 import fr.jsmadja.antredesdragons.stuff.Inventory;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,12 @@ public abstract class Entity {
     private List<Item> equipedItems = new ArrayList<>();
     private Inventory inventory = new Inventory();
 
+    @Getter
+    private boolean loseInitiative;
+
+    @Setter
+    private int rollMalus;
+
     public static final HitRollRange DEFAULT_MINIMUM_HIT_ROLL = new HitRollRange(6, 12);
 
     Entity(String name, Dice dice, int initialHealthPoints, int armor, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
@@ -45,11 +53,11 @@ public abstract class Entity {
     }
 
     int roll1Dice() {
-        return this.dice.roll();
+        return this.dice.roll() - rollMalus;
     }
 
     public Roll roll2Dices() {
-        int result = this.dice.roll(2);
+        int result = this.dice.roll(2) - rollMalus;
         Events.diceEvent(this.name + " lance 2 dés et fait " + result);
         return new Roll(result);
     }
@@ -186,4 +194,7 @@ public abstract class Entity {
         this.inventory.getAllEquipables().forEach(this::equip);
     }
 
+    public void loseInitiative() {
+        this.loseInitiative = true;
+    }
 }

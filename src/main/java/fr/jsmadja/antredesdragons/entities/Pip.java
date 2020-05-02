@@ -11,6 +11,7 @@ import fr.jsmadja.antredesdragons.pages.content.PageNumber;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.Page;
 import fr.jsmadja.antredesdragons.ui.Events;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class Pip extends Entity {
     private List<Spell> spells = new ArrayList<>();
     private List<Skill> skills = new ArrayList<>();
     private int silverCoins = 0;
+
+    @Getter
+    private PageNumber previousPage;
 
     public Pip(Dice dice) {
         super("Pip", dice, dice.roll(2) * 4, 0, DEFAULT_MINIMUM_HIT_ROLL, null, false);
@@ -49,6 +53,7 @@ public class Pip extends Entity {
         System.out.println(page.getText() + "\n");
         Execution execution = page.execute(this);
         page.setVisited(true);
+        this.previousPage = pageNumber;
         return execution;
     }
 
@@ -117,4 +122,7 @@ public class Pip extends Entity {
 
     }
 
+    public Execution goToPreviousPage() {
+        return goToPage(getPreviousPage());
+    }
 }

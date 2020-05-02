@@ -46,6 +46,7 @@ public enum Item {
     EXCALIBUR_JUNIOR("ExcaliburJunior", DamagePoint.damage(5), new HitRollRange(4)),
     TROLL_SWORD("Epée de Troll", DamagePoint.damage(2), new HitRollRange(6)),
     GHOST_SWORD("Epée de Fantôme", DamagePoint.damage(3), new HitRollRange(5)),
+    RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3),new HitRollRange(5)),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),

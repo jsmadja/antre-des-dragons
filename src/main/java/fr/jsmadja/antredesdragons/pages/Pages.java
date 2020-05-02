@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.pages;
 
-import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.content.*;
+import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.Page;
 
 import java.util.HashMap;
@@ -25,12 +25,20 @@ public class Pages {
         put(3, new Page3());
         put(4, new Page4());
         put(5, new Page5());
+        put(6, new Page6());
         put(7, new Page7());
+        put(8, new Page8());
+        put(9, new Page9());
         put(10, new Page10());
+        put(11, new Page11());
+        put(12, new Page12());
         put(13, new Page13());
         put(14, new Page14());
+        put(15, new Page15());
         put(16, new Page16());
+        put(17, new Page17());
         put(18, new Page18());
+        put(19, new Page19());
         put(20, new Page20());
         put(21, new Page21());
         put(24, new Page24());
@@ -71,7 +79,7 @@ public class Pages {
     }};
 
     public Pages() {
-        System.out.println("Avancement : " + (this.pages.keySet().size() * 100D / 173D) + "%");
+        System.out.println("Avancement : " + (this.pages.keySet().size() * 100D / 177D) + "%");
     }
 
     public static Page noPage() {

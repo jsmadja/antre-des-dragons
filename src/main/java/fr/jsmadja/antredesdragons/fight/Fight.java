@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.fight;
 
-import fr.jsmadja.antredesdragons.ui.Events;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.ui.Events;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,36 +47,15 @@ public class Fight {
         }
     }
 
-    private Comparator<Entity2DiceRoll> byRollDesc = (Entity2DiceRoll entity1, Entity2DiceRoll entity2) -> entity2.getRoll().getValue() - entity1.getRoll().getValue();
-
-    private static class Entity2DiceRoll {
-
-        private final Entity entity;
-        private final Roll roll;
-
-        public Entity2DiceRoll(Entity entity) {
-            this.entity = entity;
-            this.roll = entity.roll2Dices();
-        }
-
-        public Roll getRoll() {
-            return roll;
-        }
-
-        public Entity getEntity() {
-            return entity;
-        }
-    }
-
     private void multipleFight() {
         List<Entity> opponents = new ArrayList<>();
         opponents.add(pip);
         opponents.addAll(foes);
         if (this.firstAttacker != null && this.firstAttacker != pip) {
             opponents = opponents.stream()
-                    .map(Entity2DiceRoll::new)
-                    .sorted(byRollDesc)
-                    .map(Entity2DiceRoll::getEntity)
+                    .map(FightOrder.Entity2DiceRoll::new)
+                    .sorted((Comparator<FightOrder.Entity2DiceRoll>) new FightOrder())
+                    .map(FightOrder.Entity2DiceRoll::getEntity)
                     .collect(toList());
         }
 
@@ -92,7 +71,7 @@ public class Fight {
             this.turn++;
         }
 
-        if(this.isMaxTurnReached()) {
+        if (this.isMaxTurnReached()) {
             pip.kill();
         }
     }
@@ -103,21 +82,7 @@ public class Fight {
     }
 
     private void singleFight() {
-        List<Entity> opponents = new ArrayList<>();
-        if (firstAttacker == null) {
-            Roll pipOrderRoll = this.pip.roll2Dices();
-            Roll foeOrderRoll = this.foe.roll2Dices();
-            if (pipOrderRoll.isGreaterThan(foeOrderRoll)) {
-                opponents.add(pip);
-                opponents.add(foe);
-            } else {
-                opponents.add(foe);
-                opponents.add(pip);
-            }
-        } else {
-            opponents.add(firstAttacker);
-            opponents.add(this.getOther(firstAttacker));
-        }
+        List<Entity> opponents = getOrderedOpponents();
 
         while (!this.isOver()) {
             showTurn();
@@ -131,9 +96,28 @@ public class Fight {
             Events.statusEvent(foe.toString());
             this.turn++;
         }
-        if(this.isMaxTurnReached()) {
+        if (this.isMaxTurnReached()) {
             pip.kill();
         }
+    }
+
+    private List<Entity> getOrderedOpponents() {
+        List<Entity> opponents = new ArrayList<>();
+        if (firstAttacker == null) {
+            Roll pipOrderRoll = this.pip.roll2Dices();
+            Roll foeOrderRoll = this.foe.roll2Dices();
+            if (!this.pip.isLoseInitiative() && pipOrderRoll.isGreaterThan(foeOrderRoll)) {
+                opponents.add(pip);
+                opponents.add(foe);
+            } else {
+                opponents.add(foe);
+                opponents.add(pip);
+            }
+        } else {
+            opponents.add(firstAttacker);
+            opponents.add(this.getOther(firstAttacker));
+        }
+        return opponents;
     }
 
     private Entity getOther(Entity entity) {
@@ -170,7 +154,7 @@ public class Fight {
     }
 
     private boolean isOver() {
-        if(isMaxTurnReached()) {
+        if (isMaxTurnReached()) {
             return true;
         }
         if (this.pip.isDead()) {
