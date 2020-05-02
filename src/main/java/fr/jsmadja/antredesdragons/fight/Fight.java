@@ -7,7 +7,6 @@ import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.ui.Events;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
@@ -19,7 +18,6 @@ public class Fight {
     private final Pip pip;
     private Foe foe;
     private List<Foe> foes;
-    private Entity firstAttacker;
     private int turn = 1;
     private int maxTurns = Integer.MAX_VALUE;
 
@@ -51,13 +49,11 @@ public class Fight {
         List<Entity> opponents = new ArrayList<>();
         opponents.add(pip);
         opponents.addAll(foes);
-        if (this.firstAttacker != null && this.firstAttacker != pip) {
-            opponents = opponents.stream()
-                    .map(FightOrder.Entity2DiceRoll::new)
-                    .sorted(new FightOrder())
-                    .map(FightOrder.Entity2DiceRoll::getEntity)
-                    .collect(toList());
-        }
+        opponents = opponents.stream()
+                .map(FightOrder.Entity2DiceRoll::new)
+                .sorted(new FightOrder())
+                .map(FightOrder.Entity2DiceRoll::getEntity)
+                .collect(toList());
 
         while (!this.isOver()) {
             showTurn();
@@ -103,19 +99,14 @@ public class Fight {
 
     private List<Entity> getOrderedOpponents() {
         List<Entity> opponents = new ArrayList<>();
-        if (firstAttacker == null) {
-            Roll pipOrderRoll = this.pip.roll2Dices();
-            Roll foeOrderRoll = this.foe.roll2Dices();
-            if (!this.pip.isLoseInitiative() && pipOrderRoll.isGreaterThan(foeOrderRoll)) {
-                opponents.add(pip);
-                opponents.add(foe);
-            } else {
-                opponents.add(foe);
-                opponents.add(pip);
-            }
+        Roll pipOrderRoll = this.pip.roll2Dices();
+        Roll foeOrderRoll = this.foe.roll2Dices();
+        if (!this.pip.isLoseInitiative() && pipOrderRoll.isGreaterThan(foeOrderRoll)) {
+            opponents.add(pip);
+            opponents.add(foe);
         } else {
-            opponents.add(firstAttacker);
-            opponents.add(this.getOther(firstAttacker));
+            opponents.add(foe);
+            opponents.add(pip);
         }
         return opponents;
     }
@@ -170,11 +161,4 @@ public class Fight {
         return this.turn > this.maxTurns;
     }
 
-    public void setFirstAttacker(Entity firstAttacker) {
-        this.firstAttacker = firstAttacker;
-    }
-
-    public Entity getFirstAttacker() {
-        return firstAttacker;
-    }
 }

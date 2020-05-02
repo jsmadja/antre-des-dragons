@@ -4,7 +4,6 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
-import fr.jsmadja.antredesdragons.stuff.Inventory;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;

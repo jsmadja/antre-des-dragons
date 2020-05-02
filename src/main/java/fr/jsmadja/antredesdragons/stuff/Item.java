@@ -1,7 +1,6 @@
 package fr.jsmadja.antredesdragons.stuff;
 
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
-
 import lombok.Getter;
 
 @Getter
@@ -46,12 +45,14 @@ public enum Item {
     EXCALIBUR_JUNIOR("ExcaliburJunior", DamagePoint.damage(5), new HitRollRange(4)),
     TROLL_SWORD("Epée de Troll", DamagePoint.damage(2), new HitRollRange(6)),
     GHOST_SWORD("Epée de Fantôme", DamagePoint.damage(3), new HitRollRange(5)),
-    RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3),new HitRollRange(5)),
+    RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3), new HitRollRange(5)),
+    MONK_FIGHTING("Poings de moine", DamagePoint.damage(3), new HitRollRange(4)),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
     ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4)),
-    TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1));
+    TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1)),
+    WOLF_SKIN("Peau de loup", ArmorPoint.armor(1));
 
     Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon) {
         this.name = name;
@@ -78,6 +79,7 @@ public enum Item {
     Item(String name, DamagePoint damagePoint) {
         this(name, damagePoint, null);
     }
+
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
         this(name, null, damagePoint, true, hitRollRange, true);
     }
