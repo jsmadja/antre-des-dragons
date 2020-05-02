@@ -1,14 +1,16 @@
 package fr.jsmadja.antredesdragons.pages.types;
 
+import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.content.PageNumber;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Scanner;
 
+import static java.text.MessageFormat.format;
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 public abstract class ManualChoicePage extends Page {
 
@@ -19,24 +21,9 @@ public abstract class ManualChoicePage extends Page {
 
     public Execution askWhichWay(Pip pip) {
         Paths possiblesPath = getPossiblesPath();
-        System.out.println("\nQuel chemin prendre ?\n");
         possiblesPath.print();
-        return pip.goToPage(PageNumber.of(this.getAnswer()));
-    }
-
-    private int getAnswer() {
-        Scanner sc = new Scanner(System.in);
-        if (sc.hasNextInt()) {
-            int answer = sc.nextInt();
-            if (isValidAnswer(answer)) {
-                return answer;
-            }
-        }
-        return getAnswer();
-    }
-
-    public boolean isValidAnswer(int answer) {
-        return getPossiblesPath().isValidPath(answer);
+        Prompt.NumberAnswer path = Prompt.question("Quel chemin prendre", possiblesPath.getPages());
+        return pip.goToPage(PageNumber.of(path.getAnswer()));
     }
 
     public abstract Paths getPossiblesPath();
@@ -53,20 +40,24 @@ public abstract class ManualChoicePage extends Page {
         }
 
         public void print() {
-            paths.stream().sorted(comparing(Path::getPage)).forEach(path -> System.out.println("- " + path.getPage() + (path.getDescription() == null ? "" : " - " + path.getDescription()) + " ?"));
+            paths.stream().sorted(comparing(Path::getPage)).forEach(System.out::println);
         }
 
-        public boolean isValidPath(int page) {
-            return this.paths.stream().anyMatch(path -> path.getPage().equals(page));
+        private List<Integer> getPages() {
+            return paths.stream().map(Path::getPage).collect(toList());
         }
     }
-
 
     @Builder
     @Getter
     public static class Path {
         private Integer page;
         private String description;
+
+        @Override
+        public String toString() {
+            return format("- {0}{1} ?", page, description == null ? "" : " - " + description);
+        }
     }
 
 }

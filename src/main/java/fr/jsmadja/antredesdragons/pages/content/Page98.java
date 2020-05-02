@@ -1,7 +1,10 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
+import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
+import fr.jsmadja.antredesdragons.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
-import fr.jsmadja.antredesdragons.stuff.Sword;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
@@ -68,23 +71,24 @@ public class Page98 extends MultipleFightPage {
     protected List<Foe> getFoes() {
         return IntStream
                 .range(1, 7)
-                .mapToObj(operand -> Foe.builder()
-                        .name("Troll des Rochers #" + operand)
-                        .dice(new Dice()).initialHealthPoints(10)
-                        .armor(1)
-                        .sword(new Sword(new HitRollRange(6),2))
-                        .build())
+                .mapToObj(operand -> {
+                    Foe foe = Foe.builder()
+                            .name("Troll des Rochers #" + operand)
+                            .dice(new Dice()).initialHealthPoints(10)
+                            .armor(1)
+                            .build();
+                    foe.addAndEquip(Item.TROLL_SWORD);
+                    return foe;
+                })
                 .collect(toList());
     }
 
     private boolean talkToTrolls() {
-        System.out.println("\nParler aux trolls ? (O/N)\n");
-        return this.getYesOrNoAnswer().equalsIgnoreCase("O");
+        return Prompt.question("Parler aux trolls").isYes();
     }
 
     private boolean useInvisibilitySpell() {
-        System.out.println("\nUtiliser le sort d'invisibilité ? (O/N)\n");
-        return this.getYesOrNoAnswer().equalsIgnoreCase("O");
+        return Prompt.question("Utiliser le sort d'invisibilité").isYes();
     }
 
 }

@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.Events;
+import fr.jsmadja.antredesdragons.ui.Prompt;
+import fr.jsmadja.antredesdragons.ui.Prompt.YesNoAnswer;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
@@ -20,16 +21,14 @@ public class Page130 extends ManualChoicePage {
     @Override
     public Execution execute(Pip pip) {
         if (pip.hasSpell(INVISIBILITY)) {
-            Events.questionEvent("Voulez-vous utiliser le sort d'invisibilité ?");
-            String answer = getYesOrNoAnswer();
-            if (isYesAnswer(answer)) {
+            YesNoAnswer answer = Prompt.question("Voulez-vous utiliser le sort d'invisibilité");
+            if (answer.isYes()) {
                 pip.use(INVISIBILITY);
                 return pip.goToPage(136);
             }
         }
-        Events.questionEvent("Voulez-vous combattre la Méduse ?");
-        String answer = getYesOrNoAnswer();
-        if (isYesAnswer(answer)) {
+        YesNoAnswer answer = Prompt.question("Voulez-vous combattre la Méduse");
+        if (answer.isYes()) {
             return pip.goToPage(136);
         }
         Roll roll = pip.roll2Dices();

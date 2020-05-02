@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.Events;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
@@ -10,13 +9,15 @@ import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.Page;
-import fr.jsmadja.antredesdragons.stuff.Sword;
+import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Events;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static fr.jsmadja.antredesdragons.Events.fightEvent;
-import static fr.jsmadja.antredesdragons.Events.statusEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
 
 public class Page120 extends Page {
@@ -25,6 +26,7 @@ public class Page120 extends Page {
     private int initialPipHealthPoints;
     private HitRollRange initialPipHitRollRange;
     private Pip pip;
+    private Optional<Item> equipedWeapon;
 
     @Override
     public String getText() {
@@ -104,9 +106,11 @@ public class Page120 extends Page {
         this.minotaure = Foe.builder().name("Minotaure").dice(new Dice()).hitRollRange(new HitRollRange(6)).initialHealthPoints(10).build();
         this.initialPipHealthPoints = pip.getHealthPoints();
         this.initialPipHitRollRange = pip.getHitRollRange();
-
-        Sword pipSword = pip.unequipSword();
-        pip.setHitRollRange(new HitRollRange(6));
+        this.equipedWeapon = pip.getEquipedWeapon();
+        if(this.equipedWeapon.isPresent()) {
+            pip.unequip(this.equipedWeapon.get());
+            pip.setHitRollRange(new HitRollRange(6));
+        }
 
         List<Entity> opponents = getOrderedOpponents(pip);
         while (!this.isOver()) {
@@ -118,8 +122,10 @@ public class Page120 extends Page {
                 Events.statusEvent(attacker.toString());
             });
         }
-        pip.setSword(pipSword);
-        pip.setHitRollRange(initialPipHitRollRange);
+        if(this.equipedWeapon.isPresent()) {
+            pip.equip(this.equipedWeapon.get());
+            pip.setHitRollRange(initialPipHitRollRange);
+        }
         if(minotaure.isDead()) {
             return pip.goToPage(126);
         }

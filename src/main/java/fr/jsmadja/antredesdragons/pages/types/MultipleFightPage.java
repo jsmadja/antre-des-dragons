@@ -1,6 +1,6 @@
 package fr.jsmadja.antredesdragons.pages.types;
 
-import fr.jsmadja.antredesdragons.Events;
+import fr.jsmadja.antredesdragons.ui.Events;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.content.PageNumber;

@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.Events;
-import fr.jsmadja.antredesdragons.pages.types.Execution;
-import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.ManualChoicePage;
+import fr.jsmadja.antredesdragons.stuff.Item;
 
 public class Page99 extends ManualChoicePage {
     @Override
@@ -34,25 +34,19 @@ public class Page99 extends ManualChoicePage {
 
     @Override
     public Execution execute(Pip pip) {
-        Events.questionEvent("Voulez vous déplacer le rocher ? (O/N)");
-        if (isYes(this.getYesOrNoAnswer())) {
+        if (Prompt.question("Voulez vous déplacer le rocher").isYes()) {
             Roll roll = pip.roll2Dices();
             if (roll.isBetween(7, 12)) {
                 return pip.goToPage(102);
             }
         }
         if (pip.hasItem(Item.FIREBALL)) {
-            Events.questionEvent("Voulez-vous utiliser une boule de feu ? (O/N)");
-            if (isYes(this.getYesOrNoAnswer())) {
+            if (Prompt.question("Voulez-vous utiliser une boule de feu").isYes()) {
                 pip.removeOne(Item.FIREBALL);
                 return pip.goToPage(102);
             }
         }
         return super.askWhichWay(pip);
-    }
-
-    private boolean isYes(String answer) {
-        return answer.equalsIgnoreCase("o");
     }
 
     @Override

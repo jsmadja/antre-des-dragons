@@ -5,7 +5,7 @@ import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
-import fr.jsmadja.antredesdragons.stuff.Armory;
+import fr.jsmadja.antredesdragons.stuff.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,13 +52,13 @@ class PipTest {
 
     @Test
     void should_set_touch_cap_to_4_when_EJ_is_equiped() {
-        pip.setSword(Armory.getExcaliburJunior());
+        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
         assertEquals(4, pip.getAdjustedHitRollRange().getMin());
     }
 
     @Test
     void should_set_additional_damage_points_to_5_when_EJ_is_equiped() {
-        pip.setSword(Armory.getExcaliburJunior());
+        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
         assertEquals(5, pip.getAdditionalDamagePoints());
 
         when(dice.roll(2)).thenReturn(10);

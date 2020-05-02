@@ -1,31 +1,33 @@
 package fr.jsmadja.antredesdragons.entities;
 
-import fr.jsmadja.antredesdragons.*;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.DiceWay;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Fight;
-import fr.jsmadja.antredesdragons.pages.*;
+import fr.jsmadja.antredesdragons.market.MarketItem;
+import fr.jsmadja.antredesdragons.market.SilverCoin;
+import fr.jsmadja.antredesdragons.pages.Pages;
 import fr.jsmadja.antredesdragons.pages.content.PageNumber;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.Page;
-import fr.jsmadja.antredesdragons.stuff.Inventory;
-import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Events;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.Events.pageEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
+import static java.text.MessageFormat.format;
 
 public class Pip extends Entity {
 
     private final Pages pages = new Pages();
-    private Inventory inventory = new Inventory();
     private List<Spell> spells = new ArrayList<>();
     private List<Skill> skills = new ArrayList<>();
+    private int silverCoins = 0;
 
     public Pip(Dice dice) {
-        super("Pip", dice, dice.roll(2) * 4, 0, DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
+        super("Pip", dice, dice.roll(2) * 4, 0, DEFAULT_MINIMUM_HIT_ROLL, null, false);
     }
 
     @Override
@@ -60,11 +62,6 @@ public class Pip extends Entity {
         return goToPage(way.getPageNumber());
     }
 
-    public void addInInventory(Item item) {
-        Events.inventoryEvent("Pip ajoute " + item.getName() + " dans son inventaire");
-        this.inventory.add(item);
-    }
-
     public void fight(Foe foe) {
         new Fight(this, foe).start();
     }
@@ -89,19 +86,35 @@ public class Pip extends Entity {
         this.spells.remove(spell);
     }
 
-    public boolean hasItem(Item item) {
-        return this.inventory.contains(item);
-    }
-
-    public void removeOne(Item item) {
-        this.inventory.removeOne(item);
-    }
-
     public void use(Spell spell) {
-        Events.spellEvent(this.getName()+" utilise le sort "+spell.name());
+        Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
     }
 
     public boolean hasSkill(Skill skill) {
         return this.skills.contains(skill);
     }
+
+    public void addSilverCoins(int silverCoins) {
+        Events.event("Pip obtient " + silverCoins + " pièces d'argent");
+        this.silverCoins += silverCoins;
+    }
+
+    @Override
+    public String toString() {
+        return format("{0} ~ HP: {1}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmor(), this.silverCoins);
+    }
+
+    public boolean has(SilverCoin coins) {
+        return this.silverCoins > coins.getValue();
+    }
+
+    public void buy(MarketItem marketItem) {
+        IntStream.range(0, marketItem.getQuantity().getValue())
+                .forEach(mi -> {
+                    this.silverCoins -= marketItem.getPrice().getValue();
+                    this.addInInventory(marketItem.getItem());
+                });
+
+    }
+
 }

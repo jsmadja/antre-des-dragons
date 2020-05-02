@@ -1,8 +1,16 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
+import fr.jsmadja.antredesdragons.market.Market;
+import fr.jsmadja.antredesdragons.dices.Roll;
+import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.ManualChoicePage;
 
 public class Page4 extends ManualChoicePage {
+
+    public static final int DICE_GOLDEN_COIN = 1;
+    public static final int GOLDEN_SILVER_COIN = 10;
+
     @Override
     public String getText() {
         return "-C'est tout ? demandez-vous en fronçant les sourcils.\n" +
@@ -227,6 +235,23 @@ public class Page4 extends ManualChoicePage {
                 "Il va falloir vous mettre en route pour la découvrir, Pip ! Car, où qu'elle soit...\n" +
                 "\n" +
                 "L'aventure commence !";
+    }
+
+    @Override
+    public Execution execute(Pip pip) {
+        initializeMoney(pip);
+
+        new Market().enter(pip);
+
+        pip.equipAll();
+
+        return super.execute(pip);
+    }
+
+    private void initializeMoney(Pip pip) {
+        Roll roll = pip.roll2Dices();
+        int silverCoins = roll.getValue() * DICE_GOLDEN_COIN * GOLDEN_SILVER_COIN;
+        pip.addSilverCoins(silverCoins);
     }
 
     @Override

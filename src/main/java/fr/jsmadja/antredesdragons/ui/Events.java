@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons;
+package fr.jsmadja.antredesdragons.ui;
 
 import static java.lang.System.out;
 

@@ -14,7 +14,7 @@ public class Page71 extends GoPage {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.addInInventory(Item.FER_A_CHEVAL);
+        pip.addInInventory(Item.HORSESHOE);
         return super.execute(pip);
     }
 

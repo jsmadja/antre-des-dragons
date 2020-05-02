@@ -1,6 +1,6 @@
 package fr.jsmadja.antredesdragons.fight;
 
-import fr.jsmadja.antredesdragons.Events;
+import fr.jsmadja.antredesdragons.ui.Events;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static fr.jsmadja.antredesdragons.Events.fightEvent;
-import static fr.jsmadja.antredesdragons.Events.statusEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toList;
 

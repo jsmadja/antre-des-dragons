@@ -1,18 +1,22 @@
 package fr.jsmadja.antredesdragons.entities;
 
-import fr.jsmadja.antredesdragons.*;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
-import fr.jsmadja.antredesdragons.stuff.Sword;
+import fr.jsmadja.antredesdragons.stuff.Inventory;
+import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Events;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.TOUCHED;
 import static java.text.MessageFormat.format;
 
 public abstract class Entity {
-    private Sword sword;
     private Dice dice;
     private final int initialHealthPoints;
     private final int armor;
@@ -22,21 +26,22 @@ public abstract class Entity {
     private int maximumHealthPoints;
     private Integer constantHitDamage;
     private boolean immuneToPhysicalDamages;
+    private List<Item> equipedItems = new ArrayList<>();
+    private Inventory inventory = new Inventory();
 
     public static final HitRollRange DEFAULT_MINIMUM_HIT_ROLL = new HitRollRange(6, 12);
 
-    Entity(String name, Dice dice, int initialHealthPoints, int armor, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Sword sword) {
+    Entity(String name, Dice dice, int initialHealthPoints, int armor, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
         this.name = name;
         this.dice = dice;
         this.armor = armor;
-        if(hitRollRange != null) {
+        if (hitRollRange != null) {
             this.hitRollRange = hitRollRange;
         }
         this.initialHealthPoints = this.healthPoints = initialHealthPoints;
         this.constantHitDamage = constantHitDamage;
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
-        this.sword = sword;
     }
 
     int roll1Dice() {
@@ -67,11 +72,15 @@ public abstract class Entity {
             return constantHitDamage;
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
-        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmor() + getAdditionalDamagePoints();
+        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmor() - target.getAdditionalArmorPoints() + getAdditionalDamagePoints();
         return Math.max(0, damages);
     }
 
-    private int getArmor() {
+    private int getAdditionalArmorPoints() {
+        return this.equipedItems.stream().map(i -> i.getArmorPoint().getValue()).reduce(0, Integer::sum);
+    }
+
+    protected int getArmor() {
         return armor;
     }
 
@@ -101,7 +110,7 @@ public abstract class Entity {
     public abstract boolean isFoe();
 
     public HitRollRange getAdjustedHitRollRange() {
-        return this.getSword() == null ? hitRollRange : this.getSword().getHitRollRange();
+        return this.getEquipedWeapon().map(Item::getHitRollRange).orElse(hitRollRange);
     }
 
     void restoreHealthPoints(int restoredHealthPoints) {
@@ -130,22 +139,9 @@ public abstract class Entity {
         Events.statusEvent(target.toString());
         target.wounds(damagePoints);
     }
-    public void setSword(Sword sword) {
-        this.sword = sword;
-    }
-
-    public Sword getSword() {
-        return sword;
-    }
 
     public int getAdditionalDamagePoints() {
-        return this.getSword() == null ? 0 : this.getSword().getDamagePoints();
-    }
-
-    public Sword unequipSword() {
-        Sword sword = getSword();
-        setSword(null);
-        return sword;
+        return this.getEquipedWeapon().map(i -> i.getDamagePoint().getValue()).orElse(0);
     }
 
     public HitRollRange getHitRollRange() {
@@ -155,4 +151,39 @@ public abstract class Entity {
     public void setHitRollRange(HitRollRange hitRollRange) {
         this.hitRollRange = hitRollRange;
     }
+
+    public void equip(Item item) {
+        this.equipedItems.add(item);
+    }
+
+    public void unequip(Item item) {
+        this.equipedItems.remove(item);
+    }
+
+    public Optional<Item> getEquipedWeapon() {
+        return this.equipedItems.stream().filter(Item::isWeapon).findFirst();
+    }
+
+    public void addAndEquip(Item item) {
+        this.addInInventory(item);
+        this.equip(item);
+    }
+
+    public void addInInventory(Item item) {
+        Events.inventoryEvent(this.getName()+" ajoute " + item.getName() + " dans son inventaire");
+        this.inventory.add(item);
+    }
+
+    public boolean hasItem(Item item) {
+        return this.inventory.contains(item);
+    }
+
+    public void removeOne(Item item) {
+        this.inventory.removeOne(item);
+    }
+
+    public void equipAll() {
+        this.inventory.getAllEquipables().forEach(this::equip);
+    }
+
 }

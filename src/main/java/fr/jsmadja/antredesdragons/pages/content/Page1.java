@@ -1,9 +1,9 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.stuff.Armory;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.types.GoPage;
+import fr.jsmadja.antredesdragons.stuff.Item;
 
 public class Page1 extends GoPage {
 
@@ -32,7 +32,7 @@ public class Page1 extends GoPage {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.setSword(Armory.getExcaliburJunior());
+        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
         return super.execute(pip);
     }
 

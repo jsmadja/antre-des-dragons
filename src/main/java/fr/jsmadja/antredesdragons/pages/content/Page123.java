@@ -5,7 +5,9 @@ import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Fight;
 import fr.jsmadja.antredesdragons.pages.types.Execution;
 import fr.jsmadja.antredesdragons.pages.types.Page;
-import fr.jsmadja.antredesdragons.stuff.Sword;
+import fr.jsmadja.antredesdragons.stuff.Item;
+
+import java.util.Optional;
 
 public class Page123 extends Page {
     @Override
@@ -26,7 +28,8 @@ public class Page123 extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        Sword sword = pip.unequipSword();
+        Optional<Item> weapon = pip.getEquipedWeapon();
+        weapon.ifPresent(pip::unequip);
         Foe foe = Foe.builder().name("Poisson").initialHealthPoints(10).build();
 
         Fight fight = new Fight(pip, foe, 3);
@@ -35,7 +38,7 @@ public class Page123 extends Page {
         if(pip.isDead()) {
             return pip.goToPage(14);
         }
-        pip.setSword(sword);
+        weapon.ifPresent(pip::equip);
         return pip.goToPage(124);
     }
 }

@@ -3,6 +3,8 @@ package fr.jsmadja.antredesdragons.stuff;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class Inventory {
     private List<Item> items = new ArrayList<>();
 
@@ -16,5 +18,9 @@ public class Inventory {
 
     public void removeOne(Item item) {
         this.items.remove(item);
+    }
+
+    public List<Item> getAllEquipables() {
+        return items.stream().filter(Item::isEquipable).collect(toList());
     }
 }

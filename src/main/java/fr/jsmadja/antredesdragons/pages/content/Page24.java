@@ -1,10 +1,12 @@
 package fr.jsmadja.antredesdragons.pages.content;
 
-import fr.jsmadja.antredesdragons.stuff.Sword;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.pages.types.FightPage;
+import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
+import fr.jsmadja.antredesdragons.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.stuff.Item;
 
 public class Page24 extends FightPage {
     @Override
@@ -37,12 +39,13 @@ public class Page24 extends FightPage {
 
     @Override
     public Foe getFoe() {
-        return Foe.builder()
+        Foe foe = Foe.builder()
                 .name("Fantôme")
                 .dice(new Dice())
                 .initialHealthPoints(30)
                 .armor(0)
-                .sword(new Sword(new HitRollRange(5, 12), 3))
                 .build();
+        foe.addAndEquip(Item.GHOST_SWORD);
+        return foe;
     }
 }
