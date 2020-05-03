@@ -8,6 +8,7 @@ import fr.jsmadja.antredesdragons.ui.Events;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
@@ -52,7 +53,8 @@ public class Fight {
             opponents.stream().filter(Entity::canFight).forEach(attacker -> {
                 Entity other = this.getTarget(attacker);
                 if (!other.isDead()) {
-                    this.attack(attacker, other);
+                    this.attackPhysically(attacker, other);
+                    this.attackMagically(attacker, other);
                 }
             });
             opponents.forEach(p -> Events.statusEvent(p.toString()));
@@ -63,11 +65,19 @@ public class Fight {
         }
     }
 
-    private void attack(Entity attacker, Entity target) {
-        // fightEvent(format("{0} attaque {1}", attacker.getName(), target.getName()));
-        PhysicalAttack physicalAttack = attacker.attacks(target);
-        if (physicalAttack.getStatus() == PhysicalAttack.Status.TOUCHED) {
-            int damagePoints = physicalAttack.getDamagePoints();
+    private void attackMagically(Entity attacker, Entity target) {
+        Attack attack = attacker.createMagicAttack(target);
+        attack(attacker, target, attack);
+    }
+
+    private void attackPhysically(Entity attacker, Entity target) {
+        Attack attack = attacker.createPhysicAttack(target);
+        attack(attacker, target, attack);
+    }
+
+    private void attack(Entity attacker, Entity target, Attack attack) {
+        if (attack.getStatus() == TOUCHED) {
+            int damagePoints = attack.getDamagePoints();
             fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
             target.wounds(damagePoints);
             if (target.isDead()) {
@@ -87,6 +97,7 @@ public class Fight {
     }
 
     private void endTurn() {
+        getOrderedOpponents().forEach(Entity::removeAllMagicEffects);
         this.turn++;
     }
 

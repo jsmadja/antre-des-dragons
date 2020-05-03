@@ -6,7 +6,7 @@ import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
+import fr.jsmadja.antredesdragons.fight.Attack;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
 import fr.jsmadja.antredesdragons.stuff.Item;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
@@ -146,8 +147,8 @@ public class Page120 extends Page {
 
     private void attack(Entity attacker, Entity target) {
         fightEvent(format("{0} attaque {1}", attacker.getName(), target.getName()));
-        PhysicalAttack physicalAttack = attacker.attacks(target);
-        if (physicalAttack.getStatus() == PhysicalAttack.Status.TOUCHED) {
+        Attack physicalAttack = attacker.createPhysicAttack(target);
+        if (physicalAttack.getStatus() == TOUCHED) {
             int damagePoints = physicalAttack.getDamagePoints();
             fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
             target.wounds(damagePoints);

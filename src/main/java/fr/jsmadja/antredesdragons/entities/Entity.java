@@ -3,7 +3,9 @@ package fr.jsmadja.antredesdragons.entities;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
-import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
+import fr.jsmadja.antredesdragons.fight.Attack;
+import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
+import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
@@ -11,8 +13,8 @@ import lombok.Setter;
 
 import java.util.Optional;
 
-import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.MISSED;
-import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static java.text.MessageFormat.format;
 
 public abstract class Entity {
@@ -29,6 +31,12 @@ public abstract class Entity {
     private HitRollRange hitRollRange = new HitRollRange(6);
     private final Integer constantHitDamage;
     private final boolean immuneToPhysicalDamages;
+
+    @Getter
+    private ArmorPoint magicArmorPoints = ArmorPoint.armor(0);
+
+    @Getter
+    private DamagePoint magicDamagePoints = DamagePoint.damage(0);
 
     @Getter
     private final Inventory inventory = new Inventory();
@@ -96,6 +104,18 @@ public abstract class Entity {
     public int getArmorPoints() {
         return this.inventory.getEquipedItems().stream().map(i -> i.getArmorPoint().getValue()).reduce(0, Integer::sum);
     }
+
+    public void addMagicalArmorPoints(ArmorPoint armorPoint) {
+        this.magicArmorPoints = ArmorPoint.armor(this.magicArmorPoints.getValue() + armorPoint.getValue());
+    }
+    public void removeAllMagicEffects() {
+        this.magicArmorPoints = ArmorPoint.armor(0);
+        this.magicDamagePoints = DamagePoint.damage(0);
+    }
+    public void addMagicDamagePoints(DamagePoint damagePoint) {
+        this.magicDamagePoints = DamagePoint.damage(this.magicDamagePoints.getValue() + damagePoint.getValue());
+    }
+
     public boolean isDead() {
         return this.currentHealthPoints <= 0;
     }
@@ -118,29 +138,39 @@ public abstract class Entity {
         Events.statusEvent(target.toString());
         target.wounds(damagePoints);
     }
-    private boolean touchOpponent(int roll, Entity target) {
+    private boolean touchOpponentWithPhysic(int roll, Entity target) {
         if (target.immuneToPhysicalDamages) {
             Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
             return false;
         }
         return this.getAdjustedHitRollRange().contains(roll);
     }
+
+    private boolean touchOpponentWithMagic(Entity target) {
+        return true;
+    }
+
     public void wounds(int damagePoints) {
         this.currentHealthPoints -= damagePoints;
         if (this.currentHealthPoints < 0) {
             this.currentHealthPoints = 0;
         }
     }
-    public PhysicalAttack attacks(Entity target) {
+    public Attack createPhysicAttack(Entity target) {
         int roll = this.roll2Dices().getValue();
-        return new PhysicalAttack(computeDamages(roll, target), touchOpponent(roll, target) ? TOUCHED : MISSED);
+        return new Attack(computeDamages(roll, target), touchOpponentWithPhysic(roll, target) ? TOUCHED : MISSED);
     }
+
+    public Attack createMagicAttack(Entity target) {
+        return new Attack(getMagicDamagePoints().getValue(), touchOpponentWithMagic(target) ? TOUCHED : MISSED);
+    }
+
     private int computeDamages(int roll, Entity target) {
         if (this.constantHitDamage != null) {
             return constantHitDamage;
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
-        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() + getAdditionalDamagePoints();
+        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints();
         return Math.max(0, damages);
     }
 

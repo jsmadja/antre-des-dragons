@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.entities;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
-import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
+import fr.jsmadja.antredesdragons.fight.Attack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
 import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
 import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
 import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
-import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.MISSED;
-import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
+import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -40,18 +40,18 @@ class PipTest {
     void should_do_damage_if_roll_is_greather_than_6() {
         when(dice.roll(2)).thenReturn(10);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
-        PhysicalAttack physicalAttack = pip.attacks(target);
-        assertThat(physicalAttack.getStatus()).isEqualTo(TOUCHED);
-        assertThat(physicalAttack.getDamagePoints()).isEqualTo(4);
+        Attack Attack = pip.createPhysicAttack(target);
+        assertThat(Attack.getStatus()).isEqualTo(TOUCHED);
+        assertThat(Attack.getDamagePoints()).isEqualTo(4);
     }
 
     @Test
     void should_not_do_damage_if_roll_is_lesser_or_equal_than_6() {
         when(dice.roll(2)).thenReturn(1);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
-        PhysicalAttack physicalAttack = pip.attacks(target);
-        assertThat(physicalAttack.getStatus()).isEqualTo(MISSED);
-        assertThat(physicalAttack.getDamagePoints()).isZero();
+        Attack Attack = pip.createPhysicAttack(target);
+        assertThat(Attack.getStatus()).isEqualTo(MISSED);
+        assertThat(Attack.getDamagePoints()).isZero();
     }
 
     @Test
@@ -67,8 +67,8 @@ class PipTest {
 
         when(dice.roll(2)).thenReturn(10);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
-        PhysicalAttack physicalAttack = pip.attacks(target);
-        assertThat(physicalAttack.getDamagePoints()).isEqualTo(11);
+        Attack Attack = pip.createPhysicAttack(target);
+        assertThat(Attack.getDamagePoints()).isEqualTo(11);
     }
 
     @Test

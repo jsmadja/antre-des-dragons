@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class PhysicalAttack {
+public class Attack {
     private final int damagePoints;
     private final Status status;
 
