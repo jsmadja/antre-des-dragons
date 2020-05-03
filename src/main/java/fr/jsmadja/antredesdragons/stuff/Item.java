@@ -10,7 +10,7 @@ public enum Item {
     FIREBALL("Boule de feu"),
     TINKLE_RING("Anneau tintant"),
     ROPE("Corde"),
-    CLEATS("Crampons"),
+    CLEATS("Crampons d'escalade"),
     BACKPACK("Sac à dos"),
     BAG("Sac"),
     CARPENTER_HAMMER("Marteau de charpentier"),
@@ -36,6 +36,8 @@ public enum Item {
     FOOD("Nourriture"),
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
+
+    THATCHED_CREATURE_DAGGERS("Dagues de créature de chaumière"),
 
     HATCHET("Hâche d'armes", DamagePoint.damage(4)),
     DAGGER("Poignard", DamagePoint.damage(2)),

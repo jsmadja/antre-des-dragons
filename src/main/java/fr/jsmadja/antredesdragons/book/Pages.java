@@ -45,6 +45,15 @@ public class Pages {
         put(27, new Page27());
         put(30, new Page30());
         put(31, new Page31());
+        put(40, new Page40());
+        put(41, new Page41());
+        put(42, new Page42());
+        put(43, new Page43());
+        put(44, new Page44());
+        put(45, new Page45());
+        put(46, new Page46());
+        put(47, new Page47());
+        put(48, new Page48());
         put(49, new Page49());
         put(50, new Page50());
         put(51, new Page51());
@@ -60,8 +69,14 @@ public class Pages {
         put(64, new Page64());
         put(68, new Page68());
         put(71, new Page71());
+        put(72, new Page72());
         put(73, new Page73());
+        put(74, new Page74());
+        put(75, new Page75());
+        put(76, new Page76());
+        put(77, new Page77());
         put(78, new Page78());
+        put(79, new Page79());
         put(80, new Page80());
         put(84, new Page84());
         put(85, new Page85());
@@ -87,7 +102,7 @@ public class Pages {
     }};
 
     public Pages() {
-        System.out.println("Avancement : " + (this.pages.keySet().size() * 100D / 177D) + "%");
+        System.out.printf("Avancement : %.1f %%%n", this.pages.keySet().size() * 100D / 177D);
     }
 
     public static Page noPage() {
