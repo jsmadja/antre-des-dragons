@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
 import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
 import static java.text.MessageFormat.format;
 
 public class Pip extends Entity {
@@ -28,6 +31,7 @@ public class Pip extends Entity {
     private final List<Spell> spells = new ArrayList<>();
     private final List<Skill> skills = new ArrayList<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
+    private SpellUsages spellUsages = new SpellUsages();
 
     @Getter
     private PageNumber previousPage;
@@ -105,8 +109,19 @@ public class Pip extends Entity {
         this.spells.remove(spell);
     }
 
-    public void use(Spell spell) {
-        Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
+    public SpellEffectResult use(Spell spell) {
+        if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.of(6))) {
+            Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
+            this.wounds(3);
+            this.spellUsages.increment(spell);
+            return WORKED;
+        }
+        spellEvent(this.getName() + "ne peut pas utiliser ce sort car il a été utilisé trop de fois");
+        return FAILED;
+    }
+
+    public boolean canUse(Spell spell) {
+        return this.spellUsages.getUsagesOf(spell) < 3;
     }
 
     // Skill

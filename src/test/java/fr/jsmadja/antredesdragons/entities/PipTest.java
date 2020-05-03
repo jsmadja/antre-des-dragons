@@ -2,11 +2,20 @@ package fr.jsmadja.antredesdragons.entities;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.fight.PhysicalAttack;
-import fr.jsmadja.antredesdragons.stuff.Item;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.stream.IntStream;
+
+import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
+import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.MISSED;
+import static fr.jsmadja.antredesdragons.fight.PhysicalAttack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 class PipTest {
 
@@ -16,63 +25,92 @@ class PipTest {
     @BeforeEach
     void setUp() {
         dice = Mockito.mock(Dice.class);
-        Mockito.when(dice.roll(2)).thenReturn(10);
+        when(dice.roll(2)).thenReturn(10);
         pip = new Pip(dice);
     }
 
     @Test
     void should_initialize_pip_hp() {
-        Mockito.when(dice.roll(2)).thenReturn(10);
+        when(dice.roll(2)).thenReturn(10);
         pip = new Pip(dice);
-        Assertions.assertEquals(40, pip.getInitialHealthPoints());
+        assertThat(pip.getInitialHealthPoints()).isEqualTo(40);
     }
 
     @Test
     void should_do_damage_if_roll_is_greather_than_6() {
-        Mockito.when(dice.roll(2)).thenReturn(10);
+        when(dice.roll(2)).thenReturn(10);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
         PhysicalAttack physicalAttack = pip.attacks(target);
-        Assertions.assertEquals(physicalAttack.getStatus(), PhysicalAttack.Status.TOUCHED);
-        Assertions.assertEquals(4, physicalAttack.getDamagePoints());
+        assertThat(physicalAttack.getStatus()).isEqualTo(TOUCHED);
+        assertThat(physicalAttack.getDamagePoints()).isEqualTo(4);
     }
 
     @Test
     void should_not_do_damage_if_roll_is_lesser_or_equal_than_6() {
-        Mockito.when(dice.roll(2)).thenReturn(1);
+        when(dice.roll(2)).thenReturn(1);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
         PhysicalAttack physicalAttack = pip.attacks(target);
-        Assertions.assertEquals(physicalAttack.getStatus(), PhysicalAttack.Status.MISSED);
-        Assertions.assertEquals(physicalAttack.getDamagePoints(), 0);
+        assertThat(physicalAttack.getStatus()).isEqualTo(MISSED);
+        assertThat(physicalAttack.getDamagePoints()).isZero();
     }
 
     @Test
     void should_set_touch_cap_to_4_when_EJ_is_equiped() {
-        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
-        Assertions.assertEquals(4, pip.getAdjustedHitRollRange().getMin());
+        pip.addAndEquip(EXCALIBUR_JUNIOR);
+        assertThat(pip.getAdjustedHitRollRange().getMin()).isEqualTo(4);
     }
 
     @Test
     void should_set_additional_damage_points_to_5_when_EJ_is_equiped() {
-        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
-        Assertions.assertEquals(5, pip.getAdditionalDamagePoints());
+        pip.addAndEquip(EXCALIBUR_JUNIOR);
+        assertThat(pip.getAdditionalDamagePoints()).isEqualTo(5);
 
-        Mockito.when(dice.roll(2)).thenReturn(10);
+        when(dice.roll(2)).thenReturn(10);
         Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
         PhysicalAttack physicalAttack = pip.attacks(target);
-        Assertions.assertEquals(11, physicalAttack.getDamagePoints());
+        assertThat(physicalAttack.getDamagePoints()).isEqualTo(11);
     }
 
     @Test
     void should_sleep_well_and_restore_health_points() {
         pip.wounds(10);
-        Assertions.assertEquals(30, pip.getCurrentHealthPoints());
+        assertThat(pip.getCurrentHealthPoints()).isEqualTo(30);
 
-        Mockito.when(dice.roll()).thenReturn(5);
-        Mockito.when(dice.roll(2)).thenReturn(10);
+        when(dice.roll()).thenReturn(5);
+        when(dice.roll(2)).thenReturn(10);
 
         pip.sleep();
 
-        Assertions.assertEquals(40, pip.getCurrentHealthPoints());
+        assertThat(pip.getCurrentHealthPoints()).isEqualTo(40);
+    }
+
+    @Test
+    void use_spell_causes_3_hp() {
+        pip.use(AEP);
+        assertThat(pip.getCurrentHealthPoints()).isEqualTo(pip.getInitialHealthPoints() - 3);
+    }
+
+    @Test
+    void spell_can_only_be_used_3_times() {
+        IntStream.of(1, 2, 3).forEach(i -> {
+            assertThat(pip.canUse(AEP)).isTrue();
+            pip.use(AEP);
+        });
+        assertThat(pip.canUse(AEP)).isFalse();
+    }
+
+    @Test
+    void spell_works_only_if_roll_is_greater_than_6() {
+        when(dice.roll(2)).thenReturn(7);
+        SpellEffectResult spellEffectResult = pip.use(AEP);
+        assertThat(spellEffectResult).isEqualTo(WORKED);
+    }
+
+    @Test
+    void spell_failed_when_roll_is_lesser_than_7() {
+        when(dice.roll(2)).thenReturn(6);
+        SpellEffectResult spellEffectResult = pip.use(AEP);
+        assertThat(spellEffectResult).isEqualTo(FAILED);
     }
 
 }
