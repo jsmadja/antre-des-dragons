@@ -156,4 +156,12 @@ public class Pip extends Entity {
                 });
 
     }
+
+    public void remove(GoldenCoins goldenCoins) {
+        this.silverCoins = this.silverCoins.minus(goldenCoins.toSilverCoins());
+    }
+
+    public boolean has(GoldenCoins goldenCoins) {
+        return has(goldenCoins.toSilverCoins());
+    }
 }

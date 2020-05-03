@@ -50,6 +50,14 @@ public class Pages {
         put(29, new Page29());
         put(30, new Page30());
         put(31, new Page31());
+        put(32, new Page32());
+        put(33, new Page33());
+        put(34, new Page34());
+        put(35, new Page35());
+        put(36, new Page36());
+        put(37, new Page37());
+        put(38, new Page38());
+        put(39, new Page39());
         put(40, new Page40());
         put(41, new Page41());
         put(42, new Page42());
@@ -70,8 +78,12 @@ public class Pages {
         put(57, new Page57());
         put(58, new Page58());
         put(59, new Page59());
+        put(60, new Page60());
+        put(61, new Page61());
         put(62, new Page62());
+        put(63, new Page63());
         put(64, new Page64());
+        put(65, new Page65());
         put(68, new Page68());
         put(71, new Page71());
         put(72, new Page72());

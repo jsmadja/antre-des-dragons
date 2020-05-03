@@ -15,7 +15,7 @@ public enum Spell {
     HEP(pip -> {
         pip.addMagicDamagePoints(DamagePoint.damage(10));
         return pip;
-    });
+    }), FIP(Function.identity());
 
     @Getter
     private Function<Pip, Pip> effect;

@@ -4,6 +4,7 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Attack;
+import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import fr.jsmadja.antredesdragons.stuff.Item;
@@ -49,6 +50,9 @@ public abstract class Entity {
 
     public static final HitRollRange DEFAULT_MINIMUM_HIT_ROLL = new HitRollRange(6, 12);
 
+    @Getter
+    private DamagePoint temporaryDamagePointsMalus = DamagePoint.damage(0);
+
     Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
         this.name = name;
         this.dice = dice;
@@ -63,8 +67,12 @@ public abstract class Entity {
 
     public abstract boolean isFoe();
 
-    void restoreHealthPoints(int restoredHealthPoints) {
+    public void restoreHealthPoints(int restoredHealthPoints) {
         this.currentHealthPoints = Math.min(this.currentHealthPoints + restoredHealthPoints, this.maximumHealthPoints);
+    }
+
+    public void restoreAllHealthPoints() {
+        this.restoreHealthPoints(this.maximumHealthPoints);
     }
 
     @Override
@@ -170,7 +178,7 @@ public abstract class Entity {
             return constantHitDamage;
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
-        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints();
+        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
         return Math.max(0, damages);
     }
 
@@ -200,6 +208,14 @@ public abstract class Entity {
     }
     public void equipAll() {
         this.inventory.equipAll();
+    }
+
+    public void addTemporaryDamagePointsMalus(DamagePoint damage) {
+        this.temporaryDamagePointsMalus = DamagePoint.damage(damage.getValue() + temporaryDamagePointsMalus.getValue());
+    }
+
+    public void removeTemporaryBonusAndMalus() {
+        this.temporaryDamagePointsMalus = DamagePoint.damage(0);
     }
 
 }

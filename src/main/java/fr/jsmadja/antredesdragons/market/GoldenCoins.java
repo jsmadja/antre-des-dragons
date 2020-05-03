@@ -15,4 +15,9 @@ public class GoldenCoins {
     public SilverCoins toSilverCoins() {
         return SilverCoins.of(value * GOLDEN_SILVER_COIN);
     }
+
+    @Override
+    public String toString() {
+        return format("{0} po", value);
+    }
 }

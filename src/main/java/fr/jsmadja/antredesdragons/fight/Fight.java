@@ -47,22 +47,28 @@ public class Fight {
 
     public void start() {
         List<Entity> opponents = getOrderedOpponents();
-
         while (!this.isOver()) {
             showTurn();
-            opponents.stream().filter(Entity::canFight).forEach(attacker -> {
-                Entity other = this.getTarget(attacker);
-                if (!other.isDead()) {
-                    this.attackPhysically(attacker, other);
-                    this.attackMagically(attacker, other);
-                }
-            });
+            opponents.stream().filter(Entity::canFight).forEach(this::attack);
             opponents.forEach(p -> Events.statusEvent(p.toString()));
             this.endTurn();
         }
         if (this.isMaxTurnReached()) {
             pip.kill();
         }
+        this.endFight();
+    }
+
+    private void attack(Entity attacker) {
+        Entity other = this.getTarget(attacker);
+        if (!other.isDead()) {
+            this.attackPhysically(attacker, other);
+            this.attackMagically(attacker, other);
+        }
+    }
+
+    private void endFight() {
+        getOrderedOpponents().forEach(Entity::removeTemporaryBonusAndMalus);
     }
 
     private void attackMagically(Entity attacker, Entity target) {
