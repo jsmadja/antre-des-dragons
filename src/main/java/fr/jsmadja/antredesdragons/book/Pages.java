@@ -40,9 +40,14 @@ public class Pages {
         put(19, new Page19());
         put(20, new Page20());
         put(21, new Page21());
+        put(22, new Page22());
+        put(23, new Page23());
         put(24, new Page24());
         put(25, new Page25());
+        put(26, new Page26());
         put(27, new Page27());
+        put(28, new Page28());
+        put(29, new Page29());
         put(30, new Page30());
         put(31, new Page31());
         put(40, new Page40());

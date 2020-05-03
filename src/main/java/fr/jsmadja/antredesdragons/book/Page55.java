@@ -6,7 +6,7 @@ public class Page55 extends ManualChoicePage {
     @Override
     public Paths getPossiblesPath() {
         return new Paths(
-                Path.builder().description("J'ai traversé le Chaâteau des Ténèbres du Magicien Ansalom").page(96).build(),
+                Path.builder().description("J'ai traversé le Château des Ténèbres du Magicien Ansalom").page(96).build(),
                 Path.builder().description("Battre en retraite").page(10).build(),
                 Path.builder().description("Défier le chevalier").page(118).build()
         );

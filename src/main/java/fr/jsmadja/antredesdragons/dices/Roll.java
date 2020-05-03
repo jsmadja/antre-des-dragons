@@ -14,4 +14,8 @@ public class Roll {
     public boolean isGreaterThan(Roll roll) {
         return this.value > roll.value;
     }
+
+    public boolean is(int value) {
+        return this.value == value;
+    }
 }

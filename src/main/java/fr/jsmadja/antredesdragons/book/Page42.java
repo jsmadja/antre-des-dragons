@@ -1,12 +1,8 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.pages.GoPage;
+import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
-public class Page42 extends GoPage {
-    @Override
-    protected int getNextPage() {
-        return 10;
-    }
+public class Page42 extends ManualChoicePage {
 
     @Override
     public String getText() {
@@ -15,5 +11,14 @@ public class Page42 extends GoPage {
                 "vous vous retrouvez à votre point de départ. Mieux vaut examiner à nouveau la carte " +
                 "que Merlin vous a donnée et refaire une tentative ! Vous pouvez choisir n'importe " +
                 "laquelle des sections indiquées pour reprendre le départ.";
+    }
+
+    @Override
+    public Paths getPossiblesPath() {
+        return new Paths(
+                Path.builder().page(21).build(),
+                Path.builder().page(65).build(),
+                Path.builder().page(58).build(),
+                Path.builder().page(155).build());
     }
 }

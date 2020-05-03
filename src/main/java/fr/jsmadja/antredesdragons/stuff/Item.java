@@ -50,6 +50,7 @@ public enum Item {
     GHOST_SWORD("Epée de Fantôme", DamagePoint.damage(3), new HitRollRange(5)),
     RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3), new HitRollRange(5)),
     MONK_FIGHTING("Poings de moine", DamagePoint.damage(3), new HitRollRange(4)),
+    STONEMAN_SWORD("Epée de l'Homme de Pierre", DamagePoint.damage(4), new HitRollRange(8)),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
