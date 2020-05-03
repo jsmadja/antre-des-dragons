@@ -20,8 +20,7 @@ import java.util.stream.IntStream;
 
 import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
 import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
-import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
-import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.*;
 import static java.text.MessageFormat.format;
 
 public class Pip extends Entity {
@@ -37,9 +36,14 @@ public class Pip extends Entity {
     private PageNumber previousPage;
     private int experiencePoints;
     private int level = 1;
+    private PageNumber currentPage;
 
     public Pip(Dice dice) {
-        super("Pip", dice, dice.roll(2) * 4, DEFAULT_MINIMUM_HIT_ROLL, null, false);
+        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false);
+    }
+
+    private static int computeInitialHealthPoints(Dice dice) {
+        return IntStream.range(1, 4).map(i -> dice.roll(2) * 4).max().getAsInt();
     }
 
     @Override
@@ -85,13 +89,14 @@ public class Pip extends Entity {
     }
 
     public Execution goToPage(PageNumber pageNumber) {
+        this.previousPage = currentPage;
+        this.currentPage = pageNumber;
         pageEvent("Pip se rend à la page " + pageNumber.getPage());
+        statusEvent(this.toString());
         Page page = pages.get(pageNumber.getPage());
-        System.out.println(page.getText() + "\n");
-        Execution execution = page.execute(this);
+        System.err.println(page.getText() + "\n");
         page.setVisited(true);
-        this.previousPage = pageNumber;
-        return execution;
+        return page.execute(this);
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
@@ -116,7 +121,7 @@ public class Pip extends Entity {
             this.spellUsages.increment(spell);
             return WORKED;
         }
-        spellEvent(this.getName() + "ne peut pas utiliser ce sort car il a été utilisé trop de fois");
+        spellEvent(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
         return FAILED;
     }
 
@@ -131,7 +136,12 @@ public class Pip extends Entity {
 
     @Override
     public String toString() {
-        return format("{0} ~ HP: {1}/{6}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins, this.getMaximumHealthPoints());
+        return format("{0} ~ HP: {1}/{6}, XP: {6}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins, this.getMaximumHealthPoints(), this.experiencePoints);
+    }
+
+    @Override
+    protected boolean isDragon() {
+        return false;
     }
 
     // Money

@@ -14,6 +14,7 @@ public class Market {
         Prompt.YesNoAnswer wantBuyAnswer = Prompt.answerTo("Souhaitez-vous acheter un article");
         if (wantBuyAnswer.isYes()) {
             showItems();
+            Events.statusEvent(pip.toString());
             Prompt.NumberAnswer itemAnswer = Prompt.answerTo("Quel article souhaitez-vous acheter", Arrays.stream(MarketItem.values()).map(Enum::ordinal).collect(Collectors.toList()));
             MarketItem marketItem = getItem(itemAnswer.getAnswer());
             if (pip.has(marketItem.getPrice())) {

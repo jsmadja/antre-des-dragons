@@ -12,7 +12,7 @@ public class Page15 extends GoBackPage {
     }
 
     @Override
-    public void doSomething(Pip pip) {
+    public void beforeGoBack(Pip pip) {
         pip.loseInitiative();
     }
 }

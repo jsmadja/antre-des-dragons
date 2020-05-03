@@ -1,10 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page22 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Ecouter son conseil").page(29).build(),
                 Path.builder().description("Poursuivre mon chemin").page(19).build()
@@ -25,7 +26,7 @@ public class Page22 extends ManualChoicePage {
                 "—Voilà des heures que j'avance dans sa direction, et je n'ai pas l'impression de m'en " +
                 "approcher.\n" +
                 "—Oui, c'est un endroit très difficile à atteindre, acquiesce-t-il. Mais si vous voulez " +
-                "mon avis, dirigez- vous donc vers le [29].\n" +
+                "mon avis, dirigez-vous donc vers le [29].\n" +
                 "Vous pouvez suivre son conseil. Rendez-vous alors au [29].\n" +
                 "Mais vous pouvez préférer ne pas en tenir compte, et poursuivre votre chemin. Dans " +
                 "ce cas, rendez- vous au [19]. ";

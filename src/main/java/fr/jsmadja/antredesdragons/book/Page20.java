@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class Page20 extends ManualChoicePage {
     }
 
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(List.of(
                 Path.builder().description("Fouiller les écuries").page(71).build(),
                 Path.builder().description("Reprendre la carte").page(10).build()

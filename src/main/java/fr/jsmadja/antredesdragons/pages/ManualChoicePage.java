@@ -20,13 +20,13 @@ public abstract class ManualChoicePage extends Page {
     }
 
     public Execution askWhichWay(Pip pip) {
-        Paths possiblesPath = getPossiblesPath();
+        Paths possiblesPath = getPossiblesPath(pip);
         possiblesPath.print();
-        Prompt.NumberAnswer path = Prompt.answerTo("Quel chemin prendre", possiblesPath.getPages());
+        Prompt.NumberAnswer path = Prompt.answerTo("Quel est votre choix", possiblesPath.getPages());
         return pip.goToPage(PageNumber.page(path.getAnswer()));
     }
 
-    public abstract Paths getPossiblesPath();
+    public abstract Paths getPossiblesPath(Pip pip);
 
     public static class Paths {
         private final List<Path> paths;
@@ -56,7 +56,7 @@ public abstract class ManualChoicePage extends Page {
 
         @Override
         public String toString() {
-            return format("- {0}{1} ?", page, description == null ? "" : " - " + description);
+            return format("- {0}{1}", page, description == null ? "" : " - " + description);
         }
     }
 

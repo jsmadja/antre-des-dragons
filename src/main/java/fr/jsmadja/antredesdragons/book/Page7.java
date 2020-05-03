@@ -1,6 +1,10 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
+
+import static fr.jsmadja.antredesdragons.stuff.Item.CLEATS;
+import static fr.jsmadja.antredesdragons.stuff.Item.ROPE;
 
 public class Page7 extends ManualChoicePage {
     @Override
@@ -11,9 +15,12 @@ public class Page7 extends ManualChoicePage {
     }
 
     @Override
-    public Paths getPossiblesPath() {
-        return new Paths(
-                Path.builder().page(35).description("Utiliser le pont").build(),
-                Path.builder().page(27).description("Utiliser une corde").build());
+    public Paths getPossiblesPath(Pip pip) {
+        if (pip.has(ROPE) || pip.has(CLEATS)) {
+            return new Paths(
+                    Path.builder().page(35).description("Utiliser le pont").build(),
+                    Path.builder().page(27).description("Utiliser une corde").build());
+        }
+        return new Paths(Path.builder().page(35).description("Utiliser le pont").build());
     }
 }

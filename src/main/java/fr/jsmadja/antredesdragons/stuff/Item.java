@@ -51,12 +51,14 @@ public enum Item {
     RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3), new HitRollRange(5)),
     MONK_FIGHTING("Poings de moine", DamagePoint.damage(3), new HitRollRange(4)),
     STONEMAN_SWORD("Epée de l'Homme de Pierre", DamagePoint.damage(4), new HitRollRange(8)),
+    EXCALIBUR_JUNIOR_DRAGON_SLAYER("ExcaliburJunior (Dragon DMG+10)", DamagePoint.damage(5), new HitRollRange(4)),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
     ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4)),
     TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1)),
-    WOLF_SKIN("Peau de loup", ArmorPoint.armor(1));
+    WOLF_SKIN("Peau de loup", ArmorPoint.armor(1)),
+    STONEMONSTER_ARMOR("Armure du monstre de pierre",ArmorPoint.armor(1));
 
     Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor) {
         this.name = name;
@@ -78,7 +80,7 @@ public enum Item {
 
     // Object Constructor
     Item(String name) {
-        this(name, null, null, false, null, false, false);
+        this(name, ArmorPoint.armor(0), DamagePoint.damage(0), false, null, false, false);
     }
 
     // Weapon Constructor
@@ -87,12 +89,12 @@ public enum Item {
     }
 
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
-        this(name, null, damagePoint, true, hitRollRange, true, false);
+        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false);
     }
 
     // Armor Constructor
     Item(String name, ArmorPoint armorPoint) {
-        this(name, armorPoint, null, true, null, false, true);
+        this(name, armorPoint, DamagePoint.damage(0), true, null, false, true);
     }
 
 }

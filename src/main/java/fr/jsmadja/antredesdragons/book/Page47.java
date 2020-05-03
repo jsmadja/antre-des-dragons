@@ -1,10 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page47 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Pénétrer dans la Crypte de Nosférax").page(107).build(),
                 Path.builder().description("Retourner à la carte").page(10).build()

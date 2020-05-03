@@ -1,10 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page46 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Faire confiance à l'arbre").page(77).build(),
                 Path.builder().description("Ne pas faire confiance à l'arbre").page(11).build()

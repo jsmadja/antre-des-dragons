@@ -1,6 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
+import fr.jsmadja.antredesdragons.stuff.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Page21 extends ManualChoicePage {
     @Override
@@ -21,11 +26,13 @@ public class Page21 extends ManualChoicePage {
     }
 
     @Override
-    public Paths getPossiblesPath() {
-        return new Paths(
-                Path.builder().page(18).description("Sauter").build(),
-                Path.builder().page(7).description("Utiliser une hâche").build(),
-                Path.builder().page(5).description("Retourner dans la forêt").build()
-        );
+    public Paths getPossiblesPath(Pip pip) {
+        List<Path> paths = new ArrayList<>();
+        paths.add(Path.builder().page(18).description("Sauter").build());
+        paths.add(Path.builder().page(5).description("Retourner dans la forêt").build());
+        if (pip.has(Item.AXE)) {
+            paths.add(Path.builder().page(7).description("Utiliser une hâche").build());
+        }
+        return new Paths(paths);
     }
 }

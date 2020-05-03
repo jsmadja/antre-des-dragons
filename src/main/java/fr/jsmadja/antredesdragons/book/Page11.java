@@ -1,10 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page11 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(Path.builder().description("Bavarder avec le Lapin Blanc").page(6).build(),
                 Path.builder().description("S'asseoir sous l'arbre").page(46).build());
     }

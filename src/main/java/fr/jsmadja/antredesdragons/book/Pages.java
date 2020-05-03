@@ -84,7 +84,11 @@ public class Pages {
         put(63, new Page63());
         put(64, new Page64());
         put(65, new Page65());
+        put(66, new Page66());
+        put(67, new Page67());
         put(68, new Page68());
+        put(69, new Page69());
+        put(70, new Page70());
         put(71, new Page71());
         put(72, new Page72());
         put(73, new Page73());
@@ -95,10 +99,18 @@ public class Pages {
         put(78, new Page78());
         put(79, new Page79());
         put(80, new Page80());
+        put(81, new Page81());
+        put(82, new Page82());
+        put(83, new Page83());
         put(84, new Page84());
         put(85, new Page85());
+        put(86, new Page86());
         put(87, new Page87());
         put(88, new Page88());
+        put(89, new Page89());
+        put(90, new Page90());
+        put(91, new Page91());
+        put(92, new Page92());
         put(95, new Page95());
         put(98, new Page98());
         put(99, new Page99());
@@ -110,12 +122,14 @@ public class Pages {
         put(120, new Page120());
         put(123, new Page123());
         put(124, new Page124());
+        put(125, new Page125());
         put(126, new Page126());
         put(128, new Page128());
         put(129, new Page129());
         put(130, new Page130());
         put(135, new Page135());
         put(138, new Page138());
+        put(155, new Page155());
     }};
 
     public Pages() {

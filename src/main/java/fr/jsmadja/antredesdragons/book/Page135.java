@@ -7,7 +7,7 @@ import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page135 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Aller dans le passage 114").page(114).build(),
                 Path.builder().description("Aller dans le passage 128").page(128).build(),

@@ -1,41 +1,41 @@
 package fr.jsmadja.antredesdragons.ui;
 
-import static java.lang.System.out;
+import static java.lang.System.err;
 
 public class Events {
 
     private static final int LEFT_PADDING = 10;
 
     public static void fightEvent(String message) {
-        out.println(pad("[FIGHT]") + message.trim());
+        err.println(pad("[FIGHT]") + message.trim());
     }
 
     public static void statusEvent(String message) {
-        out.println(pad("[STATUS]") + message);
+        err.println(pad("[STATUS]") + message);
     }
 
     public static void diceEvent(String message) {
-        out.println(pad("[DICE]") + message);
+        err.println(pad("[DICE]") + message);
     }
 
     public static void pageEvent(String message) {
-        out.println(pad("\n[PAGE]") + message + "\n");
+        err.println(pad("\n[PAGE]") + message + "\n");
     }
 
     public static void inventoryEvent(String message) {
-        out.println(pad("[INVENTORY]") + message);
+        err.println(pad("[INVENTORY]") + message);
     }
 
     public static void questionEvent(String message) {
-        out.println(pad("\n[QUESTION]") + message);
+        err.println(pad("\n[QUESTION]") + message);
     }
 
     public static void spellEvent(String message) {
-        out.println(pad("[SPELL]") + message);
+        err.println(pad("[SPELL]") + message);
     }
 
     public static void event(String message) {
-        out.println(message);
+        err.println(message);
     }
 
     private static String pad(String message) {

@@ -4,7 +4,6 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Attack;
-import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import fr.jsmadja.antredesdragons.stuff.Item;
@@ -30,6 +29,8 @@ public abstract class Entity {
     private int maximumHealthPoints;
 
     private HitRollRange hitRollRange = new HitRollRange(6);
+    @Setter
+    private HitRollRange forcedMinimumHitRoll;
     private final Integer constantHitDamage;
     private final boolean immuneToPhysicalDamages;
 
@@ -84,6 +85,7 @@ public abstract class Entity {
     int roll1Dice() {
         return this.dice.roll() - rollMalus;
     }
+
     public Roll roll2Dices() {
         int result = this.dice.roll(2) - rollMalus;
         Events.diceEvent(this.name + " lance 2 dés et fait " + result);
@@ -94,21 +96,30 @@ public abstract class Entity {
     public int getAdditionalDamagePoints() {
         return this.getEquipedWeapon().map(i -> i.getDamagePoint().getValue()).orElse(0);
     }
+
     public HitRollRange getHitRollRange() {
         return hitRollRange;
     }
+
     public void setHitRollRange(HitRollRange hitRollRange) {
         this.hitRollRange = hitRollRange;
     }
+
     public int getInitialHealthPoints() {
         return this.initialHealthPoints;
     }
+
     public int getCurrentHealthPoints() {
         return this.currentHealthPoints;
     }
+
     public HitRollRange getAdjustedHitRollRange() {
+        if (this.forcedMinimumHitRoll != null) {
+            return this.forcedMinimumHitRoll;
+        }
         return this.getEquipedWeapon().map(Item::getHitRollRange).orElse(hitRollRange);
     }
+
     public int getArmorPoints() {
         return this.inventory.getEquipedItems().stream().map(i -> i.getArmorPoint().getValue()).reduce(0, Integer::sum);
     }
@@ -116,10 +127,12 @@ public abstract class Entity {
     public void addMagicalArmorPoints(ArmorPoint armorPoint) {
         this.magicArmorPoints = ArmorPoint.armor(this.magicArmorPoints.getValue() + armorPoint.getValue());
     }
+
     public void removeAllMagicEffects() {
         this.magicArmorPoints = ArmorPoint.armor(0);
         this.magicDamagePoints = DamagePoint.damage(0);
     }
+
     public void addMagicDamagePoints(DamagePoint damagePoint) {
         this.magicDamagePoints = DamagePoint.damage(this.magicDamagePoints.getValue() + damagePoint.getValue());
     }
@@ -127,6 +140,7 @@ public abstract class Entity {
     public boolean isDead() {
         return this.currentHealthPoints <= 0;
     }
+
     public boolean isStuned() {
         return this.initialHealthPoints > 5 && this.currentHealthPoints > 0 && this.currentHealthPoints <= 5;
     }
@@ -135,17 +149,21 @@ public abstract class Entity {
     public void kill() {
         this.currentHealthPoints = 0;
     }
+
     public void loseInitiative() {
         this.loseInitiative = true;
     }
+
     public boolean canFight() {
         return !this.isStuned() && !this.isDead();
     }
+
     public void attacks(int damagePoints, Entity target) {
         Events.fightEvent(this.getName() + " cause " + damagePoints + " de dommages à " + target.getName());
         Events.statusEvent(target.toString());
         target.wounds(damagePoints);
     }
+
     private boolean touchOpponentWithPhysic(int roll, Entity target) {
         if (target.immuneToPhysicalDamages) {
             Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
@@ -164,6 +182,7 @@ public abstract class Entity {
             this.currentHealthPoints = 0;
         }
     }
+
     public Attack createPhysicAttack(Entity target) {
         int roll = this.roll2Dices().getValue();
         return new Attack(computeDamages(roll, target), touchOpponentWithPhysic(roll, target) ? TOUCHED : MISSED);
@@ -179,33 +198,45 @@ public abstract class Entity {
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
         int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
+        if(this.has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
+            damages += 10;
+        }
         return Math.max(0, damages);
     }
+
+    protected abstract boolean isDragon();
 
     // Inventory
     public void equip(Item item) {
         this.inventory.equip(item);
     }
+
     public void unequip(Item item) {
         this.inventory.unequip(item);
     }
+
     public Optional<Item> getEquipedWeapon() {
         return this.inventory.getEquipedWeapon();
     }
+
     public void addAndEquip(Item item) {
         this.add(item);
         this.equip(item);
     }
+
     public void add(Item item) {
-        Events.inventoryEvent(this.getName()+" ajoute " + item.getName() + " dans son inventaire");
+        Events.inventoryEvent(this.getName() + " ajoute " + item.getName() + " dans son inventaire");
         this.inventory.add(item);
     }
+
     public boolean has(Item item) {
         return this.inventory.contains(item);
     }
+
     public void removeOne(Item item) {
         this.inventory.removeOne(item);
     }
+
     public void equipAll() {
         this.inventory.equipAll();
     }

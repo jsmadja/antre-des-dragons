@@ -11,7 +11,7 @@ import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
 
 public class Page130 extends ManualChoicePage {
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Aller au 128").page(128).build(),
                 Path.builder().description("Aller au 138").page(138).build()

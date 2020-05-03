@@ -63,14 +63,25 @@ public enum MarketItem {
 
     @Override
     public String toString() {
-        if(quantity.getValue() > 1) {
-            return format("{0} {1}", pad(item.getName()+" ("+quantity+")"), price);
+        if (quantity.getValue() > 1) {
+            return format("{0} {1}", pad(getDescription() + " (" + quantity + ")"), price);
         }
-        return format("{0} {1}", pad(item.getName()),price);
+        return format("{0} {1}", pad(getDescription()), price);
+    }
+
+    private String getDescription() {
+        String name = item.getName();
+        if (item.isWeapon()) {
+            return name + " DMG+" + item.getDamagePoint().getValue();
+        }
+        if (item.isArmor()) {
+            return name + " ARM+" + item.getArmorPoint().getValue();
+        }
+        return name;
     }
 
     private static String pad(String message) {
-        return String.format("%-30s ", message);
+        return String.format("%-35s ", message);
     }
 
 }

@@ -27,7 +27,7 @@ public class Page27 extends RollAndGoPage {
         if (answerTo("Retourner au 7").isYes()) {
             return pip.goToPage(PageNumber.page(7));
         }
-        return execute(pip);
+        return super.execute(pip);
     }
 
     @Override

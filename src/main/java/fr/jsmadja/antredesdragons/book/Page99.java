@@ -50,7 +50,7 @@ public class Page99 extends ManualChoicePage {
     }
 
     @Override
-    public Paths getPossiblesPath() {
+    public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().description("Emprunter le passage ouest").page(98).build(),
                 Path.builder().description("Emprunter le passage nord").page(105).build(),
