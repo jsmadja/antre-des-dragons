@@ -14,6 +14,6 @@ public abstract class GoPage extends Page {
     protected void beforeLeavingPage(Pip pip) {
     }
 
-    protected abstract int getNextPage();
+    public abstract int getNextPage();
 
 }

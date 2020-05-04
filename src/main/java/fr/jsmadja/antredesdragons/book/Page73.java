@@ -60,7 +60,7 @@ public class Page73 extends GoPage {
     }
 
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 11;
     }
 }

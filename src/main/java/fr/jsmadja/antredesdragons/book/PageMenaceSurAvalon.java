@@ -6,7 +6,7 @@ import static fr.jsmadja.antredesdragons.book.Pages.DANS_LA_GROTTE_DE_CRISTAL_DE
 
 public class PageMenaceSurAvalon extends GoPage {
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN;
     }
 

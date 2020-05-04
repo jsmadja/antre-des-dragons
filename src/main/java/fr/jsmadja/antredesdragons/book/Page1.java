@@ -37,7 +37,7 @@ public class Page1 extends GoPage {
     }
 
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 3;
     }
 }

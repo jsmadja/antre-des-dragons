@@ -27,7 +27,7 @@ public class Page95 extends GoPage {
     }
 
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 108;
     }
 }

@@ -8,7 +8,7 @@ import static fr.jsmadja.antredesdragons.stuff.Item.TINKLE_RING;
 
 public class Page111 extends GoPage {
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 99;
     }
 

@@ -6,7 +6,7 @@ import static fr.jsmadja.antredesdragons.book.Pages.MERLIN;
 
 public class PageDebut extends GoPage {
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return MERLIN;
     }
 

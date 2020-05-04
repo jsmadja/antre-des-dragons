@@ -67,7 +67,7 @@ public class Page86 extends GoPage {
     }
 
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 10;
     }
 }

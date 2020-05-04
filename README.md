@@ -8,5 +8,6 @@
 - [ ] Dormir
 - [ ] Sorts manquants
 - [ ] Potions et onguents de départ
+- [ ] Devoir se soigner avant de quitter le village
 - [ ] Webservice
 - [ ] Web UI

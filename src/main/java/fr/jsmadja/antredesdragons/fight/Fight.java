@@ -85,6 +85,10 @@ public class Fight {
         if (attack.getStatus() == TOUCHED) {
             int damagePoints = attack.getDamagePoints();
             fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
+            if(attacker.hasPoisonedWeapon()) {
+                fightEvent(format("{0} est empoisonné", target.getName()));
+                target.setPoisoned(true);
+            }
             target.wounds(damagePoints);
             if (target.isDead()) {
                 fightEvent(format("{0} est mort", target.getName()));

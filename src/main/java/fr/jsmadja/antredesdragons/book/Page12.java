@@ -4,7 +4,7 @@ import fr.jsmadja.antredesdragons.pages.GoPage;
 
 public class Page12 extends GoPage {
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return 23;
     }
 

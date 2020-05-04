@@ -36,6 +36,7 @@ public enum Item {
     FOOD("Nourriture"),
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
+    PARTIAL_MAP_OF_THE_DRAGONS_LAIR("Carte partielle de l'antre du dragon"),
 
     THATCHED_CREATURE_DAGGERS("Dagues de créature de chaumière"),
 
@@ -52,6 +53,7 @@ public enum Item {
     MONK_FIGHTING("Poings de moine", DamagePoint.damage(3), new HitRollRange(4)),
     STONEMAN_SWORD("Epée de l'Homme de Pierre", DamagePoint.damage(4), new HitRollRange(8)),
     EXCALIBUR_JUNIOR_DRAGON_SLAYER("ExcaliburJunior (Dragon DMG+10)", DamagePoint.damage(5), new HitRollRange(4)),
+    RAT_TEETH("Dents de Rat-Loup", DamagePoint.damage(2), new HitRollRange(5), true),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
@@ -60,7 +62,7 @@ public enum Item {
     WOLF_SKIN("Peau de loup", ArmorPoint.armor(1)),
     STONEMONSTER_ARMOR("Armure du monstre de pierre",ArmorPoint.armor(1));
 
-    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor) {
+    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned) {
         this.name = name;
         this.armorPoint = armorPoint;
         this.damagePoint = damagePoint;
@@ -68,6 +70,7 @@ public enum Item {
         this.hitRollRange = hitRollRange;
         this.weapon = weapon;
         this.armor = armor;
+        this.poisoned = poisoned;
     }
 
     private final String name;
@@ -77,24 +80,28 @@ public enum Item {
     private final HitRollRange hitRollRange;
     private final boolean weapon;
     private final boolean armor;
+    private final boolean poisoned;
 
     // Object Constructor
     Item(String name) {
-        this(name, ArmorPoint.armor(0), DamagePoint.damage(0), false, null, false, false);
+        this(name, ArmorPoint.armor(0), DamagePoint.damage(0), false, null, false, false, false);
     }
 
     // Weapon Constructor
     Item(String name, DamagePoint damagePoint) {
-        this(name, damagePoint, null);
+        this(name, damagePoint, null, false);
     }
 
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
-        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false);
+        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false, false);
     }
 
+    Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange, boolean poisoned) {
+        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false, poisoned);
+    }
     // Armor Constructor
     Item(String name, ArmorPoint armorPoint) {
-        this(name, armorPoint, DamagePoint.damage(0), true, null, false, true);
+        this(name, armorPoint, DamagePoint.damage(0), true, null, false, true, false);
     }
 
 }

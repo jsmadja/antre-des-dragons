@@ -54,6 +54,10 @@ public abstract class Entity {
     @Getter
     private DamagePoint temporaryDamagePointsMalus = DamagePoint.damage(0);
 
+    @Getter
+    @Setter
+    private boolean poisoned;
+
     Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
         this.name = name;
         this.dice = dice;
@@ -249,4 +253,15 @@ public abstract class Entity {
         this.temporaryDamagePointsMalus = DamagePoint.damage(0);
     }
 
+    public boolean hasPoisonedWeapon() {
+        return this.getEquipedWeapon().map(Item::isPoisoned).orElse(false);
+    }
+
+    public void setPoisoned(boolean poisoned) {
+        this.poisoned = poisoned;
+    }
+
+    public boolean getPoisoned() {
+        return poisoned;
+    }
 }

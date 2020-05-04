@@ -6,7 +6,7 @@ import static fr.jsmadja.antredesdragons.book.Pages.MENACE_SUR_AVALAON;
 
 public class PageMerlin extends GoPage {
     @Override
-    protected int getNextPage() {
+    public int getNextPage() {
         return MENACE_SUR_AVALAON;
     }
 
