@@ -8,5 +8,5 @@
 - [ ] Dormir
 - [ ] Sorts manquants
 - [ ] Potions et onguents de départ
-- [ ] Webservice
+- [ ] Webservice
 - [ ] Web UI
