@@ -16,20 +16,20 @@ import static java.util.stream.Collectors.toList;
 
 public class Fight {
     private final Pip pip;
-    private final List<Foe> foes;
-    private int minimumDeadFoes = Integer.MAX_VALUE;
+    private final Foes foes;
+    private int minimumFoesToKillCount = Integer.MAX_VALUE;
     private int turn = 1;
     private int maxTurns = Integer.MAX_VALUE;
 
     public Fight(Pip pip, List<Foe> foes) {
         this.pip = pip;
-        this.foes = foes;
+        this.foes = new Foes(foes, pip);
+        this.foes.getFriendlyFoes().forEach(foe -> fightEvent(String.format("%s a une réaction amicale", foe.getName())));
     }
 
     public Fight(Pip pip, int maxTurn, List<Foe> foes) {
-        this.pip = pip;
+        this(pip, foes);
         this.maxTurns = maxTurn;
-        this.foes = foes;
     }
 
     public Fight(Pip pip, Foe foe) {
@@ -42,7 +42,7 @@ public class Fight {
 
     public Fight(Pip pip, List<Foe> foes, int mininumDeadFoes) {
         this(pip, foes);
-        this.minimumDeadFoes = mininumDeadFoes;
+        this.minimumFoesToKillCount = mininumDeadFoes;
     }
 
 
@@ -120,7 +120,7 @@ public class Fight {
     public List<Entity> getOrderedOpponents() {
         List<Entity> opponents = new ArrayList<>();
         opponents.add(pip);
-        opponents.addAll(foes);
+        opponents.addAll(foes.getUnfriendlyFoes());
         return opponents.stream()
                 .map(FightOrder.Entity2DiceRoll::new)
                 .sorted(new FightOrder())
@@ -132,17 +132,20 @@ public class Fight {
         if (entity.isFoe()) {
             return this.pip;
         }
-        return this.foes.get(0);
+        return this.foes.getUnfriendlyFoes().get(0);
     }
 
     private boolean isOver() {
         if (isMaxTurnReached()) {
             return true;
         }
-        if (this.pip.isDead()) {
+        if (pip.isDead()) {
             return true;
         }
-        long numDead = this.foes.stream().filter(foe -> foe.isStuned() || foe.isDead()).count();
-        return numDead == this.foes.size() || numDead >= minimumDeadFoes;
+        return this.foes.areAllUnableToFight() || this.foes.getUnableToFightCount() >= getMinimumFoesToKillCount();
+    }
+
+    private int getMinimumFoesToKillCount() {
+        return minimumFoesToKillCount - this.foes.getFriendlyCount();
     }
 }

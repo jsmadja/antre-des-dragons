@@ -11,6 +11,7 @@ import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
@@ -113,13 +114,19 @@ public abstract class Entity {
     }
 
     // Rolling
-    int roll1Dice() {
-        return this.dice.roll() - rollMalus;
+    public Roll roll1Dice() {
+        return Roll.of(this.dice.roll() - rollMalus);
     }
 
     public Roll roll2Dices() {
         int result = this.dice.roll(2) - rollMalus;
         Events.diceEvent(this.name + " lance 2 dés et fait " + result);
+        return Roll.of(result);
+    }
+
+    public Roll roll3Dices() {
+        int result = this.dice.roll(3) - rollMalus;
+        Events.diceEvent(this.name + " lance 3 dés et fait " + result);
         return Roll.of(result);
     }
 
@@ -284,5 +291,18 @@ public abstract class Entity {
     public void useWeaponEveryNStrikes(Item weaponToUseEveryNStrikes, int changeWeaponEvery) {
         this.weaponToUseEveryNStrikes = weaponToUseEveryNStrikes;
         this.changeWeaponEvery = changeWeaponEvery;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return name.equals(entity.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

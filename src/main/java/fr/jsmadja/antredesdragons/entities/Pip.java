@@ -56,7 +56,7 @@ public class Pip extends Entity {
     }
 
     public void sleep() {
-        int face = this.roll1Dice();
+        int face = this.roll1Dice().getValue();
         if (face >= 5) {
             int restoredHealthPoints = this.roll2Dices().getValue();
             this.restoreHealthPoints(restoredHealthPoints);
@@ -188,7 +188,7 @@ public class Pip extends Entity {
     }
 
     public void add(Skill skill) {
-        this.skills.add(Skill.SWIMMING);
+        this.skills.add(skill);
     }
 
 }
