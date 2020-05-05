@@ -1,9 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.pages.Execution;
-import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.GoPage;
+import fr.jsmadja.antredesdragons.stuff.Item;
 
 public class Page71 extends GoPage {
     @Override

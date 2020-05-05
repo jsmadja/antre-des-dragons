@@ -37,6 +37,11 @@ public enum Item {
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
     PARTIAL_MAP_OF_THE_DRAGONS_LAIR("Carte partielle de l'antre du dragon"),
+    NOSFERAX_SNUFFBOX("Tabatière de Nosferax"),
+    NOSFERAX_LOLLIPOP("Sucette de Nosferax"),
+    MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
+    MINOTAUR_KEY("Clef"),
+    MAGIC_WAND("Baguette Magique"),
 
     THATCHED_CREATURE_DAGGERS("Dagues de créature de chaumière"),
 
@@ -54,13 +59,19 @@ public enum Item {
     STONEMAN_SWORD("Epée de l'Homme de Pierre", DamagePoint.damage(4), new HitRollRange(8)),
     EXCALIBUR_JUNIOR_DRAGON_SLAYER("ExcaliburJunior (Dragon DMG+10)", DamagePoint.damage(5), new HitRollRange(4)),
     RAT_TEETH("Dents de Rat-Loup", DamagePoint.damage(2), new HitRollRange(5), true),
+    DWARF_SWORD("Epée de Nain", DamagePoint.damage(3), new HitRollRange(8)),
+    MEDUSA_WEAPON("Coups de Méduse", DamagePoint.damage(0), new HitRollRange(8)),
+    MONSTER_CLAW("Griffes de monstres", DamagePoint.damage(2), new HitRollRange(5)),
+    DRAGON_FANG("Griffe de Dragon de Bronze", DamagePoint.damage(5), new HitRollRange(5)),
+    DRAGON_BLOW("Souffle du Dragon de Bronze", DamagePoint.damage(10), new HitRollRange(5)),
+    RAMPANT_TONGUE("Langue de Rampant", DamagePoint.damage(0), new HitRollRange(8)),
 
     CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
     LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
     ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4)),
     TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1)),
     WOLF_SKIN("Peau de loup", ArmorPoint.armor(1)),
-    STONEMONSTER_ARMOR("Armure du monstre de pierre",ArmorPoint.armor(1));
+    STONEMONSTER_ARMOR("Armure du monstre de pierre", ArmorPoint.armor(1));
 
     Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned) {
         this.name = name;
@@ -99,6 +110,7 @@ public enum Item {
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange, boolean poisoned) {
         this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false, poisoned);
     }
+
     // Armor Constructor
     Item(String name, ArmorPoint armorPoint) {
         this(name, armorPoint, DamagePoint.damage(0), true, null, false, true, false);

@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.pages.RollAndGoPage;
 
@@ -21,7 +22,7 @@ public class Page58 extends RollAndGoPage {
     }
 
     @Override
-    protected List<DiceWay> getDiceWays() {
+    protected List<DiceWay> getDiceWays(Pip pip) {
         return List.of(
                 new DiceWay(2, 4, PageNumber.page(9)),
                 new DiceWay(5, 8, PageNumber.page(13)),

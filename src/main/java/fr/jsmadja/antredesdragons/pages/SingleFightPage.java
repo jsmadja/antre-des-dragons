@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.pages;
 
+import fr.jsmadja.antredesdragons.book.PageNumber;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.book.PageNumber;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public abstract class SingleFightPage extends Page {
     public Execution execute(Pip pip) {
         onBeforeFight(pip);
         pip.fight(List.of(getFoe()));
-        if(pip.isDead()) {
+        if (pip.isDead()) {
             return pip.goToPage(PageNumber.page(14));
         }
         onAfterSuccessfulFight(pip);

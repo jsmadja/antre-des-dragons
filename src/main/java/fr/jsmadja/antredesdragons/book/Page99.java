@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Prompt;
 
 public class Page99 extends ManualChoicePage {
     @Override
@@ -42,7 +42,7 @@ public class Page99 extends ManualChoicePage {
         }
         if (pip.has(Item.FIREBALL)) {
             if (Prompt.answerTo("Voulez-vous utiliser une boule de feu").isYes()) {
-                pip.removeOne(Item.FIREBALL);
+                pip.remove(Item.FIREBALL);
                 return pip.goToPage(102);
             }
         }

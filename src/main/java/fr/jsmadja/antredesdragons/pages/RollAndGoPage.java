@@ -8,9 +8,9 @@ public abstract class RollAndGoPage extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        return pip.rollAndGo(getDiceWays());
+        return pip.rollAndGo(getDiceWays(pip));
     }
 
-    protected abstract List<DiceWay> getDiceWays();
+    protected abstract List<DiceWay> getDiceWays(Pip pip);
 
 }

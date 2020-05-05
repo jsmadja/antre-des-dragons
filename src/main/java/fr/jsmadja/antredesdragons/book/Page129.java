@@ -1,7 +1,10 @@
 package fr.jsmadja.antredesdragons.book;
 
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
+
+import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
 
 public class Page129 extends ManualChoicePage {
 
@@ -12,6 +15,14 @@ public class Page129 extends ManualChoicePage {
                 Path.builder().description("Aller vers le deuxième passage").page(128).build(),
                 Path.builder().description("Aller vers le troisième passage").page(137).build()
         );
+    }
+
+    @Override
+    public Execution execute(Pip pip) {
+        if (answerTo("Avez-vous déchiffré le parchemin").isYes()) {
+            pip.addExperiencePoints(1);
+        }
+        return super.execute(pip);
     }
 
     @Override

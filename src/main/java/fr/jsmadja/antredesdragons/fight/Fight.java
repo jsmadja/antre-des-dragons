@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class Fight {
     private final Pip pip;
     private final List<Foe> foes;
+    private int minimumDeadFoes = Integer.MAX_VALUE;
     private int turn = 1;
     private int maxTurns = Integer.MAX_VALUE;
 
@@ -37,6 +38,11 @@ public class Fight {
 
     public Fight(Pip pip, Foe foe, int maxTurns) {
         this(pip, maxTurns, List.of(foe));
+    }
+
+    public Fight(Pip pip, List<Foe> foes, int mininumDeadFoes) {
+        this(pip, foes);
+        this.minimumDeadFoes = mininumDeadFoes;
     }
 
 
@@ -85,7 +91,7 @@ public class Fight {
         if (attack.getStatus() == TOUCHED) {
             int damagePoints = attack.getDamagePoints();
             fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
-            if(attacker.hasPoisonedWeapon()) {
+            if (attacker.hasPoisonedWeapon()) {
                 fightEvent(format("{0} est empoisonné", target.getName()));
                 target.setPoisoned(true);
             }
@@ -136,6 +142,7 @@ public class Fight {
         if (this.pip.isDead()) {
             return true;
         }
-        return this.foes.stream().allMatch(foe -> foe.isStuned() || foe.isDead());
+        long numDead = this.foes.stream().filter(foe -> foe.isStuned() || foe.isDead()).count();
+        return numDead == this.foes.size() || numDead >= minimumDeadFoes;
     }
 }

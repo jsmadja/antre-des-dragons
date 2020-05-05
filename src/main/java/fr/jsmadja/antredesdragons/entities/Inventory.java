@@ -23,7 +23,7 @@ public class Inventory {
         return this.items.contains(item);
     }
 
-    public void removeOne(Item item) {
+    public void remove(Item item) {
         this.items.remove(item);
     }
 

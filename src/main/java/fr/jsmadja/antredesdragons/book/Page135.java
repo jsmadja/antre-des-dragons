@@ -5,6 +5,8 @@ import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
+import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
+
 public class Page135 extends ManualChoicePage {
     @Override
     public Paths getPossiblesPath(Pip pip) {
@@ -18,7 +20,10 @@ public class Page135 extends ManualChoicePage {
     public Execution execute(Pip pip) {
         Roll roll = pip.roll2Dices();
         if (roll.isBetween(2, 4)) {
-            pip.goToPage(14);
+            return pip.goToPage(14);
+        }
+        if (answerTo("Avez-vous déchiffré le parchemin").isYes()) {
+            pip.addExperiencePoints(1);
         }
         return super.execute(pip);
     }
@@ -39,6 +44,6 @@ public class Page135 extends ManualChoicePage {
                 "Si vous faites de 5 à 12, vous jouissez d'une immunité naturelle. Rejetez ce " +
                 "Serpent imbécile dans son coffre et essayez de décoder le message. Comme le " +
                 "Minotaure l'avait prédit, les autres coffres ont disparu. Les passages depuis la " +
-                "grotte du Minotaure conduisent au 114, au 128 et au 137. Faites votre choix !";
+                "grotte du Minotaure conduisent au [114], au [128] et au [137]. Faites votre choix !";
     }
 }

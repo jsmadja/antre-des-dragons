@@ -39,7 +39,7 @@ public class Events {
     }
 
     private static String pad(String message) {
-        return String.format("%-"+LEFT_PADDING+"s ", message);
+        return String.format("%-" + LEFT_PADDING + "s ", message);
     }
 
 }

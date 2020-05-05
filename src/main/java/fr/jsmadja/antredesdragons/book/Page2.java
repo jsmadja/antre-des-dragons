@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.GoPage;
 import fr.jsmadja.antredesdragons.stuff.Item;
 

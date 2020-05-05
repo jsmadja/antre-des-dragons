@@ -12,7 +12,7 @@ public class PageDebut extends GoPage {
 
     @Override
     public String getText() {
-        return "l' Antre du Dragon est le deuxième volume de la serie intitulée La Quête du Graal. Un " +
+        return "L'Antre du Dragon est le deuxième volume de la serie intitulée La Quête du Graal. Un " +
                 "livre dont VOUS êtes le héros. Dans quelques pages, vous allez etre précipité à " +
                 "l'époque du roi Arthur, et des Chevaliers de la Table Ronde, dans le fabuleux " +
                 "Royaume d' Avalon terrorisé par des monstres épouvantables, sorciers aux pouvoirs " +

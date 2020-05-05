@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.dices;
 
-import fr.jsmadja.antredesdragons.dices.Dice;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

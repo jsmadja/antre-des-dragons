@@ -22,7 +22,7 @@ public class Page138 extends Page {
 
     @Override
     public Execution execute(Pip pip) {
-        if(pip.hasSkill(SWIMMING)) {
+        if (pip.hasSkill(SWIMMING)) {
             return pip.goToPage(123);
         }
         return pip.goToPage(102);

@@ -1,12 +1,12 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.stuff.Item;
-import fr.jsmadja.antredesdragons.ui.Prompt;
-import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.MultipleFightPage;
+import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.ui.Prompt;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -65,7 +65,7 @@ public class Page98 extends MultipleFightPage {
     }
 
     @Override
-    protected List<Foe> getFoes() {
+    protected List<Foe> getFoes(Pip pip) {
         return IntStream
                 .range(1, 7)
                 .mapToObj(operand -> {

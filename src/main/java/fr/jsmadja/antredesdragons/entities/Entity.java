@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
+import static java.lang.Integer.MAX_VALUE;
 import static java.text.MessageFormat.format;
 
 public abstract class Entity {
@@ -22,7 +23,10 @@ public abstract class Entity {
     private final String name;
     private final Dice dice;
 
-    private final int initialHealthPoints;
+    @Setter
+    @Getter
+    private int initialHealthPoints;
+
     private int currentHealthPoints;
     @Getter
     @Setter
@@ -33,6 +37,10 @@ public abstract class Entity {
     private HitRollRange forcedMinimumHitRoll;
     private final Integer constantHitDamage;
     private final boolean immuneToPhysicalDamages;
+
+    @Getter
+    @Setter
+    private boolean immuneToPoison;
 
     @Getter
     private ArmorPoint magicArmorPoints = ArmorPoint.armor(0);
@@ -58,7 +66,23 @@ public abstract class Entity {
     @Setter
     private boolean poisoned;
 
-    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages) {
+    @Getter
+    @Setter
+    private boolean invisible;
+
+    @Getter
+    private final int instantKillWithStrikesInARow;
+
+    @Getter
+    private final int requiredStrikesToHitInvisible;
+    private Item weaponToUseEveryNStrikes;
+    private int changeWeaponEvery;
+    private final int maxStrikes;
+
+    @Setter
+    private Roll invisibleRequiredMinimumHitRoll;
+
+    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer instantKillWithStrikesInARow, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
         this.name = name;
         this.dice = dice;
         if (hitRollRange != null) {
@@ -68,6 +92,9 @@ public abstract class Entity {
         this.constantHitDamage = constantHitDamage;
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
+        this.instantKillWithStrikesInARow = instantKillWithStrikesInARow == null ? MAX_VALUE : instantKillWithStrikesInARow;
+        this.requiredStrikesToHitInvisible = requiredStrikesToHitInvisible == null ? MAX_VALUE : requiredStrikesToHitInvisible;
+        this.maxStrikes = maxStrikes == null ? MAX_VALUE : maxStrikes;
     }
 
     public abstract boolean isFoe();
@@ -107,10 +134,6 @@ public abstract class Entity {
 
     public void setHitRollRange(HitRollRange hitRollRange) {
         this.hitRollRange = hitRollRange;
-    }
-
-    public int getInitialHealthPoints() {
-        return this.initialHealthPoints;
     }
 
     public int getCurrentHealthPoints() {
@@ -202,7 +225,7 @@ public abstract class Entity {
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
         int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
-        if(this.has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
+        if (this.has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
             damages += 10;
         }
         return Math.max(0, damages);
@@ -237,8 +260,8 @@ public abstract class Entity {
         return this.inventory.contains(item);
     }
 
-    public void removeOne(Item item) {
-        this.inventory.removeOne(item);
+    public void remove(Item item) {
+        this.inventory.remove(item);
     }
 
     public void equipAll() {
@@ -251,17 +274,15 @@ public abstract class Entity {
 
     public void removeTemporaryBonusAndMalus() {
         this.temporaryDamagePointsMalus = DamagePoint.damage(0);
+        this.setInvisible(false);
     }
 
     public boolean hasPoisonedWeapon() {
         return this.getEquipedWeapon().map(Item::isPoisoned).orElse(false);
     }
 
-    public void setPoisoned(boolean poisoned) {
-        this.poisoned = poisoned;
-    }
-
-    public boolean getPoisoned() {
-        return poisoned;
+    public void useWeaponEveryNStrikes(Item weaponToUseEveryNStrikes, int changeWeaponEvery) {
+        this.weaponToUseEveryNStrikes = weaponToUseEveryNStrikes;
+        this.changeWeaponEvery = changeWeaponEvery;
     }
 }

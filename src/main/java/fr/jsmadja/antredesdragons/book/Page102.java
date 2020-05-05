@@ -1,11 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Fight;
+import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
 
 public class Page102 extends ManualChoicePage {
@@ -56,7 +56,7 @@ public class Page102 extends ManualChoicePage {
 
         new Fight(pip, foe).start();
 
-        if(pip.isDead()) {
+        if (pip.isDead()) {
             return pip.goToPage(14);
         }
 

@@ -1,5 +1,9 @@
 package fr.jsmadja.antredesdragons.entities;
 
 public enum SpellEffectResult {
-    FAILED, WORKED
+    FAILURE, SUCCESS;
+
+    public boolean withSuccess() {
+        return this == SUCCESS;
+    }
 }

@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import java.util.stream.IntStream;
 
 import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR;
@@ -103,14 +103,14 @@ class PipTest {
     void spell_works_only_if_roll_is_greater_than_6() {
         when(dice.roll(2)).thenReturn(7);
         SpellEffectResult spellEffectResult = pip.use(AEP);
-        assertThat(spellEffectResult).isEqualTo(WORKED);
+        assertThat(spellEffectResult).isEqualTo(SUCCESS);
     }
 
     @Test
     void spell_failed_when_roll_is_lesser_than_7() {
         when(dice.roll(2)).thenReturn(6);
         SpellEffectResult spellEffectResult = pip.use(AEP);
-        assertThat(spellEffectResult).isEqualTo(FAILED);
+        assertThat(spellEffectResult).isEqualTo(FAILURE);
     }
 
 }

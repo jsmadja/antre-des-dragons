@@ -15,12 +15,16 @@ import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.WORKED;
-import static fr.jsmadja.antredesdragons.ui.Events.*;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
 
 public class Pip extends Entity {
@@ -28,7 +32,7 @@ public class Pip extends Entity {
     public static final int NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP = 20;
     private final Pages pages = new Pages();
     private final List<Spell> spells = new ArrayList<>();
-    private final List<Skill> skills = new ArrayList<>();
+    private final Set<Skill> skills = new HashSet<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
     private SpellUsages spellUsages = new SpellUsages();
 
@@ -39,7 +43,7 @@ public class Pip extends Entity {
     private PageNumber currentPage;
 
     public Pip(Dice dice) {
-        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false);
+        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null, null, null);
     }
 
     private static int computeInitialHealthPoints(Dice dice) {
@@ -60,11 +64,15 @@ public class Pip extends Entity {
     }
 
     // Fighting
-    public void fight(List<Foe> foes) {
-        new Fight(this, foes).start();
+    public void fight(List<Foe> foes, int mininumDeadFoes) {
+        new Fight(this, foes, mininumDeadFoes).start();
         if (!this.isDead()) {
             this.addExperiencePoints(foes.size());
         }
+    }
+
+    public void fight(List<Foe> foes) {
+        this.fight(foes, foes.size());
     }
 
     public void addExperiencePoints(int points) {
@@ -115,18 +123,22 @@ public class Pip extends Entity {
     }
 
     public SpellEffectResult use(Spell spell) {
+        if (this.getCurrentHealthPoints() <= spell.getDamagePoints().getValue()) {
+            spellEvent(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
+            return FAILURE;
+        }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.of(6))) {
             Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
-            this.wounds(3);
+            this.wounds(spell.getDamagePoints().getValue());
             this.spellUsages.increment(spell);
-            return WORKED;
+            return SUCCESS;
         }
         spellEvent(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
-        return FAILED;
+        return FAILURE;
     }
 
     public boolean canUse(Spell spell) {
-        return this.spellUsages.getUsagesOf(spell) < 3;
+        return this.spellUsages.getUsagesOf(spell) < spell.getMaxUsages();
     }
 
     // Skill
@@ -174,4 +186,9 @@ public class Pip extends Entity {
     public boolean has(GoldenCoins goldenCoins) {
         return has(goldenCoins.toSilverCoins());
     }
+
+    public void add(Skill skill) {
+        this.skills.add(Skill.SWIMMING);
+    }
+
 }

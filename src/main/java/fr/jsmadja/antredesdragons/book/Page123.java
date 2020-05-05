@@ -34,7 +34,7 @@ public class Page123 extends Page {
 
         new Fight(pip, foe, 3).start();
 
-        if(pip.isDead()) {
+        if (pip.isDead()) {
             return pip.goToPage(14);
         }
         weapon.ifPresent(pip::equip);

@@ -23,7 +23,7 @@ public class Page104 extends SingleFightPage {
                 "quelque potion curative rangée quelque part";
     }
 
-   @Override
+    @Override
     protected int getSuccessPage() {
         return 10;
     }

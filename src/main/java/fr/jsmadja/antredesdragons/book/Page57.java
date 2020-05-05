@@ -67,7 +67,7 @@ public class Page57 extends MultipleFightPage {
     }
 
     @Override
-    protected List<Foe> getFoes() {
+    protected List<Foe> getFoes(Pip pip) {
         return IntStream.range(1, 4).mapToObj(id -> {
             Foe foe = Foe.builder()
                     .name(format("Moine {0}", id))

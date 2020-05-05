@@ -7,7 +7,7 @@ import fr.jsmadja.antredesdragons.pages.Page;
 
 import static fr.jsmadja.antredesdragons.entities.Spell.FIP;
 import static fr.jsmadja.antredesdragons.entities.Spell.HEP;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILED;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
 
 public class Page60 extends Page {
     @Override
@@ -36,7 +36,7 @@ public class Page60 extends Page {
     }
 
     private Execution use(Pip pip, Spell spell) {
-        if (pip.use(spell) == FAILED) return execute(pip);
+        if (pip.use(spell) == FAILURE) return execute(pip);
         pip.addExperiencePoints(1);
         return pip.goToPage(10);
     }

@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class Roll {
     private int value;
+
     public boolean isBetween(int minIncluded, int maxIncluded) {
         return minIncluded <= value && value <= maxIncluded;
     }

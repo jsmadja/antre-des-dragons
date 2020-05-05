@@ -1,14 +1,15 @@
 package fr.jsmadja.antredesdragons.pages;
 
-import fr.jsmadja.antredesdragons.ui.Prompt;
-import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.book.PageNumber;
+import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.ui.Prompt;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 
 import static java.text.MessageFormat.format;
+import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -16,7 +17,11 @@ public abstract class ManualChoicePage extends Page {
 
     @Override
     public Execution execute(Pip pip) {
+        this.beforeLeavingPage(pip);
         return askWhichWay(pip);
+    }
+
+    protected void beforeLeavingPage(Pip pip) {
     }
 
     public Execution askWhichWay(Pip pip) {
@@ -45,6 +50,10 @@ public abstract class ManualChoicePage extends Page {
 
         private List<Integer> getPages() {
             return paths.stream().map(Path::getPage).collect(toList());
+        }
+
+        public void add(Path... paths) {
+            this.paths.addAll(asList(paths));
         }
     }
 

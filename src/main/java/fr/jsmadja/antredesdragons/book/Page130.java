@@ -1,13 +1,15 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.ui.Prompt;
-import fr.jsmadja.antredesdragons.ui.Prompt.YesNoAnswer;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.entities.SpellEffectResult;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
+import fr.jsmadja.antredesdragons.ui.Prompt;
+import fr.jsmadja.antredesdragons.ui.Prompt.YesNoAnswer;
 
 import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
 
 public class Page130 extends ManualChoicePage {
     @Override
@@ -23,8 +25,10 @@ public class Page130 extends ManualChoicePage {
         if (pip.hasSpell(INVISIBILITY)) {
             YesNoAnswer answer = Prompt.answerTo("Voulez-vous utiliser le sort d'invisibilité");
             if (answer.isYes()) {
-                pip.use(INVISIBILITY);
-                return pip.goToPage(136);
+                SpellEffectResult result = pip.use(INVISIBILITY);
+                if (result == SUCCESS) {
+                    return pip.goToPage(136);
+                }
             }
         }
         YesNoAnswer answer = Prompt.answerTo("Voulez-vous combattre la Méduse");

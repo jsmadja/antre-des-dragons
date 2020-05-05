@@ -15,7 +15,7 @@ public class Page41 extends SingleFightPage {
 
     @Override
     public Execution execute(Pip pip) {
-        if(pip.has(Item.FOOD)) {
+        if (pip.has(Item.FOOD)) {
             return pip.goToPage(getSuccessPage());
         }
         return super.execute(pip);

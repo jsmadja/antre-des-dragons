@@ -9,7 +9,10 @@ import fr.jsmadja.antredesdragons.ui.Events;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static fr.jsmadja.antredesdragons.stuff.Item.*;
+import static fr.jsmadja.antredesdragons.stuff.Item.BOTTLE_OF_WATER;
+import static fr.jsmadja.antredesdragons.stuff.Item.HARP;
+import static fr.jsmadja.antredesdragons.stuff.Item.LUTH;
+import static fr.jsmadja.antredesdragons.stuff.Item.SPARE_BOOTS;
 
 public class Page73 extends GoPage {
     @Override
@@ -39,7 +42,7 @@ public class Page73 extends GoPage {
             Events.fightEvent("Vous attaquez le Troll avec votre matériel.");
             pip.addExperiencePoints(1);
         } else {
-            getThiefableItems(pip).forEach(pip::removeOne);
+            getThiefableItems(pip).forEach(pip::remove);
         }
         return super.execute(pip);
     }
