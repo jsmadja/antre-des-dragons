@@ -11,6 +11,8 @@ import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -82,6 +84,12 @@ public abstract class Entity {
 
     @Setter
     private Roll invisibleRequiredMinimumHitRoll;
+    @Setter
+    @Getter
+    private int missMalusCount;
+
+    @Getter
+    private List<Spell> spellsToCastDuringFight = new ArrayList<>();
 
     Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer instantKillWithStrikesInARow, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
         this.name = name;
@@ -203,10 +211,18 @@ public abstract class Entity {
             Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
             return false;
         }
+        if (this.getMissMalusCount() > 0) {
+            this.setMissMalusCount(this.getMissMalusCount() - 1);
+            return false;
+        }
         return this.getAdjustedHitRollRange().contains(roll);
     }
 
     private boolean touchOpponentWithMagic(Entity target) {
+        if (this.getMissMalusCount() > 0) {
+            this.setMissMalusCount(this.getMissMalusCount() - 1);
+            return false;
+        }
         return true;
     }
 
@@ -304,5 +320,17 @@ public abstract class Entity {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public boolean isPip() {
+        return !this.isFoe();
+    }
+
+    public void addSpellToCast(Spell spell) {
+        this.spellsToCastDuringFight.add(spell);
+    }
+
+    public void removeSpellToCast(Spell spell) {
+        this.spellsToCastDuringFight.remove(spell);
     }
 }

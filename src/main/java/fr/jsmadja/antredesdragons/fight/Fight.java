@@ -45,7 +45,6 @@ public class Fight {
         this.minimumFoesToKillCount = mininumDeadFoes;
     }
 
-
     private void showTurn() {
         Events.event("\n");
         fightEvent(format("Tour no {0}", this.turn));
@@ -66,10 +65,19 @@ public class Fight {
     }
 
     private void attack(Entity attacker) {
-        Entity other = this.getTarget(attacker);
-        if (!other.isDead()) {
-            this.attackPhysically(attacker, other);
-            this.attackMagically(attacker, other);
+        Entity target = this.getTarget(attacker);
+        if (!target.isDead()) {
+            if (attacker.isPip()) {
+                Pip pip = (Pip) attacker;
+                attacker.getSpellsToCastDuringFight()
+                        .forEach(spell -> {
+                            spell.getFightEffect().execute(pip, target);
+                        });
+            }
+            this.attackPhysically(attacker, target);
+            if (attacker.getMagicDamagePoints().getValue() > 0) {
+                this.attackMagically(attacker, target);
+            }
         }
     }
 

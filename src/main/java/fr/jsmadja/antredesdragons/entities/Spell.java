@@ -5,27 +5,65 @@ import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.function.Function;
+import static fr.jsmadja.antredesdragons.entities.SpellFightExecution.nothing;
 
 @AllArgsConstructor
 public enum Spell {
-    AEP(pip -> {
-        pip.addMagicalArmorPoints(ArmorPoint.armor(4));
-        return pip;
+
+    AEP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.addMagicalArmorPoints(ArmorPoint.armor(4));
+        }
+    }, nothing()),
+
+    INVISIBILITY(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.setInvisible(true);
+        }
+    }, nothing(), DamagePoint.damage(15), false, 1),
+
+    HEP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.addMagicDamagePoints(DamagePoint.damage(10));
+        }
+    }, nothing()),
+
+    FIP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.addSpellToCast(Spell.FIP);
+        }
+    }, new SpellFightExecution() {
+        @Override
+        public void execute(Pip pip, Entity target) {
+            target.wounds(10);
+            pip.removeSpellToCast(Spell.FIP);
+        }
     }),
-    INVISIBILITY(pip -> {
-        pip.setInvisible(true);
-        return pip;
-    }, DamagePoint.damage(15), false, 1),
-    HEP(pip -> {
-        pip.addMagicDamagePoints(DamagePoint.damage(10));
-        return pip;
-    }),
-    FIP(Function.identity()),
-    FIREBALL(Function.identity());
+
+    FIREBALL(SpellCastExecution.nothing(), nothing()),
+
+    RIP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.addSpellToCast(Spell.RIP);
+        }
+    }, new SpellFightExecution() {
+        @Override
+        public void execute(Pip pip, Entity target) {
+            target.setMissMalusCount(3);
+            pip.removeSpellToCast(Spell.RIP);
+        }
+    });
 
     @Getter
-    private final Function<Pip, Pip> effect;
+    private final SpellCastExecution castEffect;
+
+    @Getter
+    private final SpellFightExecution fightEffect;
 
     @Getter
     private final DamagePoint damagePoints;
@@ -36,8 +74,7 @@ public enum Spell {
     @Getter
     private final int maxUsages;
 
-    Spell(Function<Pip, Pip> effect) {
-        this(effect, DamagePoint.damage(3), true, 3);
+    Spell(SpellCastExecution onCast, SpellFightExecution onNextAttack) {
+        this(onCast, onNextAttack, DamagePoint.damage(3), true, 3);
     }
-
 }
