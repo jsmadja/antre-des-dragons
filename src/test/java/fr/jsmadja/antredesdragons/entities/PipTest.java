@@ -2,17 +2,18 @@ package fr.jsmadja.antredesdragons.entities;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.fight.Attack;
+import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.AEP;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;

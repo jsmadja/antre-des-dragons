@@ -2,14 +2,14 @@ package fr.jsmadja.antredesdragons.book;
 
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.entities.SpellEffectResult;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.ManualChoicePage;
+import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 import fr.jsmadja.antredesdragons.ui.Prompt;
 import fr.jsmadja.antredesdragons.ui.Prompt.YesNoAnswer;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
 
 public class Page130 extends ManualChoicePage {
     @Override

@@ -52,7 +52,7 @@ public class Inventory {
     }
 
     public void removeAll(Item item) {
-        while(this.items.contains(item)) {
+        while (this.items.contains(item)) {
             this.remove(item);
         }
     }

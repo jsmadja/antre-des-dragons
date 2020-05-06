@@ -7,7 +7,7 @@ import fr.jsmadja.antredesdragons.pages.RollAndGoPage;
 
 import java.util.List;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.INVISIBILITY;
 import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
 
 public class Page137 extends RollAndGoPage {

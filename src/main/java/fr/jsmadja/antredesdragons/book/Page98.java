@@ -11,7 +11,7 @@ import fr.jsmadja.antredesdragons.ui.Prompt;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.INVISIBILITY;
 import static java.util.stream.Collectors.toList;
 
 public class Page98 extends MultipleFightPage {

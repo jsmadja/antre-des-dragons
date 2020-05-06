@@ -56,7 +56,7 @@ public class Fight {
             showTurn();
             opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
                 attack(attacker);
-                if(attacker.isAbleToStrikeTwice()) {
+                if (attacker.isAbleToStrikeTwice()) {
                     attack(attacker);
                 }
             });
@@ -76,7 +76,7 @@ public class Fight {
                 Pip pip = (Pip) attacker;
                 attacker.getSpellsToCastDuringFight()
                         .forEach(spell -> {
-                            spell.getFightEffect().execute(pip, target);
+                            spell.getSpell().onAttack(pip, target);
                         });
             }
             this.attackPhysically(attacker, target);
@@ -88,7 +88,6 @@ public class Fight {
 
     private void endFight() {
         getOrderedOpponents().forEach(Entity::removeTemporaryBonusAndMalus);
-        this.pip.getSpellsToCastDuringFight().forEach(spell -> spell.getOnFightEnd().execute(this.pip));
     }
 
     private void attackMagically(Entity attacker, Entity target) {

@@ -4,6 +4,7 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Attack;
+import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
 import fr.jsmadja.antredesdragons.stuff.Item;
@@ -93,7 +94,7 @@ public abstract class Entity {
     private int missMalusCount;
 
     @Getter
-    private List<Spell> spellsToCastDuringFight = new ArrayList<>();
+    private List<SpellBook> spellsToCastDuringFight = new ArrayList<>();
 
     Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer instantKillWithStrikesInARow, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
         this.name = name;
@@ -329,11 +330,11 @@ public abstract class Entity {
         return !this.isFoe();
     }
 
-    public void addSpellToCast(Spell spell) {
+    public void addSpellToCast(SpellBook spell) {
         this.spellsToCastDuringFight.add(spell);
     }
 
-    public void removeSpellToCast(Spell spell) {
+    public void removeSpellToCast(SpellBook spell) {
         this.spellsToCastDuringFight.remove(spell);
     }
 

@@ -1,13 +1,13 @@
 package fr.jsmadja.antredesdragons.book;
 
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.entities.Spell;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
+import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.FIP;
-import static fr.jsmadja.antredesdragons.entities.Spell.HEP;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.FIP;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.HEP;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
 
 public class Page60 extends Page {
     @Override
@@ -35,7 +35,7 @@ public class Page60 extends Page {
         return pip.goToPage(14);
     }
 
-    private Execution use(Pip pip, Spell spell) {
+    private Execution use(Pip pip, SpellBook spell) {
         if (pip.use(spell) == FAILURE) return execute(pip);
         pip.addExperiencePoints(1);
         return pip.goToPage(10);

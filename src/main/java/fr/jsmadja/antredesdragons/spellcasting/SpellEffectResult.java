@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons.entities;
+package fr.jsmadja.antredesdragons.spellcasting;
 
 public enum SpellEffectResult {
     FAILURE, SUCCESS;

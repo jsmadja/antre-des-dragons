@@ -6,7 +6,7 @@ import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
 import fr.jsmadja.antredesdragons.stuff.Item;
 
-import static fr.jsmadja.antredesdragons.entities.Spell.FIREBALL;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.FIREBALL;
 import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
 
 public class Page151 extends Page {

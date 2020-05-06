@@ -1,16 +1,16 @@
 package fr.jsmadja.antredesdragons.book;
 
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.entities.Spell;
-import fr.jsmadja.antredesdragons.entities.SpellEffectResult;
 import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.RollAndGoPage;
+import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
+import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 
 import java.util.List;
 
 import static fr.jsmadja.antredesdragons.entities.Skill.SWIMMING;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
 
 public class Page132 extends RollAndGoPage {
     @Override
@@ -23,8 +23,8 @@ public class Page132 extends RollAndGoPage {
 
     @Override
     public Execution execute(Pip pip) {
-        if (pip.hasSpell(Spell.AEP) && pip.canUse(Spell.AEP)) {
-            SpellEffectResult result = pip.use(Spell.AEP);
+        if (pip.hasSpell(SpellBook.AEP) && pip.canUse(SpellBook.AEP)) {
+            SpellEffectResult result = pip.use(SpellBook.AEP);
             if (result == SUCCESS) {
                 return pip.goToPage(124);
             }

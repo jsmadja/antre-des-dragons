@@ -11,6 +11,9 @@ import fr.jsmadja.antredesdragons.market.SilverCoins;
 import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
+import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
+import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
+import fr.jsmadja.antredesdragons.spellcasting.SpellUsages;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
@@ -22,8 +25,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.FAILURE;
-import static fr.jsmadja.antredesdragons.entities.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
+import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
@@ -33,7 +36,7 @@ public class Pip extends Entity {
 
     public static final int NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP = 20;
     private final Pages pages = new Pages();
-    private final List<Spell> spells = new ArrayList<>();
+    private final List<SpellBook> spells = new ArrayList<>();
     private final Set<Skill> skills = new HashSet<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
     private SpellUsages spellUsages = new SpellUsages();
@@ -47,7 +50,7 @@ public class Pip extends Entity {
     private int experiencePoints;
     private int level = 1;
     private PageNumber currentPage;
-    private List<Spell> usedSpellsInCurrentChapter = new ArrayList<>();
+    private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
 
     public Pip(Dice dice) {
         super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null, null, null);
@@ -116,7 +119,8 @@ public class Pip extends Entity {
 
     private void onChapterEnd() {
         this.previousPage = currentPage;
-        this.usedSpellsInCurrentChapter.forEach(s -> s.getOnChapterEnd().execute(this));
+        this.usedSpellsInCurrentChapter.forEach(s -> s.getSpell().onChapterEnd(this));
+
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
@@ -126,23 +130,23 @@ public class Pip extends Entity {
     }
 
     // Spell
-    public boolean hasSpell(Spell spell) {
+    public boolean hasSpell(SpellBook spell) {
         return this.spells.contains(spell);
     }
 
-    public void removeSpell(Spell spell) {
+    public void removeSpell(SpellBook spell) {
         this.spells.remove(spell);
     }
 
-    public SpellEffectResult use(Spell spell) {
-        if (this.getCurrentHealthPoints() <= spell.getDamagePoints().getValue()) {
+    public SpellEffectResult use(SpellBook spell) {
+        if (this.getCurrentHealthPoints() <= spell.getSpell().getDamagePoints().getValue()) {
             spellEvent(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
             return FAILURE;
         }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.of(6))) {
             Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
-            spell.getCastEffect().execute(this);
-            this.wounds(spell.getDamagePoints().getValue());
+            spell.getSpell().onCast(this);
+            this.wounds(spell.getSpell().getDamagePoints().getValue());
             this.spellUsages.increment(spell);
             this.addUsedSpellsInCurrentChapter(spell);
             return SUCCESS;
@@ -151,12 +155,12 @@ public class Pip extends Entity {
         return FAILURE;
     }
 
-    private void addUsedSpellsInCurrentChapter(Spell spell) {
+    private void addUsedSpellsInCurrentChapter(SpellBook spell) {
         this.usedSpellsInCurrentChapter.add(spell);
     }
 
-    public boolean canUse(Spell spell) {
-        return this.spellUsages.getUsagesOf(spell) < spell.getMaxUsages();
+    public boolean canUse(SpellBook spell) {
+        return this.spellUsages.getUsagesOf(spell) < spell.getSpell().getMaxUsages();
     }
 
     // Skill
