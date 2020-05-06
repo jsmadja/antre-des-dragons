@@ -67,6 +67,18 @@ public enum Spell {
                 }
             }),
 
+    NIP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.setAbleToOpenAnyItem(true);
+        }
+    }, SpellFightExecution.nothing(), new SpellChapterEndExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.setAbleToOpenAnyItem(false);
+        }
+    }),
+
     INVISIBILITY(new SpellCastExecution() {
         @Override
         public void execute(Pip pip) {

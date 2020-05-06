@@ -13,6 +13,7 @@ import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +36,10 @@ public class Pip extends Entity {
     private final Set<Skill> skills = new HashSet<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
     private SpellUsages spellUsages = new SpellUsages();
+
+    @Setter
+    @Getter
+    private boolean ableToOpenAnyItem;
 
     @Getter
     private PageNumber previousPage;

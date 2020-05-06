@@ -7,6 +7,7 @@ import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.FIP;
 import static fr.jsmadja.antredesdragons.entities.Spell.HEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.entities.Spell.NIP;
 import static fr.jsmadja.antredesdragons.entities.Spell.PAP;
 import static fr.jsmadja.antredesdragons.entities.Spell.RIP;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -94,6 +95,19 @@ class SpellTest {
         assertThat(pip.isImmuneToPoison()).isFalse();
         PAP.getCastEffect().execute(pip);
         assertThat(pip.isImmuneToPoison()).isFalse();
+    }
+
+    @Test
+    public void NIP_pip_can_open_any_item() {
+        Pip pip = getPip();
+
+        assertThat(pip.isAbleToOpenAnyItem()).isFalse();
+
+        NIP.getCastEffect().execute(pip);
+        assertThat(pip.isAbleToOpenAnyItem()).isTrue();
+
+        NIP.getOnChapterEnd().execute(pip);
+        assertThat(pip.isAbleToOpenAnyItem()).isFalse();
     }
 
     private Pip getPip() {
