@@ -7,6 +7,7 @@ import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.FIP;
 import static fr.jsmadja.antredesdragons.entities.Spell.HEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.entities.Spell.PAP;
 import static fr.jsmadja.antredesdragons.entities.Spell.RIP;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,6 +72,28 @@ class SpellTest {
 
         assertThat(pip.getSpellsToCastDuringFight()).isEmpty();
         assertThat(target.getCurrentHealthPoints()).isEqualTo(0);
+    }
+
+    @Test
+    public void PAP_should_immune_to_poison() {
+        Pip pip = getPip();
+        assertThat(pip.isImmuneToPoison()).isFalse();
+
+        PAP.getCastEffect().execute(pip);
+        assertThat(pip.isImmuneToPoison()).isTrue();
+
+        PAP.getOnChapterEnd().execute(pip);
+        assertThat(pip.isImmuneToPoison()).isFalse();
+    }
+
+    @Test
+    public void PAP_cant_work_on_an_already_poisoned_entity() {
+        Pip pip = getPip();
+        pip.setPoisoned(true);
+
+        assertThat(pip.isImmuneToPoison()).isFalse();
+        PAP.getCastEffect().execute(pip);
+        assertThat(pip.isImmuneToPoison()).isFalse();
     }
 
     private Pip getPip() {

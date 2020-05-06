@@ -41,6 +41,7 @@ public class Pip extends Entity {
     private int experiencePoints;
     private int level = 1;
     private PageNumber currentPage;
+    private List<Spell> usedSpellsInCurrentChapter = new ArrayList<>();
 
     public Pip(Dice dice) {
         super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null, null, null);
@@ -97,14 +98,19 @@ public class Pip extends Entity {
     }
 
     public Execution goToPage(PageNumber pageNumber) {
-        this.previousPage = currentPage;
+        onChapterEnd();
         this.currentPage = pageNumber;
-        pageEvent("Pip se rend à la page " + pageNumber.getPage());
+        pageEvent("Pip se rend à la page " + this.currentPage.getPage());
         statusEvent(this.toString());
-        Page page = pages.get(pageNumber.getPage());
+        Page page = pages.get(this.currentPage.getPage());
         System.err.println(page.getText() + "\n");
         page.setVisited(true);
         return page.execute(this);
+    }
+
+    private void onChapterEnd() {
+        this.previousPage = currentPage;
+        this.usedSpellsInCurrentChapter.forEach(s -> s.getOnChapterEnd().execute(this));
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
@@ -129,12 +135,18 @@ public class Pip extends Entity {
         }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.of(6))) {
             Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
+            spell.getCastEffect().execute(this);
             this.wounds(spell.getDamagePoints().getValue());
             this.spellUsages.increment(spell);
+            this.addUsedSpellsInCurrentChapter(spell);
             return SUCCESS;
         }
         spellEvent(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
         return FAILURE;
+    }
+
+    private void addUsedSpellsInCurrentChapter(Spell spell) {
+        this.usedSpellsInCurrentChapter.add(spell);
     }
 
     public boolean canUse(Spell spell) {
