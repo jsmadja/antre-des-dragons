@@ -46,6 +46,10 @@ public abstract class Entity {
     private boolean immuneToPoison;
 
     @Getter
+    @Setter
+    private boolean ableToStrikeTwice;
+
+    @Getter
     private ArmorPoint magicArmorPoints = ArmorPoint.armor(0);
 
     @Getter
@@ -196,7 +200,7 @@ public abstract class Entity {
         this.loseInitiative = true;
     }
 
-    public boolean canFight() {
+    public boolean isAbleToFight() {
         return !this.isStuned() && !this.isDead();
     }
 
@@ -297,7 +301,6 @@ public abstract class Entity {
 
     public void removeTemporaryBonusAndMalus() {
         this.temporaryDamagePointsMalus = DamagePoint.damage(0);
-        this.setInvisible(false);
     }
 
     public boolean hasPoisonedWeapon() {
@@ -333,4 +336,5 @@ public abstract class Entity {
     public void removeSpellToCast(Spell spell) {
         this.spellsToCastDuringFight.remove(spell);
     }
+
 }

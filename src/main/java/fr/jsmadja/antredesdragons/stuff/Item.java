@@ -42,6 +42,7 @@ public enum Item {
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
     MINOTAUR_KEY("Clef"),
     MAGIC_WAND("Baguette Magique"),
+    FINGER_OF_FIRE("Doigt de Feu"),
 
     THATCHED_CREATURE_DAGGERS("Dagues de créature de chaumière"),
 

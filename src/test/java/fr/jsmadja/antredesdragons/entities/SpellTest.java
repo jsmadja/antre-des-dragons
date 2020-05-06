@@ -1,12 +1,16 @@
 package fr.jsmadja.antredesdragons.entities;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
+import fr.jsmadja.antredesdragons.stuff.Item;
 import org.junit.jupiter.api.Test;
 
 import static fr.jsmadja.antredesdragons.entities.Spell.AEP;
+import static fr.jsmadja.antredesdragons.entities.Spell.FINGER_OF_FIRE;
 import static fr.jsmadja.antredesdragons.entities.Spell.FIP;
+import static fr.jsmadja.antredesdragons.entities.Spell.FIREBALL;
 import static fr.jsmadja.antredesdragons.entities.Spell.HEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.entities.Spell.MEP;
 import static fr.jsmadja.antredesdragons.entities.Spell.NIP;
 import static fr.jsmadja.antredesdragons.entities.Spell.PAP;
 import static fr.jsmadja.antredesdragons.entities.Spell.RIP;
@@ -42,6 +46,9 @@ class SpellTest {
         INVISIBILITY.getCastEffect().execute(pip);
 
         assertThat(pip.isInvisible()).isTrue();
+
+        INVISIBILITY.getOnChapterEnd().execute(pip);
+        assertThat(pip.isInvisible()).isFalse();
     }
 
     @Test
@@ -108,6 +115,53 @@ class SpellTest {
 
         NIP.getOnChapterEnd().execute(pip);
         assertThat(pip.isAbleToOpenAnyItem()).isFalse();
+    }
+
+    @Test
+    public void MEP_should_be_able_to_strike_twice_during_the_fight_() {
+        Pip pip = getPip();
+        assertThat(pip.isAbleToStrikeTwice()).isFalse();
+
+        MEP.getCastEffect().execute(pip);
+        assertThat(pip.isAbleToStrikeTwice()).isTrue();
+
+        MEP.getOnChapterEnd().execute(pip);
+        assertThat(pip.isAbleToStrikeTwice()).isFalse();
+    }
+
+    @Test
+    public void FINGER_OF_DEATH_should_give_10_items() {
+        Pip pip = getPip();
+        assertThat(pip.has(Item.FINGER_OF_FIRE)).isFalse();
+
+        FINGER_OF_FIRE.getCastEffect().execute(pip);
+        assertThat(pip.has(Item.FINGER_OF_FIRE)).isTrue();
+        assertThat(pip.getInventory().stream().filter(i -> i == Item.FINGER_OF_FIRE).count()).isEqualTo(10);
+
+        Foe target = Foe.builder().initialHealthPoints(10).build();
+
+        FINGER_OF_FIRE.getFightEffect().execute(pip, target);
+        assertThat(target.isDead()).isTrue();
+        assertThat(pip.getInventory().stream().filter(i -> i == Item.FINGER_OF_FIRE).count()).isEqualTo(9);
+
+        FINGER_OF_FIRE.getOnChapterEnd().execute(pip);
+        assertThat(pip.has(Item.FINGER_OF_FIRE)).isFalse();
+    }
+
+    @Test
+    public void FIREBALL_should_give_2_items() {
+        Pip pip = getPip();
+        assertThat(pip.has(Item.FIREBALL)).isFalse();
+
+        FIREBALL.getCastEffect().execute(pip);
+        assertThat(pip.has(Item.FIREBALL)).isTrue();
+        assertThat(pip.getInventory().stream().filter(i -> i == Item.FIREBALL).count()).isEqualTo(2);
+
+        Foe target = Foe.builder().initialHealthPoints(75).build();
+
+        FIREBALL.getFightEffect().execute(pip, target);
+        assertThat(target.isDead()).isTrue();
+        assertThat(pip.getInventory().stream().filter(i -> i == Item.FIREBALL).count()).isEqualTo(1);
     }
 
     private Pip getPip() {

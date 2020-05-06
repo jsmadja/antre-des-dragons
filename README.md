@@ -6,7 +6,7 @@
 - [X] Pages
 - [X] Réaction amicale
 - [ ] Dormir
-- [ ] Sorts manquants
+- [X] Sorts manquants
 - [ ] Potions et onguents de départ
 - [ ] Devoir se soigner avant de quitter le village
 - [ ] Gérer la tabatière
@@ -19,3 +19,4 @@
 - [ ] Gestion Fight : maxStrikes
 - [ ] Webservice
 - [ ] Web UI
+- [ ] Où utiliser NIP ?

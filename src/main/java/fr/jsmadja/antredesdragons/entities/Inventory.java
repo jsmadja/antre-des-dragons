@@ -50,4 +50,10 @@ public class Inventory {
     public Stream<Item> stream() {
         return this.items.stream();
     }
+
+    public void removeAll(Item item) {
+        while(this.items.contains(item)) {
+            this.remove(item);
+        }
+    }
 }

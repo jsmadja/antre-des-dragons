@@ -2,9 +2,12 @@ package fr.jsmadja.antredesdragons.entities;
 
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.stream.IntStream;
 
 @AllArgsConstructor
 public enum Spell {
@@ -34,7 +37,7 @@ public enum Spell {
             target.setMissMalusCount(3);
             pip.removeSpellToCast(Spell.RIP);
         }
-    }, SpellChapterEndExecution.nothing()),
+    }),
 
     FIP(new SpellCastExecution() {
         @Override
@@ -47,7 +50,7 @@ public enum Spell {
             target.wounds(10);
             pip.removeSpellToCast(Spell.FIP);
         }
-    }, SpellChapterEndExecution.nothing()),
+    }),
 
     PAP(new SpellCastExecution() {
         @Override
@@ -59,7 +62,7 @@ public enum Spell {
                 pip.setImmuneToPoison(true);
             }
         }
-    }, SpellFightExecution.nothing(),
+    },
             new SpellChapterEndExecution() {
                 @Override
                 public void execute(Pip pip) {
@@ -72,27 +75,95 @@ public enum Spell {
         public void execute(Pip pip) {
             pip.setAbleToOpenAnyItem(true);
         }
-    }, SpellFightExecution.nothing(), new SpellChapterEndExecution() {
+    }, new SpellChapterEndExecution() {
         @Override
         public void execute(Pip pip) {
             pip.setAbleToOpenAnyItem(false);
         }
     }),
 
+    MEP(new SpellCastExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.setAbleToStrikeTwice(true);
+        }
+    }, new SpellChapterEndExecution() {
+        @Override
+        public void execute(Pip pip) {
+            pip.setAbleToStrikeTwice(false);
+        }
+    }),
     INVISIBILITY(new SpellCastExecution() {
         @Override
         public void execute(Pip pip) {
             pip.setInvisible(true);
         }
-    }, SpellFightExecution.nothing(), SpellChapterEndExecution.nothing(), DamagePoint.damage(15), false, 1),
+    }, SpellFightExecution.nothing(),
+            SpellFightEndExecution.nothing(),
+            new SpellChapterEndExecution() {
+                @Override
+                public void execute(Pip pip) {
+                    pip.setInvisible(false);
+                }
+            }, DamagePoint.damage(15), false, 1),
 
-    FIREBALL(SpellCastExecution.nothing(), SpellFightExecution.nothing(), SpellChapterEndExecution.nothing());
+    FINGER_OF_FIRE(
+            new SpellCastExecution() {
+                @Override
+                public void execute(Pip pip) {
+                    IntStream.range(0, 10).forEach(i -> pip.add(Item.FINGER_OF_FIRE));
+                }
+            },
+            new SpellFightExecution() {
+                @Override
+                public void execute(Pip pip, Entity target) {
+                    if (pip.has(Item.FINGER_OF_FIRE)) {
+                        target.wounds(10);
+                        pip.remove(Item.FINGER_OF_FIRE);
+                    }
+                }
+            },
+            SpellFightEndExecution.nothing(),
+            new SpellChapterEndExecution() {
+                @Override
+                public void execute(Pip pip) {
+                    pip.removeAll(Item.FINGER_OF_FIRE);
+                }
+            },
+            DamagePoint.damage(3),
+            true,
+            1),
+
+    FIREBALL(
+            new SpellCastExecution() {
+                @Override
+                public void execute(Pip pip) {
+                    IntStream.range(0, 2).forEach(i -> pip.add(Item.FIREBALL));
+                }
+            },
+            new SpellFightExecution() {
+                @Override
+                public void execute(Pip pip, Entity target) {
+                    if (pip.has(Item.FIREBALL)) {
+                        target.wounds(75);
+                        pip.remove(Item.FIREBALL);
+                    }
+                }
+            },
+            SpellFightEndExecution.nothing(),
+            SpellChapterEndExecution.nothing(),
+            DamagePoint.damage(3),
+            true,
+            3);
 
     @Getter
     private final SpellCastExecution castEffect;
 
     @Getter
     private final SpellFightExecution fightEffect;
+
+    @Getter
+    private final SpellFightEndExecution onFightEnd;
 
     @Getter
     private final SpellChapterEndExecution onChapterEnd;
@@ -106,11 +177,19 @@ public enum Spell {
     @Getter
     private final int maxUsages;
 
-    Spell(SpellCastExecution onCast, SpellFightExecution onNextAttack, SpellChapterEndExecution onChapterEnd) {
-        this(onCast, onNextAttack, onChapterEnd, DamagePoint.damage(3), true, 3);
+    Spell(SpellCastExecution onCast, SpellFightExecution onNextAttack, SpellFightEndExecution onFightEnd, SpellChapterEndExecution onChapterEnd) {
+        this(onCast, onNextAttack, onFightEnd, onChapterEnd, DamagePoint.damage(3), true, 3);
     }
 
     Spell(SpellCastExecution onCast) {
-        this(onCast, SpellFightExecution.nothing(), SpellChapterEndExecution.nothing(), DamagePoint.damage(3), true, 3);
+        this(onCast, SpellFightExecution.nothing(), SpellFightEndExecution.nothing(), SpellChapterEndExecution.nothing(), DamagePoint.damage(3), true, 3);
+    }
+
+    Spell(SpellCastExecution spellCastExecution, SpellFightExecution spellFightExecution) {
+        this(spellCastExecution, spellFightExecution, SpellFightEndExecution.nothing(), SpellChapterEndExecution.nothing());
+    }
+
+    Spell(SpellCastExecution spellCastExecution, SpellChapterEndExecution spellChapterEndExecution) {
+        this(spellCastExecution, SpellFightExecution.nothing(), SpellFightEndExecution.nothing(), spellChapterEndExecution);
     }
 }

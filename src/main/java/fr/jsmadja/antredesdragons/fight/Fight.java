@@ -54,7 +54,12 @@ public class Fight {
         List<Entity> opponents = getOrderedOpponents();
         while (!this.isOver()) {
             showTurn();
-            opponents.stream().filter(Entity::canFight).forEach(this::attack);
+            opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
+                attack(attacker);
+                if(attacker.isAbleToStrikeTwice()) {
+                    attack(attacker);
+                }
+            });
             opponents.forEach(p -> Events.statusEvent(p.toString()));
             this.endTurn();
         }
@@ -83,6 +88,7 @@ public class Fight {
 
     private void endFight() {
         getOrderedOpponents().forEach(Entity::removeTemporaryBonusAndMalus);
+        this.pip.getSpellsToCastDuringFight().forEach(spell -> spell.getOnFightEnd().execute(this.pip));
     }
 
     private void attackMagically(Entity attacker, Entity target) {

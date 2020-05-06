@@ -11,6 +11,7 @@ import fr.jsmadja.antredesdragons.market.SilverCoins;
 import fr.jsmadja.antredesdragons.pages.DiceWay;
 import fr.jsmadja.antredesdragons.pages.Execution;
 import fr.jsmadja.antredesdragons.pages.Page;
+import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
@@ -208,4 +209,7 @@ public class Pip extends Entity {
         this.skills.add(skill);
     }
 
+    public void removeAll(Item item) {
+        this.getInventory().removeAll(item);
+    }
 }
