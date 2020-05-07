@@ -18,8 +18,8 @@ public class Events {
         err.println(pad("[DICE]") + message);
     }
 
-    public static void pageEvent(String message) {
-        err.println(pad("\n[PAGE]") + message + "\n");
+    public static void chapterEvent(String message) {
+        err.println(pad("\n[CHAPTER]") + message + "\n");
     }
 
     public static void inventoryEvent(String message) {

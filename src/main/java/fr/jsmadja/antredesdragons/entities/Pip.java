@@ -1,16 +1,16 @@
 package fr.jsmadja.antredesdragons.entities;
 
-import fr.jsmadja.antredesdragons.book.PageNumber;
-import fr.jsmadja.antredesdragons.book.Pages;
+import fr.jsmadja.antredesdragons.book.ChapterNumber;
+import fr.jsmadja.antredesdragons.book.Book;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Fight;
 import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.market.MarketItem;
 import fr.jsmadja.antredesdragons.market.SilverCoins;
-import fr.jsmadja.antredesdragons.pages.DiceWay;
-import fr.jsmadja.antredesdragons.pages.Execution;
-import fr.jsmadja.antredesdragons.pages.Page;
+import fr.jsmadja.antredesdragons.chapters.DiceWay;
+import fr.jsmadja.antredesdragons.chapters.Execution;
+import fr.jsmadja.antredesdragons.chapters.Chapter;
 import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 import fr.jsmadja.antredesdragons.spellcasting.SpellUsages;
@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
 
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
-import static fr.jsmadja.antredesdragons.ui.Events.pageEvent;
+import static fr.jsmadja.antredesdragons.ui.Events.chapterEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
@@ -35,7 +35,7 @@ import static java.text.MessageFormat.format;
 public class Pip extends Entity {
 
     public static final int NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP = 20;
-    private final Pages pages = new Pages();
+    private final Book book = new Book();
     private final List<SpellBook> spells = new ArrayList<>();
     private final Set<Skill> skills = new HashSet<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
@@ -46,10 +46,10 @@ public class Pip extends Entity {
     private boolean ableToOpenAnyItem;
 
     @Getter
-    private PageNumber previousPage;
+    private ChapterNumber previousChapter;
     private int experiencePoints;
     private int level = 1;
-    private PageNumber currentPage;
+    private ChapterNumber currentChapter;
     private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
 
     public Pip(Dice dice) {
@@ -98,27 +98,27 @@ public class Pip extends Entity {
     }
 
     // Navigation
-    public Execution goToPage(int page) {
-        return goToPage(PageNumber.page(page));
+    public Execution goToChapter(int chapter) {
+        return goToChapter(ChapterNumber.chapter(chapter));
     }
 
-    public Execution goToPreviousPage() {
-        return goToPage(getPreviousPage());
+    public Execution goToPreviousChapter() {
+        return goToChapter(getPreviousChapter());
     }
 
-    public Execution goToPage(PageNumber pageNumber) {
+    public Execution goToChapter(ChapterNumber chapterNumber) {
         onChapterEnd();
-        this.currentPage = pageNumber;
-        pageEvent("Pip se rend à la page " + this.currentPage.getPage());
+        this.currentChapter = chapterNumber;
+        chapterEvent("Pip se rend au chapitre " + this.currentChapter.getChapter());
         statusEvent(this.toString());
-        Page page = pages.get(this.currentPage.getPage());
-        System.err.println(page.getText() + "\n");
-        page.setVisited(true);
-        return page.execute(this);
+        Chapter chapter = book.get(this.currentChapter.getChapter());
+        System.err.println(chapter.getText() + "\n");
+        chapter.setVisited(true);
+        return chapter.execute(this);
     }
 
     private void onChapterEnd() {
-        this.previousPage = currentPage;
+        this.previousChapter = currentChapter;
         this.usedSpellsInCurrentChapter.forEach(s -> s.getSpell().onChapterEnd(this));
 
     }
@@ -126,7 +126,7 @@ public class Pip extends Entity {
     public Execution rollAndGo(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().get();
-        return goToPage(way.getPageNumber());
+        return goToChapter(way.getChapterNumber());
     }
 
     // Spell
