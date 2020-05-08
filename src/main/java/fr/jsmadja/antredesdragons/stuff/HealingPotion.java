@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.stuff;
 
 import fr.jsmadja.antredesdragons.dices.Dice;
+import fr.jsmadja.antredesdragons.entities.Entity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,12 @@ public class HealingPotion extends HealingItem {
     }
 
     @Override
+    public HealthPoints useDuringFight(Entity attacker, Entity target) {
+        return this.use();
+    }
+
+    @Override
     public String toString() {
-        return "Potion Curative de "+this.doses.size()+" doses ("+this.doses.stream().map(HealthPoints::toString).collect(Collectors.joining(", "))+")";
+        return "Potion Curative de " + this.doses.size() + " doses (" + this.doses.stream().map(HealthPoints::toString).collect(Collectors.joining(", ")) + ")";
     }
 }

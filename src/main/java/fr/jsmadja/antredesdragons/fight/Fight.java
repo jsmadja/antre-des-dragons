@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
@@ -51,6 +52,7 @@ public class Fight {
     }
 
     public void start() {
+        beforeFight();
         List<Entity> opponents = getOrderedOpponents();
         while (!this.isOver()) {
             showTurn();
@@ -67,6 +69,10 @@ public class Fight {
             pip.die();
         }
         this.endFight();
+    }
+
+    private void beforeFight() {
+        getOrderedOpponents().forEach(o -> o.setLostHealthPointsDuringCurrentFight(hp(0)));
     }
 
     private void attack(Entity attacker) {

@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.stuff;
 
+import fr.jsmadja.antredesdragons.entities.Entity;
 import lombok.Getter;
 
 import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
@@ -11,8 +12,16 @@ public class Ointment extends HealingItem {
 
     @Override
     public HealthPoints use() {
-        this.usable = false;
-        return hp(5);
+        if (isUsable()) {
+            this.usable = false;
+            return hp(5);
+        }
+        return hp(0);
+    }
+
+    @Override
+    public HealthPoints useDuringFight(Entity attacker, Entity target) {
+        return this.use();
     }
 
     @Override

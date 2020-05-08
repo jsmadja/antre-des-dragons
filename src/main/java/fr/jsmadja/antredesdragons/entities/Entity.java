@@ -8,6 +8,7 @@ import fr.jsmadja.antredesdragons.skills.SpecialSkill;
 import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.stuff.HealthPoints;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static java.lang.Integer.MAX_VALUE;
 import static java.text.MessageFormat.format;
 
@@ -101,6 +103,10 @@ public abstract class Entity {
 
     @Getter
     private List<SpecialSkill> specialSkills = new ArrayList<>();
+
+    @Setter
+    @Getter
+    private HealthPoints lostHealthPointsDuringCurrentFight = hp(0);
 
     Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
         this.name = name;
@@ -264,6 +270,7 @@ public abstract class Entity {
     }
 
     public void wounds(int damagePoints) {
+        this.lostHealthPointsDuringCurrentFight = hp(this.lostHealthPointsDuringCurrentFight.getValue() + damagePoints);
         this.currentHealthPoints -= damagePoints;
         if (this.currentHealthPoints < 0) {
             this.currentHealthPoints = 0;
@@ -369,4 +376,5 @@ public abstract class Entity {
     public void add(SpecialSkill specialSkill) {
         this.specialSkills.add(specialSkill);
     }
+
 }

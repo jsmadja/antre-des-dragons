@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.stuff;
 
+import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import lombok.AllArgsConstructor;
 
@@ -21,6 +22,11 @@ public class NosferaxSnuffBox extends HealingItem {
         }
         pip.setNosferaxSnuffBoxUsed(true);
         return hp(pip.roll4Dices().getValue());
+    }
+
+    @Override
+    public HealthPoints useDuringFight(Entity attacker, Entity target) {
+        return this.use();
     }
 
     @Override

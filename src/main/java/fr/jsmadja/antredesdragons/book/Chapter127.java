@@ -1,9 +1,8 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.chapters.GoNextChapter;
-
-import static fr.jsmadja.antredesdragons.stuff.Item.NOSFERAX_LOLLIPOP;
+import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.stuff.NosferaxLollipop;
 
 public class Chapter127 extends GoNextChapter {
     @Override
@@ -13,9 +12,7 @@ public class Chapter127 extends GoNextChapter {
 
     @Override
     protected void beforeLeavingChapter(Pip pip) {
-        pip.add(NOSFERAX_LOLLIPOP);
-        pip.add(NOSFERAX_LOLLIPOP);
-        pip.add(NOSFERAX_LOLLIPOP);
+        pip.add(new NosferaxLollipop());
         super.beforeLeavingChapter(pip);
     }
 
