@@ -16,7 +16,7 @@
 - [X] Gestion Fight : instantKillWithStrikesInARow
 - [X] Gestion Fight : requiredStrikesToHitInvisible
 - [X] Gestion Fight : useWeaponEveryNStrike
-- [ ] Gestion Fight : invisibleRequiredMinimumHitRoll
+- [X] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [X] Gestion Fight : maxStrikes
 - [ ] Webservice
 - [ ] Web UI

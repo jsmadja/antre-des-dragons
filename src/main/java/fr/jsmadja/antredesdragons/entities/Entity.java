@@ -214,8 +214,8 @@ public abstract class Entity {
         target.wounds(damagePoints);
     }
 
-    private boolean hasTouchedTargetWithPhysic(int roll, Entity target) {
-        if (isNotAbleToTouchInvisibleTarget(target)) {
+    private boolean hasTouchedTargetWithPhysic(Roll roll, Entity target) {
+        if (target.isInvisible() && !isAbleToTouchInvisibleTarget(target, roll)) {
             return false;
         }
         if (target.immuneToPhysicalDamages) {
@@ -226,15 +226,11 @@ public abstract class Entity {
             this.setMissMalusCount(this.getMissMalusCount() - 1);
             return false;
         }
-        return this.getAdjustedHitRollRange().contains(roll);
-    }
-
-    private boolean isNotAbleToTouchInvisibleTarget(Entity target) {
-        return target.isInvisible() && this.getStrikesInARow() < target.getRequiredStrikesToHitInvisible();
+        return this.getAdjustedHitRollRange().contains(roll.getValue());
     }
 
     private boolean hasTouchedOpponentWithMagic(Entity target) {
-        if (isNotAbleToTouchInvisibleTarget(target)) {
+        if (target.isInvisible() && !isAbleToTouchInvisibleTarget(target, null)) {
             return false;
         }
         if (this.getMissMalusCount() > 0) {
@@ -242,6 +238,24 @@ public abstract class Entity {
             return false;
         }
         return true;
+    }
+
+    private boolean isAbleToTouchInvisibleTarget(Entity target, Roll roll) {
+        if (this.hasEnoughStrikesInRowToHit(target)) {
+            return true;
+        }
+        if (roll != null && this.hasEnoughRollToHit(target, roll)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasEnoughStrikesInRowToHit(Entity target) {
+        return this.getStrikesInARow() >= target.getRequiredStrikesToHitInvisible();
+    }
+
+    public boolean hasEnoughRollToHit(Entity target, Roll roll) {
+        return roll.getValue() >= target.invisibleRequiredMinimumHitRoll.getValue();
     }
 
     public void wounds(int damagePoints) {
@@ -252,7 +266,7 @@ public abstract class Entity {
     }
 
     public Attack createPhysicAttack(Entity target) {
-        int roll = this.roll2Dices().getValue();
+        Roll roll = this.roll2Dices();
         return new Attack(computeDamages(roll, target), hasTouchedTargetWithPhysic(roll, target) ? TOUCHED : MISSED);
     }
 
@@ -260,12 +274,12 @@ public abstract class Entity {
         return new Attack(getMagicDamagePoints().getValue(), hasTouchedOpponentWithMagic(target) ? TOUCHED : MISSED);
     }
 
-    private int computeDamages(int roll, Entity target) {
+    private int computeDamages(Roll roll, Entity target) {
         if (this.constantHitDamage != null) {
             return constantHitDamage;
         }
         // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
-        int damages = roll - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
+        int damages = roll.getValue() - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
         if (this.has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
             damages += 10;
         }
