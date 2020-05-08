@@ -15,7 +15,7 @@
 - [ ] Gestion d'objets à chaque chapitre
 - [X] Gestion Fight : instantKillWithStrikesInARow
 - [X] Gestion Fight : requiredStrikesToHitInvisible
-- [ ] Gestion Fight : useWeaponEveryNStrike
+- [X] Gestion Fight : useWeaponEveryNStrike
 - [ ] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [ ] Gestion Fight : maxStrikes
 - [ ] Webservice

@@ -81,9 +81,9 @@ public abstract class Entity {
 
     @Getter
     private final int requiredStrikesToHitInvisible;
-    private Item weaponToUseEveryNStrikes;
-    private int changeWeaponEvery;
     private final int maxStrikes;
+    @Getter
+    private int strikes;
 
     @Setter
     @Getter
@@ -280,8 +280,9 @@ public abstract class Entity {
         this.inventory.equip(item);
     }
 
-    public void unequip(Item item) {
+    public Item unequip(Item item) {
         this.inventory.unequip(item);
+        return item;
     }
 
     public Optional<Item> getEquipedWeapon() {
@@ -320,11 +321,6 @@ public abstract class Entity {
 
     public boolean hasPoisonedWeapon() {
         return this.getEquipedWeapon().map(Item::isPoisoned).orElse(false);
-    }
-
-    public void useWeaponEveryNStrikes(Item weaponToUseEveryNStrikes, int changeWeaponEvery) {
-        this.weaponToUseEveryNStrikes = weaponToUseEveryNStrikes;
-        this.changeWeaponEvery = changeWeaponEvery;
     }
 
     @Override
