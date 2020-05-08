@@ -3,10 +3,14 @@ package fr.jsmadja.antredesdragons.entities;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.fight.Attack;
 import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
+import fr.jsmadja.antredesdragons.stuff.HealingItem;
+import fr.jsmadja.antredesdragons.stuff.HealingPotion;
+import fr.jsmadja.antredesdragons.stuff.Ointment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
@@ -112,6 +116,18 @@ class PipTest {
         when(dice.roll(2)).thenReturn(6);
         SpellEffectResult spellEffectResult = pip.use(AEP);
         assertThat(spellEffectResult).isEqualTo(FAILURE);
+    }
+
+    @Test
+    void pip_should_have_3_potions_at_the_beginning() {
+        List<HealingItem> potions = pip.getHealingItemsOfType(HealingPotion.class);
+        assertThat(potions).hasSize(3);
+    }
+
+    @Test
+    void pip_should_have_5_ointments_at_the_beginning() {
+        List<HealingItem> ointments = pip.getHealingItemsOfType(Ointment.class);
+        assertThat(ointments).hasSize(5);
     }
 
 }

@@ -5,19 +5,19 @@
 # Todo
 - [X] Pages
 - [X] Réaction amicale
-- [ ] Dormir
 - [X] Sorts manquants
-- [ ] Potions et onguents de départ
+- [X] Potions et onguents de départ
 - [ ] Devoir se soigner avant de quitter le village
 - [ ] Gérer la tabatière
 - [ ] Gérer la sucette
 - [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
-- [ ] Gestion d'objets à chaque chapitre
+- [ ] Où utiliser NIP ?
 - [X] Gestion Fight : instantKillWithStrikesInARow
 - [X] Gestion Fight : requiredStrikesToHitInvisible
 - [X] Gestion Fight : useWeaponEveryNStrike
 - [X] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [X] Gestion Fight : maxStrikes
+- [ ] Dormir
+- [ ] Gestion d'objets à chaque chapitre
 - [ ] Webservice
 - [ ] Web UI
-- [ ] Où utiliser NIP ?

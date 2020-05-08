@@ -1,20 +1,23 @@
 package fr.jsmadja.antredesdragons.entities;
 
-import fr.jsmadja.antredesdragons.book.ChapterNumber;
 import fr.jsmadja.antredesdragons.book.Book;
+import fr.jsmadja.antredesdragons.book.ChapterNumber;
+import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.DiceWay;
+import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Fight;
 import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.market.MarketItem;
 import fr.jsmadja.antredesdragons.market.SilverCoins;
-import fr.jsmadja.antredesdragons.chapters.DiceWay;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.Chapter;
 import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 import fr.jsmadja.antredesdragons.spellcasting.SpellUsages;
+import fr.jsmadja.antredesdragons.stuff.HealingItem;
+import fr.jsmadja.antredesdragons.stuff.HealingPotion;
 import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.stuff.Ointment;
 import fr.jsmadja.antredesdragons.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +57,20 @@ public class Pip extends Entity {
 
     public Pip(Dice dice) {
         super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
+
+        IntStream.range(0, 3)
+                .mapToObj(i -> new HealingPotion(dice))
+                .forEach(healingPotion -> {
+                    Events.inventoryEvent(this.getName() + " ajoute " + healingPotion + " dans son inventaire");
+                    this.getInventory().add(healingPotion);
+                });
+
+        IntStream.range(0, 5)
+                .mapToObj(i -> new Ointment())
+                .forEach(ointment -> {
+                    Events.inventoryEvent(this.getName() + " ajoute " + ointment + " dans son inventaire");
+                    this.getInventory().add(ointment);
+                });
     }
 
     private static int computeInitialHealthPoints(Dice dice) {
@@ -215,5 +232,9 @@ public class Pip extends Entity {
 
     public void removeAll(Item item) {
         this.getInventory().removeAll(item);
+    }
+
+    public List<HealingItem> getHealingItemsOfType(Class<? extends  HealingItem> clazz) {
+        return this.getInventory().getHealingItemsOfType(clazz);
     }
 }

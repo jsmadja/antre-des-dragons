@@ -1,11 +1,13 @@
 package fr.jsmadja.antredesdragons.entities;
 
+import fr.jsmadja.antredesdragons.stuff.HealingItem;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -14,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 public class Inventory {
     private final List<Item> items = new ArrayList<>();
     private final List<Item> equipedItems = new ArrayList<>();
+    private final List<HealingItem> healingItems = new ArrayList<>();
 
     public void add(Item item) {
         this.items.add(item);
@@ -55,5 +58,13 @@ public class Inventory {
         while (this.items.contains(item)) {
             this.remove(item);
         }
+    }
+
+    public List<HealingItem> getHealingItemsOfType(Class<? extends HealingItem> clazz) {
+        return this.healingItems.stream().filter(i -> i.getClass().isAssignableFrom(clazz)).collect(Collectors.toList());
+    }
+
+    public void add(HealingItem healingItem) {
+        this.healingItems.add(healingItem);
     }
 }
