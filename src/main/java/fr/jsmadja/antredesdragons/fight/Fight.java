@@ -71,14 +71,13 @@ public class Fight {
 
     private void attack(Entity attacker) {
         Entity target = this.getTarget(attacker);
-        attacker.getSpecialSkills().forEach(specialSkill -> specialSkill.onAttack(attacker, target));
+        attacker.getSpecialSkills()
+                .forEach(specialSkill -> specialSkill.onAttack(attacker, target));
         if (!target.isDead()) {
             if (attacker.isPip()) {
                 Pip pip = (Pip) attacker;
                 attacker.getSpellsToCastDuringFight()
-                        .forEach(spell -> {
-                            spell.getSpell().onAttack(pip, target);
-                        });
+                        .forEach(spell -> spell.getSpell().onAttack(pip, target));
             }
             this.attackPhysically(attacker, target);
             if (attacker.getMagicDamagePoints().getValue() > 0) {

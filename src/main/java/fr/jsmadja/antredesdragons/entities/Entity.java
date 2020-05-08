@@ -4,7 +4,6 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Attack;
-import fr.jsmadja.antredesdragons.skills.InstantKillWithStrikesInARowSpecialSkill;
 import fr.jsmadja.antredesdragons.skills.SpecialSkill;
 import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
@@ -216,7 +215,10 @@ public abstract class Entity {
         target.wounds(damagePoints);
     }
 
-    private boolean touchOpponentWithPhysic(int roll, Entity target) {
+    private boolean hasTouchedTargetWithPhysic(int roll, Entity target) {
+        if (isNotAbleToTouchInvisibleTarget(target)) {
+            return false;
+        }
         if (target.immuneToPhysicalDamages) {
             Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
             return false;
@@ -228,7 +230,14 @@ public abstract class Entity {
         return this.getAdjustedHitRollRange().contains(roll);
     }
 
-    private boolean touchOpponentWithMagic(Entity target) {
+    private boolean isNotAbleToTouchInvisibleTarget(Entity target) {
+        return target.isInvisible() && this.getStrikesInARow() < target.getRequiredStrikesToHitInvisible();
+    }
+
+    private boolean hasTouchedOpponentWithMagic(Entity target) {
+        if (isNotAbleToTouchInvisibleTarget(target)) {
+            return false;
+        }
         if (this.getMissMalusCount() > 0) {
             this.setMissMalusCount(this.getMissMalusCount() - 1);
             return false;
@@ -245,11 +254,11 @@ public abstract class Entity {
 
     public Attack createPhysicAttack(Entity target) {
         int roll = this.roll2Dices().getValue();
-        return new Attack(computeDamages(roll, target), touchOpponentWithPhysic(roll, target) ? TOUCHED : MISSED);
+        return new Attack(computeDamages(roll, target), hasTouchedTargetWithPhysic(roll, target) ? TOUCHED : MISSED);
     }
 
     public Attack createMagicAttack(Entity target) {
-        return new Attack(getMagicDamagePoints().getValue(), touchOpponentWithMagic(target) ? TOUCHED : MISSED);
+        return new Attack(getMagicDamagePoints().getValue(), hasTouchedOpponentWithMagic(target) ? TOUCHED : MISSED);
     }
 
     private int computeDamages(int roll, Entity target) {

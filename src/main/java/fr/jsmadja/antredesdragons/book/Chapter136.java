@@ -16,7 +16,7 @@ public class Chapter136 extends ManualChoiceChapter {
         Foe foe = Foe.builder()
                 .name("Méduse")
                 .initialHealthPoints(100)
-                .requiredStrikesToHitInvisible(3)
+                .requiredStrikesInARowToHitInvisible(3)
                 .build();
         foe.addAndEquip(MEDUSA_WEAPON);
         foe.add(new InstantKillWithStrikesInARowSpecialSkill(2));
