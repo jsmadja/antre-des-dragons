@@ -4,6 +4,8 @@ import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.fight.Attack;
+import fr.jsmadja.antredesdragons.skills.InstantKillWithStrikesInARowSpecialSkill;
+import fr.jsmadja.antredesdragons.skills.SpecialSkill;
 import fr.jsmadja.antredesdragons.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.stuff.ArmorPoint;
 import fr.jsmadja.antredesdragons.stuff.DamagePoint;
@@ -79,13 +81,14 @@ public abstract class Entity {
     private boolean invisible;
 
     @Getter
-    private final int instantKillWithStrikesInARow;
-
-    @Getter
     private final int requiredStrikesToHitInvisible;
     private Item weaponToUseEveryNStrikes;
     private int changeWeaponEvery;
     private final int maxStrikes;
+
+    @Setter
+    @Getter
+    private int strikesInARow;
 
     @Setter
     private Roll invisibleRequiredMinimumHitRoll;
@@ -96,7 +99,10 @@ public abstract class Entity {
     @Getter
     private List<SpellBook> spellsToCastDuringFight = new ArrayList<>();
 
-    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer instantKillWithStrikesInARow, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
+    @Getter
+    private List<SpecialSkill> specialSkills = new ArrayList<>();
+
+    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
         this.name = name;
         this.dice = dice;
         if (hitRollRange != null) {
@@ -106,7 +112,6 @@ public abstract class Entity {
         this.constantHitDamage = constantHitDamage;
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
-        this.instantKillWithStrikesInARow = instantKillWithStrikesInARow == null ? MAX_VALUE : instantKillWithStrikesInARow;
         this.requiredStrikesToHitInvisible = requiredStrikesToHitInvisible == null ? MAX_VALUE : requiredStrikesToHitInvisible;
         this.maxStrikes = maxStrikes == null ? MAX_VALUE : maxStrikes;
     }
@@ -338,4 +343,7 @@ public abstract class Entity {
         this.spellsToCastDuringFight.remove(spell);
     }
 
+    public void add(SpecialSkill specialSkill) {
+        this.specialSkills.add(specialSkill);
+    }
 }

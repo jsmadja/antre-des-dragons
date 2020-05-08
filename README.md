@@ -13,7 +13,8 @@
 - [ ] Gérer la sucette
 - [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
 - [ ] Gestion d'objets à chaque chapitre
-- [ ] Gestion Fight : instantKillWithStrikesInARow, requiredStrikesToHitInvisible
+- [X] Gestion Fight : instantKillWithStrikesInARow
+- [ ] Gestion Fight : requiredStrikesToHitInvisible
 - [ ] Gestion Fight : useWeaponEveryNStrike
 - [ ] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [ ] Gestion Fight : maxStrikes

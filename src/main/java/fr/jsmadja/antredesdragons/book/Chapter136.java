@@ -6,6 +6,7 @@ import fr.jsmadja.antredesdragons.fight.Fight;
 import fr.jsmadja.antredesdragons.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.chapters.ManualChoiceChapter;
+import fr.jsmadja.antredesdragons.skills.InstantKillWithStrikesInARowSpecialSkill;
 
 import static fr.jsmadja.antredesdragons.stuff.Item.MEDUSA_WEAPON;
 
@@ -15,10 +16,10 @@ public class Chapter136 extends ManualChoiceChapter {
         Foe foe = Foe.builder()
                 .name("Méduse")
                 .initialHealthPoints(100)
-                .instantKillWithStrikesInARow(2)
                 .requiredStrikesToHitInvisible(3)
                 .build();
         foe.addAndEquip(MEDUSA_WEAPON);
+        foe.add(new InstantKillWithStrikesInARowSpecialSkill(2));
         return foe;
     }
 
@@ -45,7 +46,7 @@ public class Chapter136 extends ManualChoiceChapter {
                 "DE VIE. Elle peut vous transformer en pierre chaque fois qu'elle frappe deux " +
                 "coups d'affilée contre vous. Il lui faut faire au minimum 8 pour frapper un coup. Si " +
                 "vous décidez d'utiliser votre sortilège INVISIBILITÉ durant ce combat, elle peut " +
-                "quand même vous vaincre, mais il lui faudra frapper Trois coups d'affilée contre " +
+                "quand même vous vaincre, mais il lui faudra frapper trois coups d'affilée contre " +
                 "vous. Bonne chance !\n" +
                 "Si la Méduse vous tue, rendez-vous au [14]. Si vous tuez la Méduse, vous " +
                 "constaterez que vous pouvez facilement porter un trésor qui vaut 200 000 Pièces " +

@@ -9,8 +9,8 @@ public class Foe extends Entity {
     private boolean dragon;
 
     @Builder
-    public Foe(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, boolean dragon, Integer instantKillWithStrikesInARow, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
-        super(name, dice == null ? new Dice() : dice, initialHealthPoints, hitRollRange, constantHitDamage, immuneToPhysicalDamages, instantKillWithStrikesInARow, requiredStrikesToHitInvisible, maxStrikes);
+    public Foe(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, boolean dragon, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
+        super(name, dice == null ? new Dice() : dice, initialHealthPoints, hitRollRange, constantHitDamage, immuneToPhysicalDamages, requiredStrikesToHitInvisible, maxStrikes);
         this.dragon = dragon;
     }
 

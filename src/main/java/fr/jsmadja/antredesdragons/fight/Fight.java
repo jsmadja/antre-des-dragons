@@ -71,6 +71,7 @@ public class Fight {
 
     private void attack(Entity attacker) {
         Entity target = this.getTarget(attacker);
+        attacker.getSpecialSkills().forEach(specialSkill -> specialSkill.onAttack(attacker, target));
         if (!target.isDead()) {
             if (attacker.isPip()) {
                 Pip pip = (Pip) attacker;
@@ -102,6 +103,7 @@ public class Fight {
 
     private void attack(Entity attacker, Entity target, Attack attack) {
         if (attack.getStatus() == TOUCHED) {
+            attacker.setStrikesInARow(attacker.getStrikesInARow() + 1);
             int damagePoints = attack.getDamagePoints();
             fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
             if (attacker.hasPoisonedWeapon()) {
