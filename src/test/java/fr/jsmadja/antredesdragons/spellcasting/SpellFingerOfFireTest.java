@@ -5,6 +5,7 @@ import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import org.junit.jupiter.api.Test;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.FINGER_OF_FIRE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,7 @@ class SpellFingerOfFireTest {
         assertThat(pip.has(FINGER_OF_FIRE)).isTrue();
         assertThat(pip.getInventory().stream().filter(i -> i == FINGER_OF_FIRE).count()).isEqualTo(10);
 
-        Foe target = Foe.builder().initialHealthPoints(10).build();
+        Foe target = Foe.builder().initialHealthPoints(hp(10)).build();
 
         spell.onAttack(pip, target);
         assertThat(target.isDead()).isTrue();

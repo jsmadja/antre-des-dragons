@@ -22,6 +22,7 @@ import java.util.Optional;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER;
 import static java.lang.Integer.MAX_VALUE;
 import static java.text.MessageFormat.format;
 
@@ -69,6 +70,10 @@ public abstract class Entity {
     @Setter
     private int rollMalus;
 
+    @Getter
+    @Setter
+    private boolean sleeping;
+
     public static final HitRollRange DEFAULT_MINIMUM_HIT_ROLL = new HitRollRange(6, 12);
 
     @Getter
@@ -108,13 +113,13 @@ public abstract class Entity {
     @Getter
     private HealthPoints lostHealthPointsDuringCurrentFight = hp(0);
 
-    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
+    Entity(String name, Dice dice, HealthPoints initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
         this.name = name;
         this.dice = dice;
         if (hitRollRange != null) {
             this.hitRollRange = hitRollRange;
         }
-        this.initialHealthPoints = this.currentHealthPoints = initialHealthPoints;
+        this.initialHealthPoints = this.currentHealthPoints = initialHealthPoints.getValue();
         this.constantHitDamage = constantHitDamage;
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
@@ -138,30 +143,32 @@ public abstract class Entity {
 
     // Rolling
     public Roll roll1Dice() {
-        return Roll.of(this.dice.roll() - rollMalus);
+        return Roll.roll(this.dice.roll() - rollMalus);
     }
 
     public Roll roll2Dices() {
-        int result = this.dice.roll(2) - rollMalus;
+        int result = this.dice.roll(2).getValue() - rollMalus;
         Events.diceEvent(this.name + " lance 2 dés et fait " + result);
-        return Roll.of(result);
+        return Roll.roll(result);
     }
 
     public Roll roll3Dices() {
-        int result = this.dice.roll(3) - rollMalus;
+        int result = this.dice.roll(3).getValue() - rollMalus;
         Events.diceEvent(this.name + " lance 3 dés et fait " + result);
-        return Roll.of(result);
+        return Roll.roll(result);
     }
 
     public Roll roll4Dices() {
-        int result = this.dice.roll(4) - rollMalus;
+        int result = this.dice.roll(4).getValue() - rollMalus;
         Events.diceEvent(this.name + " lance 4 dés et fait " + result);
-        return Roll.of(result);
+        return Roll.roll(result);
     }
 
     // Status
     public int getAdditionalDamagePoints() {
-        return this.getEquipedWeapon().map(i -> i.getDamagePoint().getValue()).orElse(0);
+        return this.getEquipedWeapon()
+                .filter(i -> !isSleeping() || i.isDreamItem())
+                .map(i -> i.getDamagePoint().getValue()).orElse(0);
     }
 
     public HitRollRange getHitRollRange() {
@@ -184,7 +191,11 @@ public abstract class Entity {
     }
 
     public int getArmorPoints() {
-        return this.inventory.getEquipedItems().stream().map(i -> i.getArmorPoint().getValue()).reduce(0, Integer::sum);
+        return this.inventory.getEquipedItems()
+                .stream()
+                .filter(item -> !isSleeping() || item.isDreamItem())
+                .map(i -> i.getArmorPoint().getValue())
+                .reduce(0, Integer::sum);
     }
 
     public void addMagicalArmorPoints(ArmorPoint armorPoint) {
@@ -279,20 +290,24 @@ public abstract class Entity {
 
     public Attack createPhysicAttack(Entity target) {
         Roll roll = this.roll2Dices();
-        return new Attack(computeDamages(roll, target), hasTouchedTargetWithPhysic(roll, target) ? TOUCHED : MISSED);
+        return new Attack(getPhysicalDamagePoints(roll, target), hasTouchedTargetWithPhysic(roll, target) ? TOUCHED : MISSED);
     }
 
     public Attack createMagicAttack(Entity target) {
         return new Attack(getMagicDamagePoints().getValue(), hasTouchedOpponentWithMagic(target) ? TOUCHED : MISSED);
     }
 
-    private int computeDamages(Roll roll, Entity target) {
+    private int getPhysicalDamagePoints(Roll roll, Entity target) {
         if (this.constantHitDamage != null) {
             return constantHitDamage;
         }
-        // System.out.println(roll+" - tch:"+this.getAdjustedHitRollRange().getMin()+" - arm:"+target.getArmor()+" + sw:"+getAdditionalDamagePoints());
-        int damages = roll.getValue() - this.getAdjustedHitRollRange().getMin() - target.getArmorPoints() - target.magicArmorPoints.getValue() + getAdditionalDamagePoints() - getTemporaryDamagePointsMalus().getValue();
-        if (this.has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
+        int damages = roll.getValue();
+        damages -= this.getAdjustedHitRollRange().getMin();
+        damages -= target.getArmorPoints();
+        damages -= target.magicArmorPoints.getValue();
+        damages += getAdditionalDamagePoints();
+        damages -= getTemporaryDamagePointsMalus().getValue();
+        if (!sleeping && has(EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
             damages += 10;
         }
         return Math.max(0, damages);
@@ -377,4 +392,7 @@ public abstract class Entity {
         this.specialSkills.add(specialSkill);
     }
 
+    public void wounds(HealthPoints healthPoints) {
+        this.wounds(healthPoints.getValue());
+    }
 }

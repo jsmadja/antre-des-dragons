@@ -1,8 +1,9 @@
 package fr.jsmadja.antredesdragons.entities;
 
+import fr.jsmadja.antredesdragons.Sleep;
 import fr.jsmadja.antredesdragons.book.Book;
-import fr.jsmadja.antredesdragons.book.ChapterNumber;
 import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.chapters.DiceWay;
 import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
@@ -16,6 +17,7 @@ import fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult;
 import fr.jsmadja.antredesdragons.spellcasting.SpellUsages;
 import fr.jsmadja.antredesdragons.stuff.HealingItem;
 import fr.jsmadja.antredesdragons.stuff.HealingPotion;
+import fr.jsmadja.antredesdragons.stuff.HealthPoints;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.stuff.Ointment;
 import fr.jsmadja.antredesdragons.ui.Events;
@@ -26,14 +28,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.ui.Events.chapterEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.spellEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
+import static java.util.stream.IntStream.range;
 
 public class Pip extends Entity {
 
@@ -62,17 +66,17 @@ public class Pip extends Entity {
     public Pip(Dice dice) {
         super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
 
-        IntStream.range(0, 3)
+        range(0, 3)
                 .mapToObj(i -> new HealingPotion(dice))
                 .forEach(this::add);
 
-        IntStream.range(0, 5)
+        range(0, 5)
                 .mapToObj(i -> new Ointment())
                 .forEach(this::add);
     }
 
-    private static int computeInitialHealthPoints(Dice dice) {
-        return IntStream.range(1, 4).map(i -> dice.roll(2) * 4).max().orElse(0);
+    private static HealthPoints computeInitialHealthPoints(Dice dice) {
+        return hp(range(1, 4).map(i -> dice.roll(2).getValue()).max().orElse(0) * 4);
     }
 
     public void add(HealingItem healingItem) {
@@ -85,12 +89,16 @@ public class Pip extends Entity {
         return false;
     }
 
-    public void sleep() {
-        int face = this.roll1Dice().getValue();
-        if (face >= 5) {
-            int restoredHealthPoints = this.roll2Dices().getValue();
-            this.restoreHealthPoints(restoredHealthPoints);
+    public Execution sleep() {
+        this.setSleeping(true);
+        Sleep sleep = new Sleep(this);
+        if (sleep.isGood()) {
+            HealthPoints healthPoints = sleep.getHealthPoints();
+            this.restoreHealthPoints(healthPoints.getValue());
+            this.setSleeping(false);
+            return this.goToPreviousChapter();
         }
+        return book.getDreamChapter(sleep.getDreamChapterNumber().getChapter()).execute(this);
     }
 
     // Fighting
@@ -119,14 +127,18 @@ public class Pip extends Entity {
 
     // Navigation
     public Execution goToChapter(int chapter) {
-        return goToChapter(ChapterNumber.chapter(chapter));
+        return goTo(chapter(chapter));
     }
 
     public Execution goToPreviousChapter() {
-        return goToChapter(getPreviousChapter());
+        return goTo(getPreviousChapter());
     }
 
-    public Execution goToChapter(ChapterNumber chapterNumber) {
+    public Execution goTo(ChapterNumber chapterNumber) {
+        if (this.isDead()) {
+            return goTo(chapter(14));
+        }
+
         onChapterEnd();
         this.currentChapter = chapterNumber;
         chapterEvent("Pip se rend au chapitre " + this.currentChapter.getChapter());
@@ -146,7 +158,7 @@ public class Pip extends Entity {
     public Execution rollAndGo(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
-        return goToChapter(way.getChapterNumber());
+        return goTo(way.getChapterNumber());
     }
 
     // Spell
@@ -163,7 +175,7 @@ public class Pip extends Entity {
             spellEvent(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
             return FAILURE;
         }
-        if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.of(6))) {
+        if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.roll(6))) {
             Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
             spell.getSpell().onCast(this);
             this.wounds(spell.getSpell().getDamagePoints().getValue());
@@ -213,7 +225,7 @@ public class Pip extends Entity {
     }
 
     public void buy(MarketItem marketItem) {
-        IntStream.range(0, marketItem.getQuantity().getValue())
+        range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {
                     this.silverCoins = this.silverCoins.minus(marketItem.getPrice());
                     this.add(marketItem.getItem());
@@ -237,7 +249,12 @@ public class Pip extends Entity {
         this.getInventory().removeAll(item);
     }
 
-    public List<HealingItem> getHealingItemsOfType(Class<? extends  HealingItem> clazz) {
+    public List<HealingItem> getHealingItemsOfType(Class<? extends HealingItem> clazz) {
         return this.getInventory().getHealingItemsOfType(clazz);
     }
+
+    public Execution goToDreamChapter(ChapterNumber dreamChapterNumber) {
+        return Execution.empty();
+    }
+
 }

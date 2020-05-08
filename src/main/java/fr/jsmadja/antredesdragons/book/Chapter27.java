@@ -1,9 +1,10 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.chapters.DiceWay;
 import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.chapters.RollAndGoChapter;
+import fr.jsmadja.antredesdragons.entities.Pip;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Chapter27 extends RollAndGoChapter {
     @Override
     public Execution execute(Pip pip) {
         if (answerTo("Retourner au 7").isYes()) {
-            return pip.goToChapter(ChapterNumber.chapter(7));
+            return pip.goTo(ChapterNumber.chapter(7));
         }
         return super.execute(pip);
     }

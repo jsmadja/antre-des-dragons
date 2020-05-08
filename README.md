@@ -14,7 +14,7 @@
 - [X] Gestion Fight : useWeaponEveryNStrike
 - [X] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [X] Gestion Fight : maxStrikes
-- [ ] Dormir
+- [X] Dormir
 - [ ] Gestion d'objets à chaque chapitre (nosferax snuff est mortel)
 - [ ] Gestion d'objets pendant les combats (nosferax lollipop)
 - [ ] Webservice

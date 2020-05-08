@@ -1,10 +1,11 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Foe;
-import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.skills.UseSpecialWeaponEveryNStrikes;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.DRAGON_BLOW;
 import static fr.jsmadja.antredesdragons.stuff.Item.DRAGON_FANG;
 
@@ -19,10 +20,10 @@ public class Chapter172 extends SingleFightChapter {
         Foe foe = Foe.builder()
                 .dragon(true)
                 .name("Dragon de Bronze")
-                .initialHealthPoints(150)
+                .initialHealthPoints(hp(150))
                 .build();
         foe.addAndEquip(DRAGON_FANG);
-        foe.setInvisibleRequiredMinimumHitRoll(Roll.of(8));
+        foe.setInvisibleRequiredMinimumHitRoll(Roll.roll(8));
         foe.add(new UseSpecialWeaponEveryNStrikes(DRAGON_BLOW, 3));
         return foe;
     }

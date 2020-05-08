@@ -6,6 +6,7 @@ import fr.jsmadja.antredesdragons.entities.Pip;
 import org.junit.jupiter.api.Test;
 
 import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.FIP;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpellFIPTest {
@@ -13,7 +14,7 @@ class SpellFIPTest {
     @Test
     public void FIP_should_damage_10_points() {
         Pip pip = new Pip(new Dice());
-        Foe target = Foe.builder().initialHealthPoints(10).build();
+        Foe target = Foe.builder().initialHealthPoints(hp(10)).build();
 
         assertThat(target.getCurrentHealthPoints()).isEqualTo(10);
         assertThat(pip.getSpellsToCastDuringFight()).isEmpty();

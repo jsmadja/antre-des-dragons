@@ -1,8 +1,10 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
+import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.stuff.Item;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 
 public class Chapter104 extends SingleFightChapter {
 
@@ -32,7 +34,7 @@ public class Chapter104 extends SingleFightChapter {
     protected Foe getFoe() {
         Foe foe = Foe.builder()
                 .name("Rat-Loup")
-                .initialHealthPoints(25)
+                .initialHealthPoints(hp(25))
                 .build();
         foe.addAndEquip(Item.RAT_TEETH);
         return foe;

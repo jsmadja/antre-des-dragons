@@ -5,6 +5,7 @@ import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import org.junit.jupiter.api.Test;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.FIREBALL;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +21,7 @@ class SpellFireBallTest {
         assertThat(pip.has(FIREBALL)).isTrue();
         assertThat(pip.getInventory().stream().filter(i -> i == FIREBALL).count()).isEqualTo(2);
 
-        Foe target = Foe.builder().initialHealthPoints(75).build();
+        Foe target = Foe.builder().initialHealthPoints(hp(75)).build();
 
         spell.onAttack(pip, target);
         assertThat(target.isDead()).isTrue();

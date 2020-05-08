@@ -1,10 +1,12 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
-import fr.jsmadja.antredesdragons.stuff.Item;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.STONEMONSTER_ARMOR;
 
 public class Chapter67 extends SingleFightChapter {
     @Override
@@ -14,8 +16,8 @@ public class Chapter67 extends SingleFightChapter {
 
     @Override
     protected Foe getFoe() {
-        Foe foe = Foe.builder().name("Monstre de Pierre").initialHealthPoints(18).hitRollRange(new HitRollRange(7)).build();
-        foe.addAndEquip(Item.STONEMONSTER_ARMOR);
+        Foe foe = Foe.builder().name("Monstre de Pierre").initialHealthPoints(hp(18)).hitRollRange(new HitRollRange(7)).build();
+        foe.addAndEquip(STONEMONSTER_ARMOR);
         return foe;
     }
 

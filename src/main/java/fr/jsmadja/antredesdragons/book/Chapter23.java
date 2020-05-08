@@ -1,8 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
+import fr.jsmadja.antredesdragons.entities.Foe;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.STONEMAN_SWORD;
 
 public class Chapter23 extends SingleFightChapter {
@@ -13,7 +14,7 @@ public class Chapter23 extends SingleFightChapter {
 
     @Override
     protected Foe getFoe() {
-        Foe foe = Foe.builder().initialHealthPoints(28).build();
+        Foe foe = Foe.builder().initialHealthPoints(hp(28)).build();
         foe.addAndEquip(STONEMAN_SWORD);
         return foe;
     }

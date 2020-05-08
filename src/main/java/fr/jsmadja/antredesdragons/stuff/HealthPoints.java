@@ -1,10 +1,12 @@
 package fr.jsmadja.antredesdragons.stuff;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import static java.text.MessageFormat.format;
 
+@EqualsAndHashCode
 @RequiredArgsConstructor
 public class HealthPoints {
     @Getter

@@ -1,12 +1,14 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Fight;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.Chapter;
-import fr.jsmadja.antredesdragons.stuff.Item;
-import fr.jsmadja.antredesdragons.ui.Prompt;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.RABBIT_FANGS;
+import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
 
 public class Chapter6 extends Chapter {
     @Override
@@ -24,8 +26,7 @@ public class Chapter6 extends Chapter {
 
     @Override
     public Execution execute(Pip pip) {
-        Prompt.YesNoAnswer answer = Prompt.answerTo("Voulez-vous combattre le Lapin Blanc");
-        if (answer.isNo()) {
+        if (answerTo("Voulez-vous combattre le Lapin Blanc").isNo()) {
             return pip.goToChapter(getSuccessChapter());
         }
         pip.setRollMalus(2);
@@ -45,9 +46,9 @@ public class Chapter6 extends Chapter {
     private Foe getFoe() {
         Foe foe = Foe.builder()
                 .name("Lapin Blanc")
-                .initialHealthPoints(25)
+                .initialHealthPoints(hp(25))
                 .build();
-        foe.addAndEquip(Item.RABBIT_FANGS);
+        foe.addAndEquip(RABBIT_FANGS);
         return foe;
     }
 }

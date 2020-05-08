@@ -8,18 +8,20 @@ import fr.jsmadja.antredesdragons.stuff.HealingPotion;
 import fr.jsmadja.antredesdragons.stuff.Ointment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.dices.Roll.roll;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.AEP;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.spellcasting.SpellEffectResult.SUCCESS;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.EXCALIBUR_JUNIOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class PipTest {
@@ -29,22 +31,22 @@ class PipTest {
 
     @BeforeEach
     void setUp() {
-        dice = Mockito.mock(Dice.class);
-        when(dice.roll(2)).thenReturn(10);
+        dice = mock(Dice.class);
+        when(dice.roll(2)).thenReturn(roll(10));
         pip = new Pip(dice);
     }
 
     @Test
     void should_initialize_pip_hp() {
-        when(dice.roll(2)).thenReturn(10);
+        when(dice.roll(2)).thenReturn(roll(10));
         pip = new Pip(dice);
         assertThat(pip.getInitialHealthPoints()).isEqualTo(40);
     }
 
     @Test
     void should_do_damage_if_roll_is_greather_than_6() {
-        when(dice.roll(2)).thenReturn(10);
-        Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
+        when(dice.roll(2)).thenReturn(roll(10));
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(hp(10)).build();
         Attack Attack = pip.createPhysicAttack(target);
         assertThat(Attack.getStatus()).isEqualTo(TOUCHED);
         assertThat(Attack.getDamagePoints()).isEqualTo(4);
@@ -52,8 +54,8 @@ class PipTest {
 
     @Test
     void should_not_do_damage_if_roll_is_lesser_or_equal_than_6() {
-        when(dice.roll(2)).thenReturn(1);
-        Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
+        when(dice.roll(2)).thenReturn(roll(1));
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(hp(10)).build();
         Attack Attack = pip.createPhysicAttack(target);
         assertThat(Attack.getStatus()).isEqualTo(MISSED);
         assertThat(Attack.getDamagePoints()).isZero();
@@ -70,23 +72,10 @@ class PipTest {
         pip.addAndEquip(EXCALIBUR_JUNIOR);
         assertThat(pip.getAdditionalDamagePoints()).isEqualTo(5);
 
-        when(dice.roll(2)).thenReturn(10);
-        Entity target = Foe.builder().name("Foe").dice(Mockito.mock(Dice.class)).initialHealthPoints(10).build();
+        when(dice.roll(2)).thenReturn(roll(10));
+        Entity target = Foe.builder().name("Foe").dice(mock(Dice.class)).initialHealthPoints(hp(10)).build();
         Attack Attack = pip.createPhysicAttack(target);
         assertThat(Attack.getDamagePoints()).isEqualTo(11);
-    }
-
-    @Test
-    void should_sleep_well_and_restore_health_points() {
-        pip.wounds(10);
-        assertThat(pip.getCurrentHealthPoints()).isEqualTo(30);
-
-        when(dice.roll()).thenReturn(5);
-        when(dice.roll(2)).thenReturn(10);
-
-        pip.sleep();
-
-        assertThat(pip.getCurrentHealthPoints()).isEqualTo(40);
     }
 
     @Test
@@ -106,14 +95,14 @@ class PipTest {
 
     @Test
     void spell_works_only_if_roll_is_greater_than_6() {
-        when(dice.roll(2)).thenReturn(7);
+        when(dice.roll(2)).thenReturn(roll(7));
         SpellEffectResult spellEffectResult = pip.use(AEP);
         assertThat(spellEffectResult).isEqualTo(SUCCESS);
     }
 
     @Test
     void spell_failed_when_roll_is_lesser_than_7() {
-        when(dice.roll(2)).thenReturn(6);
+        when(dice.roll(2)).thenReturn(roll(6));
         SpellEffectResult spellEffectResult = pip.use(AEP);
         assertThat(spellEffectResult).isEqualTo(FAILURE);
     }

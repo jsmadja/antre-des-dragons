@@ -15,7 +15,7 @@ class NosferaxSnuffBoxTest {
     @Test
     public void should_kill_pip_when_snuffbox_is_used_twice() {
         Pip pip = mock(Pip.class);
-        when(pip.roll4Dices()).thenReturn(Roll.of(40), Roll.of(12));
+        when(pip.roll4Dices()).thenReturn(Roll.roll(40), Roll.roll(12));
 
         NosferaxSnuffBox nosferaxSnuffBox = new NosferaxSnuffBox(pip);
         assertThat(nosferaxSnuffBox.isUsable()).isTrue();

@@ -1,14 +1,16 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Foe;
-import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
+import fr.jsmadja.antredesdragons.entities.Foe;
+import fr.jsmadja.antredesdragons.entities.Pip;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.MONK_FIGHTING;
 import static fr.jsmadja.antredesdragons.ui.Prompt.answerTo;
 import static java.text.MessageFormat.format;
@@ -46,7 +48,7 @@ public class Chapter57 extends MultipleFightChapter {
     @Override
     public Execution execute(Pip pip) {
         if (answerTo("Voulez-vous rester avec eux à jamais").isYes()) {
-            return pip.goToChapter(ChapterNumber.chapter(110));
+            return pip.goTo(ChapterNumber.chapter(110));
         }
         if (answerTo("Voulez-vous rebrousser chemin").isYes()) {
             return pip.goToPreviousChapter();
@@ -71,7 +73,7 @@ public class Chapter57 extends MultipleFightChapter {
         return IntStream.range(1, 4).mapToObj(id -> {
             Foe foe = Foe.builder()
                     .name(format("Moine {0}", id))
-                    .initialHealthPoints(25)
+                    .initialHealthPoints(hp(25))
                     .build();
             foe.addAndEquip(MONK_FIGHTING);
             return foe;

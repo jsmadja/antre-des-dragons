@@ -1,12 +1,14 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 
 public class Chapter157 extends MultipleFightChapter {
     @Override
@@ -20,7 +22,7 @@ public class Chapter157 extends MultipleFightChapter {
                 i -> {
                     Foe foe = Foe.builder()
                             .name("Forme #" + i)
-                            .initialHealthPoints(4)
+                            .initialHealthPoints(hp(4))
                             .constantHitDamage(15)
                             .build();
                     foe.loseInitiative();

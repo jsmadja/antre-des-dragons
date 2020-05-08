@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.book;
 
 import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.DreamChapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,20 @@ public class Book {
     public static final int MERLIN = -9;
     public static final int MENACE_SUR_AVALAON = -8;
     public static final int DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN = -7;
+
+    private final Map<Integer, DreamChapter> dreamChapters = new HashMap<>() {{
+        put(2, new DreamChapter2());
+        put(3, new DreamChapter3());
+        put(4, new DreamChapter4());
+        put(5, new DreamChapter5());
+        put(6, new DreamChapter6());
+        put(7, new DreamChapter7());
+        put(8, new DreamChapter8());
+        put(9, new DreamChapter9());
+        put(10, new DreamChapter10());
+        put(11, new DreamChapter11());
+        put(12, new DreamChapter12());
+    }};
 
     private final Map<Integer, Chapter> chapters = new HashMap<>() {{
         put(DEBUT, new ChapterDebut());
@@ -217,6 +232,14 @@ public class Book {
         Chapter chapter = chapters.get(chapterNumber);
         if (chapter == null) {
             throw new RuntimeException("Chapter not found");
+        }
+        return chapter;
+    }
+
+    public DreamChapter getDreamChapter(int chapterNumber) {
+        DreamChapter chapter = dreamChapters.get(chapterNumber);
+        if (chapter == null) {
+            throw new RuntimeException("DreamChapter not found");
         }
         return chapter;
     }

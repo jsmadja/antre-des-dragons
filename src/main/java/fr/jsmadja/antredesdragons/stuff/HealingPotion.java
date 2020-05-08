@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toList;
+
 public class HealingPotion extends HealingItem {
     private final List<HealthPoints> doses;
 
     public HealingPotion(Dice dice) {
         this.doses = IntStream
                 .range(0, 6)
-                .mapToObj(i -> HealthPoints.hp(dice.roll(2))).collect(Collectors.toList());
+                .mapToObj(i -> dice.roll(2).toHealthPoints()).collect(toList());
     }
 
     @Override

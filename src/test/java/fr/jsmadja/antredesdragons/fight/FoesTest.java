@@ -23,13 +23,13 @@ public class FoesTest {
         Foe friendly1 = mock(Foe.class);
         Foe friendly2 = mock(Foe.class);
 
-        when(pip.roll3Dices()).thenReturn(Roll.of(4));
+        when(pip.roll3Dices()).thenReturn(Roll.roll(4));
 
-        when(unfriendly1.roll1Dice()).thenReturn(Roll.of(1));
-        when(unfriendly2.roll1Dice()).thenReturn(Roll.of(3));
+        when(unfriendly1.roll1Dice()).thenReturn(Roll.roll(1));
+        when(unfriendly2.roll1Dice()).thenReturn(Roll.roll(3));
 
-        when(friendly1.roll1Dice()).thenReturn(Roll.of(5));
-        when(friendly2.roll1Dice()).thenReturn(Roll.of(6));
+        when(friendly1.roll1Dice()).thenReturn(Roll.roll(5));
+        when(friendly2.roll1Dice()).thenReturn(Roll.roll(6));
 
         List<Foe> foesList = List.of(unfriendly1, friendly1, unfriendly2, friendly2);
         Foes foes = new Foes(foesList, pip);
@@ -48,18 +48,18 @@ public class FoesTest {
         Foe friendly1 = mock(Foe.class);
         Foe friendly2 = mock(Foe.class);
 
-        when(pip.roll3Dices()).thenReturn(Roll.of(4));
+        when(pip.roll3Dices()).thenReturn(Roll.roll(4));
 
-        when(unfriendly1.roll1Dice()).thenReturn(Roll.of(1));
+        when(unfriendly1.roll1Dice()).thenReturn(Roll.roll(1));
         when(unfriendly1.isDead()).thenReturn(true);
 
-        when(unfriendly2.roll1Dice()).thenReturn(Roll.of(3));
+        when(unfriendly2.roll1Dice()).thenReturn(Roll.roll(3));
         when(unfriendly2.isStuned()).thenReturn(true);
 
-        when(friendly1.roll1Dice()).thenReturn(Roll.of(5));
+        when(friendly1.roll1Dice()).thenReturn(Roll.roll(5));
         when(friendly1.isDead()).thenReturn(true);
 
-        when(friendly2.roll1Dice()).thenReturn(Roll.of(6));
+        when(friendly2.roll1Dice()).thenReturn(Roll.roll(6));
         when(friendly2.isStuned()).thenReturn(true);
 
         List<Foe> foesList = List.of(unfriendly1, friendly1, unfriendly2, friendly2);

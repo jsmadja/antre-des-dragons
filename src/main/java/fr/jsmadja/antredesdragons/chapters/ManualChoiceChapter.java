@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.chapters;
 
-import fr.jsmadja.antredesdragons.book.ChapterNumber;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.ui.Prompt;
 import lombok.Builder;
@@ -25,7 +24,7 @@ public abstract class ManualChoiceChapter extends Chapter {
         Paths possiblesPath = getPossiblesPath(pip);
         possiblesPath.print();
         Prompt.NumberAnswer path = Prompt.answerTo("Quel est votre choix", possiblesPath.getChapter());
-        return pip.goToChapter(ChapterNumber.chapter(path.getAnswer()));
+        return pip.goTo(ChapterNumber.chapter(path.getAnswer()));
     }
 
     public abstract Paths getPossiblesPath(Pip pip);

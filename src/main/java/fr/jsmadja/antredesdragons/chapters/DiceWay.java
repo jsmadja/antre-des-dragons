@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.chapters;
 
-import fr.jsmadja.antredesdragons.book.ChapterNumber;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

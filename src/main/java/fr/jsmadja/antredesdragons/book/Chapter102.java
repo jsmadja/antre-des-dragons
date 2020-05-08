@@ -1,12 +1,14 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Execution;
+import fr.jsmadja.antredesdragons.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Fight;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.ManualChoiceChapter;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 
 public class Chapter102 extends ManualChoiceChapter {
     @Override
@@ -47,7 +49,7 @@ public class Chapter102 extends ManualChoiceChapter {
         Foe foe = Foe.builder()
                 .name("Esprit")
                 .dice(new Dice())
-                .initialHealthPoints(25)
+                .initialHealthPoints(hp(25))
                 .hitRollRange(new HitRollRange(6))
                 .constantHitDamage(3)
                 .immuneToPhysicalDamages(true)

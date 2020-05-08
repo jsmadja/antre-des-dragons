@@ -1,8 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
+import fr.jsmadja.antredesdragons.entities.Foe;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.GHOST_SWORD;
 
 public class Chapter24 extends SingleFightChapter {
@@ -38,7 +39,7 @@ public class Chapter24 extends SingleFightChapter {
     public Foe getFoe() {
         Foe foe = Foe.builder()
                 .name("Fantôme")
-                .initialHealthPoints(30)
+                .initialHealthPoints(hp(30))
                 .build();
         foe.addAndEquip(GHOST_SWORD);
         return foe;

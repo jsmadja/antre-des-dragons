@@ -10,7 +10,7 @@ public class Dice {
         return random.nextInt(6) + 1;
     }
 
-    public int roll(int count) {
-        return IntStream.range(0, count).map(i -> this.roll()).sum();
+    public Roll roll(int count) {
+        return Roll.roll(IntStream.range(0, count).map(i -> this.roll()).sum());
     }
 }

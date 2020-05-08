@@ -1,10 +1,12 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.market.GoldenCoins;
-import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
-import fr.jsmadja.antredesdragons.stuff.Item;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.WOLF_SKIN;
 
 public class Chapter50 extends SingleFightChapter {
     @Override
@@ -14,8 +16,8 @@ public class Chapter50 extends SingleFightChapter {
 
     @Override
     protected Foe getFoe() {
-        Foe foe = Foe.builder().name("Loup").initialHealthPoints(31).build();
-        foe.addAndEquip(Item.WOLF_SKIN);
+        Foe foe = Foe.builder().name("Loup").initialHealthPoints(hp(31)).build();
+        foe.addAndEquip(WOLF_SKIN);
         return foe;
     }
 

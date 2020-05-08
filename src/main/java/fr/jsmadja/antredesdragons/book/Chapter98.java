@@ -1,17 +1,19 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Execution;
+import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
-import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Prompt;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static fr.jsmadja.antredesdragons.spellcasting.SpellBook.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.TROLL_ARMOR;
+import static fr.jsmadja.antredesdragons.stuff.Item.TROLL_SWORD;
 import static java.util.stream.Collectors.toList;
 
 public class Chapter98 extends MultipleFightChapter {
@@ -71,10 +73,10 @@ public class Chapter98 extends MultipleFightChapter {
                 .mapToObj(operand -> {
                     Foe foe = Foe.builder()
                             .name("Troll des Rochers #" + operand)
-                            .dice(new Dice()).initialHealthPoints(10)
+                            .dice(new Dice()).initialHealthPoints(hp(10))
                             .build();
-                    foe.addAndEquip(Item.TROLL_SWORD);
-                    foe.addAndEquip(Item.TROLL_ARMOR);
+                    foe.addAndEquip(TROLL_SWORD);
+                    foe.addAndEquip(TROLL_ARMOR);
                     return foe;
                 })
                 .collect(toList());

@@ -1,7 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
+import fr.jsmadja.antredesdragons.entities.Foe;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 
 public class Chapter82 extends SingleFightChapter {
     @Override
@@ -11,7 +13,7 @@ public class Chapter82 extends SingleFightChapter {
 
     @Override
     protected Foe getFoe() {
-        return Foe.builder().name("Loup Siffleur").initialHealthPoints(15).build();
+        return Foe.builder().name("Loup Siffleur").initialHealthPoints(hp(15)).build();
     }
 
     @Override

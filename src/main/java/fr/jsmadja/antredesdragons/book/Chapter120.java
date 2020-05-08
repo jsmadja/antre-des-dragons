@@ -1,5 +1,7 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.dices.Dice;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.dices.Roll;
@@ -7,8 +9,6 @@ import fr.jsmadja.antredesdragons.entities.Entity;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Attack;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.Chapter;
 import fr.jsmadja.antredesdragons.stuff.Item;
 import fr.jsmadja.antredesdragons.ui.Events;
 
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.fight.Attack.Status.TOUCHED;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.ui.Events.fightEvent;
 import static fr.jsmadja.antredesdragons.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
@@ -102,7 +103,7 @@ public class Chapter120 extends Chapter {
     @Override
     public Execution execute(Pip pip) {
         this.pip = pip;
-        this.minotaure = Foe.builder().name("Minotaure").dice(new Dice()).hitRollRange(new HitRollRange(6)).initialHealthPoints(10).build();
+        this.minotaure = Foe.builder().name("Minotaure").dice(new Dice()).hitRollRange(new HitRollRange(6)).initialHealthPoints(hp(10)).build();
         this.initialPipHealthPoints = pip.getCurrentHealthPoints();
         HitRollRange initialPipHitRollRange = pip.getHitRollRange();
         Optional<Item> equipedWeapon = pip.getEquipedWeapon();

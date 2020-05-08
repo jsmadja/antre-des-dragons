@@ -1,11 +1,14 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Execution;
+import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.market.SilverCoins;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.stuff.Item;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+import static fr.jsmadja.antredesdragons.stuff.Item.THATCHED_CREATURE_DAGGERS;
 
 public class Chapter41 extends SingleFightChapter {
     @Override
@@ -23,14 +26,14 @@ public class Chapter41 extends SingleFightChapter {
 
     @Override
     protected void onAfterSuccessfulFight(Pip pip) {
-        pip.add(Item.THATCHED_CREATURE_DAGGERS);
+        pip.add(THATCHED_CREATURE_DAGGERS);
         pip.addSilverCoins(SilverCoins.of(10));
         super.onAfterSuccessfulFight(pip);
     }
 
     @Override
     protected Foe getFoe() {
-        return Foe.builder().name("Créature de la chaumière").initialHealthPoints(5).build();
+        return Foe.builder().name("Créature de la chaumière").initialHealthPoints(hp(5)).build();
     }
 
     @Override

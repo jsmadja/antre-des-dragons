@@ -1,8 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.chapters.DiceWay;
 import fr.jsmadja.antredesdragons.chapters.RollAndGoChapter;
+import fr.jsmadja.antredesdragons.entities.Pip;
 
 import java.util.List;
 

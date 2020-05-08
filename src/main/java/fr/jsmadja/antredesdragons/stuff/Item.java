@@ -3,6 +3,9 @@ package fr.jsmadja.antredesdragons.stuff;
 import fr.jsmadja.antredesdragons.dices.HitRollRange;
 import lombok.Getter;
 
+import static fr.jsmadja.antredesdragons.stuff.ArmorPoint.armor;
+import static fr.jsmadja.antredesdragons.stuff.DamagePoint.damage;
+
 @Getter
 public enum Item {
     HORSESHOE("Fer à cheval"),
@@ -45,44 +48,40 @@ public enum Item {
 
     THATCHED_CREATURE_DAGGERS("Dagues de créature de chaumière"),
 
-    HATCHET("Hâche d'armes", DamagePoint.damage(4)),
-    DAGGER("Poignard", DamagePoint.damage(2)),
-    FLAIL("Fléau", DamagePoint.damage(2)),
-    MACE("Masse d'armes", DamagePoint.damage(3)),
-    CLUB("Massue", DamagePoint.damage(5)),
-    SWORD("Epée", DamagePoint.damage(4)),
-    EXCALIBUR_JUNIOR("ExcaliburJunior", DamagePoint.damage(5), new HitRollRange(4)),
-    TROLL_SWORD("Epée de Troll", DamagePoint.damage(2), new HitRollRange(6)),
-    GHOST_SWORD("Epée de Fantôme", DamagePoint.damage(3), new HitRollRange(5)),
-    RABBIT_FANGS("Croc de lapon", DamagePoint.damage(3), new HitRollRange(5)),
-    MONK_FIGHTING("Poings de moine", DamagePoint.damage(3), new HitRollRange(4)),
-    STONEMAN_SWORD("Epée de l'Homme de Pierre", DamagePoint.damage(4), new HitRollRange(8)),
-    EXCALIBUR_JUNIOR_DRAGON_SLAYER("ExcaliburJunior (Dragon DMG+10)", DamagePoint.damage(5), new HitRollRange(4)),
-    RAT_TEETH("Dents de Rat-Loup", DamagePoint.damage(2), new HitRollRange(5), true),
-    DWARF_SWORD("Epée de Nain", DamagePoint.damage(3), new HitRollRange(8)),
-    MEDUSA_WEAPON("Coups de Méduse", DamagePoint.damage(0), new HitRollRange(8)),
-    MONSTER_CLAW("Griffes de monstres", DamagePoint.damage(2), new HitRollRange(5)),
-    DRAGON_FANG("Griffe de Dragon de Bronze", DamagePoint.damage(5), new HitRollRange(5)),
-    DRAGON_BLOW("Souffle du Dragon de Bronze", DamagePoint.damage(10), new HitRollRange(5)),
-    RAMPANT_TONGUE("Langue de Rampant", DamagePoint.damage(0), new HitRollRange(8)),
+    HATCHET("Hâche d'armes", damage(4)),
+    DAGGER("Poignard", damage(2)),
+    FLAIL("Fléau", damage(2)),
+    MACE("Masse d'armes", damage(3)),
+    CLUB("Massue", damage(5)),
+    SWORD("Epée", damage(4)),
+    EXCALIBUR_JUNIOR("ExcaliburJunior", damage(5), new HitRollRange(4)),
+    TROLL_SWORD("Epée de Troll", damage(2), new HitRollRange(6)),
+    GHOST_SWORD("Epée de Fantôme", damage(3), new HitRollRange(5)),
+    RABBIT_FANGS("Croc de lapon", damage(3), new HitRollRange(5)),
+    MONK_FIGHTING("Poings de moine", damage(3), new HitRollRange(4)),
+    STONEMAN_SWORD("Epée de l'Homme de Pierre", damage(4), new HitRollRange(8)),
+    EXCALIBUR_JUNIOR_DRAGON_SLAYER("ExcaliburJunior (Dragon DMG+10)", damage(5), new HitRollRange(4)),
+    RAT_TEETH("Dents de Rat-Loup", damage(2), new HitRollRange(5), true),
+    DWARF_SWORD("Epée de Nain", damage(3), new HitRollRange(8)),
+    MEDUSA_WEAPON("Coups de Méduse", damage(0), new HitRollRange(8)),
+    MONSTER_CLAW("Griffes de monstres", damage(2), new HitRollRange(5)),
+    DRAGON_FANG("Griffe de Dragon de Bronze", damage(5), new HitRollRange(5)),
+    DRAGON_BLOW("Souffle du Dragon de Bronze", damage(10), new HitRollRange(5)),
+    RAMPANT_TONGUE("Langue de Rampant", damage(0), new HitRollRange(8)),
+    BLACK_KNIGHT_SPEAR("Lance du Chevalier Noir", damage(10)),
+    CANTERBURY_SPEAR("Lance de Canterbury", damage(12), true),
+    OGRE_CLUB("Massue d'ogre", damage(15)),
 
-    CHAINMAIL("Cotte de mailles", ArmorPoint.armor(3)),
-    LEATHER_DOUBLE("Pourpoint en cuir", ArmorPoint.armor(2)),
-    ARMOR_PLATE("Plaque d'armure", ArmorPoint.armor(4)),
-    TROLL_ARMOR("Armure de Troll", ArmorPoint.armor(1)),
-    WOLF_SKIN("Peau de loup", ArmorPoint.armor(1)),
-    STONEMONSTER_ARMOR("Armure du monstre de pierre", ArmorPoint.armor(1));
+    CHAINMAIL("Cotte de mailles", armor(3)),
+    LEATHER_DOUBLE("Pourpoint en cuir", armor(2)),
+    ARMOR_PLATE("Plaque d'armure", armor(4)),
+    TROLL_ARMOR("Armure de Troll", armor(1)),
+    WOLF_SKIN("Peau de loup", armor(1)),
+    STONEMONSTER_ARMOR("Armure du monstre de pierre", armor(1)),
+    DREAM_ARMOR("Armure de rêve", armor(5), true),
+    BLACK_KNIGHT_ARMOR("Armure du Chevalier Noir", armor(6));
 
-    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned) {
-        this.name = name;
-        this.armorPoint = armorPoint;
-        this.damagePoint = damagePoint;
-        this.equipable = equipable;
-        this.hitRollRange = hitRollRange;
-        this.weapon = weapon;
-        this.armor = armor;
-        this.poisoned = poisoned;
-    }
+    private final boolean dreamItem;
 
     private final String name;
     private final ArmorPoint armorPoint;
@@ -93,9 +92,21 @@ public enum Item {
     private final boolean armor;
     private final boolean poisoned;
 
+    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned, boolean dreamItem) {
+        this.name = name;
+        this.armorPoint = armorPoint;
+        this.damagePoint = damagePoint;
+        this.equipable = equipable;
+        this.hitRollRange = hitRollRange;
+        this.weapon = weapon;
+        this.armor = armor;
+        this.poisoned = poisoned;
+        this.dreamItem = dreamItem;
+    }
+
     // Object Constructor
     Item(String name) {
-        this(name, ArmorPoint.armor(0), DamagePoint.damage(0), false, null, false, false, false);
+        this(name, armor(0), damage(0), false, null, false, false, false, false);
     }
 
     // Weapon Constructor
@@ -104,16 +115,23 @@ public enum Item {
     }
 
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
-        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false, false);
+        this(name, armor(0), damagePoint, true, hitRollRange, true, false, false, false);
     }
 
     Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange, boolean poisoned) {
-        this(name, ArmorPoint.armor(0), damagePoint, true, hitRollRange, true, false, poisoned);
+        this(name, armor(0), damagePoint, true, hitRollRange, true, false, poisoned, false);
+    }
+
+    Item(String name, DamagePoint damagePoint, boolean dreamItem) {
+        this(name, armor(0), damagePoint, true, null, true, false, false, dreamItem);
     }
 
     // Armor Constructor
     Item(String name, ArmorPoint armorPoint) {
-        this(name, armorPoint, DamagePoint.damage(0), true, null, false, true, false);
+        this(name, armorPoint, false);
     }
 
+    Item(String name, ArmorPoint armorPoint, boolean dreamItem) {
+        this(name, armorPoint, damage(0), true, null, false, true, false, dreamItem);
+    }
 }

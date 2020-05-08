@@ -1,14 +1,15 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.dices.Roll;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.chapters.MultipleFightChapter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.stuff.Item.DWARF_SWORD;
 
 public class Chapter131 extends MultipleFightChapter {
@@ -22,7 +23,7 @@ public class Chapter131 extends MultipleFightChapter {
         Roll roll = pip.roll2Dices();
         return IntStream.range(1, 13).mapToObj(
                 i -> {
-                    Foe foe = Foe.builder().initialHealthPoints(10).build();
+                    Foe foe = Foe.builder().initialHealthPoints(hp(10)).build();
                     if (i <= roll.getValue()) {
                         foe.loseInitiative();
                     }

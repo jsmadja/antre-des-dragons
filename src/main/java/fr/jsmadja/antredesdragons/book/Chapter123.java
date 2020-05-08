@@ -1,13 +1,15 @@
 package fr.jsmadja.antredesdragons.book;
 
+import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.fight.Fight;
-import fr.jsmadja.antredesdragons.chapters.Execution;
-import fr.jsmadja.antredesdragons.chapters.Chapter;
 import fr.jsmadja.antredesdragons.stuff.Item;
 
 import java.util.Optional;
+
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
 
 public class Chapter123 extends Chapter {
     @Override
@@ -30,7 +32,7 @@ public class Chapter123 extends Chapter {
     public Execution execute(Pip pip) {
         Optional<Item> weapon = pip.getEquipedWeapon();
         weapon.ifPresent(pip::unequip);
-        Foe foe = Foe.builder().name("Poisson").initialHealthPoints(10).build();
+        Foe foe = Foe.builder().name("Poisson").initialHealthPoints(hp(10)).build();
 
         new Fight(pip, foe, 3).start();
 

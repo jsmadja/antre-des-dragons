@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.chapters;
 
-import fr.jsmadja.antredesdragons.book.ChapterNumber;
 import fr.jsmadja.antredesdragons.entities.Foe;
 import fr.jsmadja.antredesdragons.entities.Pip;
 
@@ -12,10 +11,10 @@ public abstract class SingleFightChapter extends Chapter {
         onBeforeFight(pip);
         pip.fight(List.of(getFoe()));
         if (pip.isDead()) {
-            return pip.goToChapter(ChapterNumber.chapter(14));
+            return pip.goTo(ChapterNumber.chapter(14));
         }
         onAfterSuccessfulFight(pip);
-        return pip.goToChapter(ChapterNumber.chapter(getSuccessChapter()));
+        return pip.goTo(ChapterNumber.chapter(getSuccessChapter()));
     }
 
     protected void onBeforeFight(Pip pip) {

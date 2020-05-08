@@ -1,8 +1,9 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Pip;
-import fr.jsmadja.antredesdragons.chapters.Execution;
 import fr.jsmadja.antredesdragons.chapters.Chapter;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
+import fr.jsmadja.antredesdragons.chapters.Execution;
+import fr.jsmadja.antredesdragons.entities.Pip;
 
 public class Chapter49 extends Chapter {
     @Override
@@ -20,6 +21,6 @@ public class Chapter49 extends Chapter {
 
     @Override
     public Execution execute(Pip pip) {
-        return pip.goToChapter(ChapterNumber.chapter(14));
+        return pip.goTo(ChapterNumber.chapter(14));
     }
 }

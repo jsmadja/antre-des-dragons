@@ -1,12 +1,17 @@
 package fr.jsmadja.antredesdragons.dices;
 
-import lombok.AllArgsConstructor;
+import fr.jsmadja.antredesdragons.chapters.ChapterNumber;
+import fr.jsmadja.antredesdragons.stuff.HealthPoints;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor(staticName = "of")
+import static fr.jsmadja.antredesdragons.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.stuff.HealthPoints.hp;
+
+@RequiredArgsConstructor
 @Getter
 public class Roll {
-    private int value;
+    private final int value;
 
     public boolean isBetween(int minIncluded, int maxIncluded) {
         return minIncluded <= value && value <= maxIncluded;
@@ -18,5 +23,21 @@ public class Roll {
 
     public boolean is(int value) {
         return this.value == value;
+    }
+
+    public static Roll roll(int value) {
+        return new Roll(value);
+    }
+
+    public HealthPoints toHealthPoints() {
+        return hp(this.value);
+    }
+
+    public ChapterNumber toChapterNumber() {
+        return chapter(this.value);
+    }
+
+    public boolean isLesserThan(Roll roll) {
+        return this.value < roll.value;
     }
 }
