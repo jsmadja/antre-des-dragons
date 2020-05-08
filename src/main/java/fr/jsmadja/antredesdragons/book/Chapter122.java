@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.book;
 
-import fr.jsmadja.antredesdragons.entities.Pip;
 import fr.jsmadja.antredesdragons.chapters.GoNextChapter;
-import fr.jsmadja.antredesdragons.stuff.Item;
+import fr.jsmadja.antredesdragons.entities.Pip;
+import fr.jsmadja.antredesdragons.stuff.NosferaxSnuffBox;
 
 public class Chapter122 extends GoNextChapter {
     @Override
@@ -23,7 +23,7 @@ public class Chapter122 extends GoNextChapter {
                 "Superbe ! répondez-vous, vous rappelant que Nosférax aime entendre vanter ses vers. " +
                 "Les allusions mythologiques me semblent tout à fait appropriées.\n" +
                 "Oui, dit Nosférax, visiblement ravi. C'est aussi mon avis. Maintenant, comme vous " +
-                "êtes de toute évidence un jeune homme plein de goût et de discernement, permettezmoi de vous récompenser de votre intelligence.\n" +
+                "êtes de toute évidence un jeune homme plein de goût et de discernement, permettez-moi de vous récompenser de votre intelligence.\n" +
                 "Là-dessus, il sort de la poche de son frac une petite tabatière en argent.\n" +
                 "Vous prisez ? demande-t-il. Vous secouez la tête. Tant mieux, approuve Nosférax.\n" +
                 "Une manie répugnante et très mauvaise pour la santé. Vous pouvez néanmoins faire " +
@@ -43,7 +43,7 @@ public class Chapter122 extends GoNextChapter {
 
     @Override
     protected void beforeLeavingChapter(Pip pip) {
-        pip.add(Item.NOSFERAX_SNUFFBOX);
+        pip.add(new NosferaxSnuffBox(pip));
         super.beforeLeavingChapter(pip);
     }
 

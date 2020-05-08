@@ -55,26 +55,29 @@ public class Pip extends Entity {
     private ChapterNumber currentChapter;
     private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
 
+    @Setter
+    @Getter
+    private boolean nosferaxSnuffBoxUsed;
+
     public Pip(Dice dice) {
         super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
 
         IntStream.range(0, 3)
                 .mapToObj(i -> new HealingPotion(dice))
-                .forEach(healingPotion -> {
-                    Events.inventoryEvent(this.getName() + " ajoute " + healingPotion + " dans son inventaire");
-                    this.getInventory().add(healingPotion);
-                });
+                .forEach(this::add);
 
         IntStream.range(0, 5)
                 .mapToObj(i -> new Ointment())
-                .forEach(ointment -> {
-                    Events.inventoryEvent(this.getName() + " ajoute " + ointment + " dans son inventaire");
-                    this.getInventory().add(ointment);
-                });
+                .forEach(this::add);
     }
 
     private static int computeInitialHealthPoints(Dice dice) {
-        return IntStream.range(1, 4).map(i -> dice.roll(2) * 4).max().getAsInt();
+        return IntStream.range(1, 4).map(i -> dice.roll(2) * 4).max().orElse(0);
+    }
+
+    public void add(HealingItem healingItem) {
+        Events.inventoryEvent(this.getName() + " ajoute " + healingItem + " dans son inventaire");
+        this.getInventory().add(healingItem);
     }
 
     @Override
@@ -142,7 +145,7 @@ public class Pip extends Entity {
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
-        DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().get();
+        DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
         return goToChapter(way.getChapterNumber());
     }
 

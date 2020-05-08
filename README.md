@@ -8,7 +8,7 @@
 - [X] Sorts manquants
 - [X] Potions et onguents de départ
 - [ ] Devoir se soigner avant de quitter le village
-- [ ] Gérer la tabatière
+- [X] Gérer la tabatière
 - [ ] Gérer la sucette
 - [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
 - [ ] Où utiliser NIP ?
@@ -18,6 +18,6 @@
 - [X] Gestion Fight : invisibleRequiredMinimumHitRoll
 - [X] Gestion Fight : maxStrikes
 - [ ] Dormir
-- [ ] Gestion d'objets à chaque chapitre
+- [ ] Gestion d'objets à chaque chapitre (nosferax snuff est mortel)
 - [ ] Webservice
 - [ ] Web UI

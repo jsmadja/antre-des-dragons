@@ -26,6 +26,7 @@ import static java.text.MessageFormat.format;
 public abstract class Entity {
     @Getter
     private final String name;
+
     private final Dice dice;
 
     @Setter
@@ -146,6 +147,12 @@ public abstract class Entity {
         return Roll.of(result);
     }
 
+    public Roll roll4Dices() {
+        int result = this.dice.roll(4) - rollMalus;
+        Events.diceEvent(this.name + " lance 4 dés et fait " + result);
+        return Roll.of(result);
+    }
+
     // Status
     public int getAdditionalDamagePoints() {
         return this.getEquipedWeapon().map(i -> i.getDamagePoint().getValue()).orElse(0);
@@ -240,14 +247,12 @@ public abstract class Entity {
         return true;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isAbleToTouchInvisibleTarget(Entity target, Roll roll) {
         if (this.hasEnoughStrikesInRowToHit(target)) {
             return true;
         }
-        if (roll != null && this.hasEnoughRollToHit(target, roll)) {
-            return true;
-        }
-        return false;
+        return roll != null && this.hasEnoughRollToHit(target, roll);
     }
 
     public boolean hasEnoughStrikesInRowToHit(Entity target) {

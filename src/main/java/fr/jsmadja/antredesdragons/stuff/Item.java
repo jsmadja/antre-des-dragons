@@ -37,7 +37,6 @@ public enum Item {
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
     PARTIAL_MAP_OF_THE_DRAGONS_LAIR("Carte partielle de l'antre du dragon"),
-    NOSFERAX_SNUFFBOX("Tabatière de Nosferax"),
     NOSFERAX_LOLLIPOP("Sucette de Nosferax"),
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
     MINOTAUR_KEY("Clef"),
