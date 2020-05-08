@@ -81,7 +81,7 @@ public abstract class Entity {
 
     @Getter
     private final int requiredStrikesToHitInvisible;
-    private final int maxStrikes;
+
     @Getter
     private int strikes;
 
@@ -101,7 +101,7 @@ public abstract class Entity {
     @Getter
     private List<SpecialSkill> specialSkills = new ArrayList<>();
 
-    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible, Integer maxStrikes) {
+    Entity(String name, Dice dice, int initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
         this.name = name;
         this.dice = dice;
         if (hitRollRange != null) {
@@ -112,7 +112,6 @@ public abstract class Entity {
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
         this.requiredStrikesToHitInvisible = requiredStrikesToHitInvisible == null ? MAX_VALUE : requiredStrikesToHitInvisible;
-        this.maxStrikes = maxStrikes == null ? MAX_VALUE : maxStrikes;
     }
 
     public abstract boolean isFoe();
@@ -197,7 +196,7 @@ public abstract class Entity {
     }
 
     // Fighting
-    public void kill() {
+    public void die() {
         this.currentHealthPoints = 0;
     }
 

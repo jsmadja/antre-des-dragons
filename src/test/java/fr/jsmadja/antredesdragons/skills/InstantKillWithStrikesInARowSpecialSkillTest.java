@@ -20,15 +20,15 @@ class InstantKillWithStrikesInARowSpecialSkillTest {
 
         when(attacker.getStrikesInARow()).thenReturn(0);
         specialSkill.onAttack(attacker, target);
-        verify(target, never()).kill();
+        verify(target, never()).die();
 
         when(attacker.getStrikesInARow()).thenReturn(1);
         specialSkill.onAttack(attacker, target);
-        verify(target, never()).kill();
+        verify(target, never()).die();
 
         when(attacker.getStrikesInARow()).thenReturn(2);
         specialSkill.onAttack(attacker, target);
-        verify(target, times(1)).kill();
+        verify(target, times(1)).die();
     }
 
 }

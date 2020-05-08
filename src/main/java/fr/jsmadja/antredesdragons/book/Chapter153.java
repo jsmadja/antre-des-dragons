@@ -13,7 +13,7 @@ public class Chapter153 extends SingleFightChapter {
     @Override
     public Execution execute(Pip pip) {
         if (pip.roll2Dices().isBetween(9, 12)) {
-            pip.kill();
+            pip.die();
             return pip.goToChapter(14);
         }
         return super.execute(pip);

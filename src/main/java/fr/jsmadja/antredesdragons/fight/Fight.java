@@ -64,7 +64,7 @@ public class Fight {
             this.endTurn();
         }
         if (this.isMaxTurnReached()) {
-            pip.kill();
+            pip.die();
         }
         this.endFight();
     }
@@ -73,7 +73,7 @@ public class Fight {
         Entity target = this.getTarget(attacker);
         attacker.getSpecialSkills()
                 .forEach(specialSkill -> specialSkill.onAttack(attacker, target));
-        if (!target.isDead()) {
+        if (!attacker.isDead() && !target.isDead()) {
             if (attacker.isPip()) {
                 Pip pip = (Pip) attacker;
                 attacker.getSpellsToCastDuringFight()

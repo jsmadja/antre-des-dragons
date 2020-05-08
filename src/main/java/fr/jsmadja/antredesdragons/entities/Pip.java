@@ -53,7 +53,7 @@ public class Pip extends Entity {
     private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
 
     public Pip(Dice dice) {
-        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null, null);
+        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
     }
 
     private static int computeInitialHealthPoints(Dice dice) {

@@ -17,7 +17,7 @@
 - [X] Gestion Fight : requiredStrikesToHitInvisible
 - [X] Gestion Fight : useWeaponEveryNStrike
 - [ ] Gestion Fight : invisibleRequiredMinimumHitRoll
-- [ ] Gestion Fight : maxStrikes
+- [X] Gestion Fight : maxStrikes
 - [ ] Webservice
 - [ ] Web UI
 - [ ] Où utiliser NIP ?
