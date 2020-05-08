@@ -7,11 +7,8 @@
 - [X] Réaction amicale
 - [X] Sorts manquants
 - [X] Potions et onguents de départ
-- [ ] Devoir se soigner avant de quitter le village
 - [X] Gérer la tabatière
 - [X] Gérer la sucette
-- [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
-- [ ] Où utiliser NIP ?
 - [X] Gestion Fight : instantKillWithStrikesInARow
 - [X] Gestion Fight : requiredStrikesToHitInvisible
 - [X] Gestion Fight : useWeaponEveryNStrike
@@ -22,3 +19,6 @@
 - [ ] Gestion d'objets pendant les combats (nosferax lollipop)
 - [ ] Webservice
 - [ ] Web UI
+- [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
+- [ ] Où utiliser NIP ?
+- [ ] Devoir se soigner avant de quitter le village (Trouver les chapitres qui font sortir du village)
