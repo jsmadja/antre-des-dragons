@@ -13,8 +13,10 @@ import static java.text.MessageFormat.format;
 @Data
 public class Action {
     @JsonUnwrapped
-    private ChapterNumber chapter;
+    private final ChapterNumber chapter;
     private String question;
+    private String suffix;
+    private String answer;
 
     public static Action goChapter(ChapterNumber chapterNumber) {
         return Action.builder().chapter(chapterNumber).build();
@@ -25,6 +27,6 @@ public class Action {
     }
 
     public String getUrl() {
-        return format("http://localhost:8080/chapter/{0}", chapter);
+        return format("http://localhost:8080/chapter/{0}{1}", chapter, suffix == null ? "" : suffix);
     }
 }

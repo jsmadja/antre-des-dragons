@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import fr.jsmadja.antredesdragons.core.Answer;
 import fr.jsmadja.antredesdragons.core.book.Book;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static fr.jsmadja.antredesdragons.core.book.Book.DEBUT;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -153,6 +155,24 @@ public class Pip extends Entity {
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         chapter.setVisited(true);
         return chapter.execute2(this);
+    }
+
+
+    public Execution2 goToChapter2WithAnswer(ChapterNumber chapterNumber, UUID questionId, Answer answer) {
+        LogEntries currentChapterLogEntries = getCurrentChapterLogEntries();
+        this.getDiary().openNewPage();
+        if (this.isDead()) {
+            return Execution2.builder()
+                    .logEntries(currentChapterLogEntries)
+                    .actions(List.of(goChapter(chapter(14))))
+                    .build();
+        }
+        onChapterEnd();
+        super.log(chapterNumber);
+        this.currentChapterNumber = chapterNumber;
+        Chapter chapter = book.get(this.currentChapterNumber.getChapter());
+        chapter.setVisited(true);
+        return chapter.execute2(this, questionId, answer);
     }
 
     public LogEntries getCurrentChapterLogEntries() {

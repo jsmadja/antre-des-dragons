@@ -39,7 +39,7 @@ public class Book {
         put(3, new Chapter3());
         put(4, new Chapter4());
         put(5, new Chapter5());
-        put(6, new Chapter6());
+        put(6, new Chapter6Bis());
         put(7, new Chapter7());
         put(8, new Chapter8());
         put(9, new Chapter9());
