@@ -1,10 +1,8 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
-import fr.jsmadja.antredesdragons.core.market.Market;
 
 public class Chapter4 extends ManualChoiceChapter {
 
@@ -225,11 +223,11 @@ public class Chapter4 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
+    protected void beforeLeavingChapter(Pip pip) {
+        // TODO MARKET
+        // new Market().enter(pip);
+        // pip.equipAll();
         initializeMoney(pip);
-        new Market().enter(pip);
-        pip.equipAll();
-        return super.execute(pip);
     }
 
     private void initializeMoney(Pip pip) {

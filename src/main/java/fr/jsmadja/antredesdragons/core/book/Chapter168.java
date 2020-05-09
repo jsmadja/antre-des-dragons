@@ -17,7 +17,7 @@ public class Chapter168 extends MultipleFightChapter {
     }
 
     @Override
-    protected List<Foe> getFoes(Pip pip) {
+    protected List<Foe> createFoes(Pip pip) {
         return IntStream.range(1, 6).mapToObj(
                 i -> {
                     Foe foe = Foe.builder()

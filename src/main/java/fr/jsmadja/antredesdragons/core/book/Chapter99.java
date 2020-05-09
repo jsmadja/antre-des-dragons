@@ -4,7 +4,7 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 
 public class Chapter99 extends ManualChoiceChapter {

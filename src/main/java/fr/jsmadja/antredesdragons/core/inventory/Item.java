@@ -1,10 +1,12 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
+import fr.jsmadja.antredesdragons.core.stuff.ArmorPoints;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 import lombok.Getter;
 
-import static fr.jsmadja.antredesdragons.core.stuff.ArmorPoint.armor;
-import static fr.jsmadja.antredesdragons.core.stuff.DamagePoint.damage;
+import static fr.jsmadja.antredesdragons.core.stuff.ArmorPoints.armor;
+import static fr.jsmadja.antredesdragons.core.stuff.DamagePoints.damage;
 
 @Getter
 public enum Item {
@@ -40,7 +42,6 @@ public enum Item {
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
     PARTIAL_MAP_OF_THE_DRAGONS_LAIR("Carte partielle de l'antre du dragon"),
-    // NOSFERAX_LOLLIPOP("Sucette de Nosferax"),
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
     MINOTAUR_KEY("Clef"),
     MAGIC_WAND("Baguette Magique"),
@@ -54,7 +55,7 @@ public enum Item {
     MACE("Masse d'armes", damage(3)),
     CLUB("Massue", damage(5)),
     SWORD("Epée", damage(4)),
-    EXCALIBUR_JUNIOR("ExcaliburJunior", damage(5), new HitRollRange(4)),
+    EXCALIBUR_JUNIOR("Excalibur Junior", damage(5), new HitRollRange(4)),
     TROLL_SWORD("Epée de Troll", damage(2), new HitRollRange(6)),
     GHOST_SWORD("Epée de Fantôme", damage(3), new HitRollRange(5)),
     RABBIT_FANGS("Croc de lapon", damage(3), new HitRollRange(5)),
@@ -84,18 +85,18 @@ public enum Item {
     private final boolean dreamItem;
 
     private final String name;
-    private final ArmorPoint armorPoint;
-    private final DamagePoint damagePoint;
+    private final ArmorPoints armorPoints;
+    private final DamagePoints damagePoints;
     private final boolean equipable;
     private final HitRollRange hitRollRange;
     private final boolean weapon;
     private final boolean armor;
     private final boolean poisoned;
 
-    Item(String name, ArmorPoint armorPoint, DamagePoint damagePoint, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned, boolean dreamItem) {
+    Item(String name, ArmorPoints armorPoints, DamagePoints damagePoints, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned, boolean dreamItem) {
         this.name = name;
-        this.armorPoint = armorPoint;
-        this.damagePoint = damagePoint;
+        this.armorPoints = armorPoints;
+        this.damagePoints = damagePoints;
         this.equipable = equipable;
         this.hitRollRange = hitRollRange;
         this.weapon = weapon;
@@ -110,28 +111,28 @@ public enum Item {
     }
 
     // Weapon Constructor
-    Item(String name, DamagePoint damagePoint) {
-        this(name, damagePoint, null, false);
+    Item(String name, DamagePoints damagePoints) {
+        this(name, damagePoints, null, false);
     }
 
-    Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange) {
-        this(name, armor(0), damagePoint, true, hitRollRange, true, false, false, false);
+    Item(String name, DamagePoints damagePoints, HitRollRange hitRollRange) {
+        this(name, armor(0), damagePoints, true, hitRollRange, true, false, false, false);
     }
 
-    Item(String name, DamagePoint damagePoint, HitRollRange hitRollRange, boolean poisoned) {
-        this(name, armor(0), damagePoint, true, hitRollRange, true, false, poisoned, false);
+    Item(String name, DamagePoints damagePoints, HitRollRange hitRollRange, boolean poisoned) {
+        this(name, armor(0), damagePoints, true, hitRollRange, true, false, poisoned, false);
     }
 
-    Item(String name, DamagePoint damagePoint, boolean dreamItem) {
-        this(name, armor(0), damagePoint, true, null, true, false, false, dreamItem);
+    Item(String name, DamagePoints damagePoints, boolean dreamItem) {
+        this(name, armor(0), damagePoints, true, null, true, false, false, dreamItem);
     }
 
     // Armor Constructor
-    Item(String name, ArmorPoint armorPoint) {
-        this(name, armorPoint, false);
+    Item(String name, ArmorPoints armorPoints) {
+        this(name, armorPoints, false);
     }
 
-    Item(String name, ArmorPoint armorPoint, boolean dreamItem) {
-        this(name, armorPoint, damage(0), true, null, false, true, false, dreamItem);
+    Item(String name, ArmorPoints armorPoints, boolean dreamItem) {
+        this(name, armorPoints, damage(0), true, null, false, true, false, dreamItem);
     }
 }

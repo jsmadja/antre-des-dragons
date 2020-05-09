@@ -1,7 +1,7 @@
-package fr.jsmadja.antredesdragons.core.entities;
+package fr.jsmadja.antredesdragons.core.inventory;
 
-import fr.jsmadja.antredesdragons.core.stuff.HealingItem;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
+@Data
 @Getter
 public class Inventory {
     private final List<Item> items = new ArrayList<>();
@@ -30,6 +31,7 @@ public class Inventory {
         this.items.remove(item);
     }
 
+    @JsonIgnore
     public List<Item> getAllEquipables() {
         return items.stream().filter(Item::isEquipable).collect(toList());
     }

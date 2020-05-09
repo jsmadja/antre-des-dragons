@@ -4,7 +4,7 @@ import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.FIREBALL;
 import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;

@@ -4,7 +4,7 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 public class Chapter128 extends ManualChoiceChapter {
     @Override

@@ -2,7 +2,7 @@ package fr.jsmadja.antredesdragons.core.spellcasting;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
-import static fr.jsmadja.antredesdragons.core.stuff.ArmorPoint.armor;
+import static fr.jsmadja.antredesdragons.core.stuff.ArmorPoints.armor;
 
 public class SpellAEP extends Spell {
     @Override

@@ -10,7 +10,7 @@ import fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult;
 
 import java.util.List;
 
-import static fr.jsmadja.antredesdragons.core.entities.Skill.SWIMMING;
+import static fr.jsmadja.antredesdragons.core.skills.Skill.SWIMMING;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 
 public class Chapter132 extends RollAndGoChapter {

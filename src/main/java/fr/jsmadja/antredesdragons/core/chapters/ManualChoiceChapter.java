@@ -1,12 +1,15 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static java.text.MessageFormat.format;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
@@ -24,10 +27,18 @@ public abstract class ManualChoiceChapter extends Chapter {
         Paths possiblesPath = getPossiblesPath(pip);
         possiblesPath.print();
         Prompt.NumberAnswer path = Prompt.answerTo("Quel est votre choix", possiblesPath.getChapter());
-        return pip.goTo(ChapterNumber.chapter(path.getAnswer()));
+        return pip.goTo(chapter(path.getAnswer()));
     }
 
     public abstract Paths getPossiblesPath(Pip pip);
+
+    @Override
+    public Execution2 execute2(Pip pip) {
+        return Execution2.builder()
+                .logEntries(pip.getCurrentChapterLogEntries())
+                .actions(getPossiblesPath(pip).toActions())
+                .build();
+    }
 
     public static class Paths {
         private final List<Path> paths;
@@ -51,6 +62,10 @@ public abstract class ManualChoiceChapter extends Chapter {
         public void add(Path... paths) {
             this.paths.addAll(asList(paths));
         }
+
+        public List<Action> toActions() {
+            return paths.stream().map(Path::toAction).collect(toList());
+        }
     }
 
     @Builder
@@ -63,6 +78,9 @@ public abstract class ManualChoiceChapter extends Chapter {
         public String toString() {
             return format("- {0}{1}", chapter, description == null ? "" : " - " + description);
         }
-    }
 
+        public Action toAction() {
+            return Action.question(chapter(chapter), description);
+        }
+    }
 }

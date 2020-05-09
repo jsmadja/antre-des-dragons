@@ -4,7 +4,7 @@ import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
-import static fr.jsmadja.antredesdragons.core.entities.Skill.SWIMMING;
+import static fr.jsmadja.antredesdragons.core.skills.Skill.SWIMMING;
 
 public class Chapter138 extends Chapter {
 

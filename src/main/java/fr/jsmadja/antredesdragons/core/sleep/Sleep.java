@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons.core;
+package fr.jsmadja.antredesdragons.core.sleep;
 
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.dices.Roll;

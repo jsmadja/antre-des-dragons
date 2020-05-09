@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.core.skills;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
+import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DreamChapter;
 
 import java.util.HashMap;
@@ -242,5 +243,9 @@ public class Book {
             throw new RuntimeException("DreamChapter not found");
         }
         return chapter;
+    }
+
+    public Chapter get(ChapterNumber chapterNumber) {
+        return chapters.get(chapterNumber.getChapter());
     }
 }

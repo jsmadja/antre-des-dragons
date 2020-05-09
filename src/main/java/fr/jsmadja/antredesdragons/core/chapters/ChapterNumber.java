@@ -13,4 +13,9 @@ public class ChapterNumber {
     public static ChapterNumber chapter(Integer chapter) {
         return new ChapterNumber(chapter);
     }
+
+    @Override
+    public String toString() {
+        return chapter.toString();
+    }
 }

@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
@@ -23,5 +24,9 @@ public class Foe extends Entity {
     @Override
     protected boolean isDragon() {
         return dragon;
+    }
+
+    public LogEntries getLogEntries() {
+        return this.getDiary().getLogEntries();
     }
 }

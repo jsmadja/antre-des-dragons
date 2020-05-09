@@ -3,7 +3,7 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 
 public class Chapter32 extends GoNextChapter {
     @Override
@@ -13,7 +13,7 @@ public class Chapter32 extends GoNextChapter {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.addTemporaryDamagePointsMalus(DamagePoint.damage(4));
+        pip.addTemporaryDamagePointsMalus(DamagePoints.damage(4));
         return super.execute(pip);
     }
 

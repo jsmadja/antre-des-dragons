@@ -3,11 +3,15 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
-import fr.jsmadja.antredesdragons.core.ui.Events;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static fr.jsmadja.antredesdragons.core.inventory.Item.BOTTLE_OF_WATER;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.HARP;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.LUTH;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.SPARE_BOOTS;
 
 public class Chapter73 extends GoNextChapter {
     @Override
@@ -34,7 +38,7 @@ public class Chapter73 extends GoNextChapter {
     @Override
     public Execution execute(Pip pip) {
         if (canAttackTroll(pip)) {
-            Events.fightEvent("Vous attaquez le Troll avec votre matériel.");
+            pip.logFight("Vous attaquez le Troll avec votre matériel.");
             pip.addExperiencePoints(1);
         } else {
             getThiefableItems(pip).forEach(pip::remove);
@@ -44,10 +48,10 @@ public class Chapter73 extends GoNextChapter {
 
     private boolean canAttackTroll(Pip pip) {
         return List.of(
-                Item.BOTTLE_OF_WATER,
-                Item.SPARE_BOOTS,
-                Item.LUTH,
-                Item.HARP
+                BOTTLE_OF_WATER,
+                SPARE_BOOTS,
+                LUTH,
+                HARP
         ).stream().anyMatch(pip::has);
     }
 

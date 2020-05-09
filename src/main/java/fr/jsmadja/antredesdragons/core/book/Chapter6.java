@@ -5,8 +5,8 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 
 public class Chapter6 extends Chapter {
@@ -29,7 +29,7 @@ public class Chapter6 extends Chapter {
             return pip.goToChapter(getSuccessChapter());
         }
         pip.setRollMalus(2);
-        Fight fight = new Fight(pip, getFoe());
+        Fight fight = new Fight(pip, createFoe());
         fight.start();
         if (pip.isDead()) {
             return pip.goToChapter(14);
@@ -42,7 +42,7 @@ public class Chapter6 extends Chapter {
         return 5;
     }
 
-    private Foe getFoe() {
+    private Foe createFoe() {
         Foe foe = Foe.builder()
                 .name("Lapin Blanc")
                 .initialHealthPoints(HealthPoints.hp(25))

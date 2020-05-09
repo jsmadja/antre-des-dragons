@@ -2,7 +2,7 @@ package fr.jsmadja.antredesdragons.core.spellcasting;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
 public class Spell {
 
     @Getter
-    private final DamagePoint damagePoints;
+    private final DamagePoints damagePoints;
 
     @Getter
     private final boolean freelyUsable;
@@ -21,7 +21,7 @@ public class Spell {
     Spell() {
         this.freelyUsable = true;
         this.maxUsages = 3;
-        this.damagePoints = DamagePoint.damage(3);
+        this.damagePoints = DamagePoints.damage(3);
     }
 
     public void onCast(Pip pip) {

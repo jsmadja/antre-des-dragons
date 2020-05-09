@@ -3,7 +3,7 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.FightDreamChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.stream.IntStream;
 

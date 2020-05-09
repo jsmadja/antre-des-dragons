@@ -1,7 +1,8 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -21,12 +22,12 @@ class NosferaxSnuffBoxTest {
         assertThat(nosferaxSnuffBox.isUsable()).isTrue();
 
         HealthPoints healthPoints = nosferaxSnuffBox.use();
-        assertThat(healthPoints.getValue()).isEqualTo(40);
+        assertThat(healthPoints.getHealthPoints()).isEqualTo(40);
         assertThat(nosferaxSnuffBox.isUsable()).isTrue();
 
         when(pip.isNosferaxSnuffBoxUsed()).thenReturn(true);
         healthPoints = nosferaxSnuffBox.use();
-        assertThat(healthPoints.getValue()).isEqualTo(12);
+        assertThat(healthPoints.getHealthPoints()).isEqualTo(12);
         verify(pip, Mockito.times(1)).die();
     }
 

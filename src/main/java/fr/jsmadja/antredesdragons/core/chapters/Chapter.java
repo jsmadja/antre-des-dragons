@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +13,16 @@ public abstract class Chapter {
 
     public abstract String getText();
 
-    public abstract Execution execute(Pip pip);
+    @Deprecated
+    public Execution execute(Pip pip) {
+        return Execution.empty();
+    }
 
-    protected void beforeLeavingChapter(Pip pip) {}
+    protected void beforeLeavingChapter(Pip pip) {
+    }
+
+    public Execution2 execute2(Pip pip) {
+        return Execution2.builder().logEntries(pip.getCurrentChapterLogEntries()).build();
+    }
 
 }

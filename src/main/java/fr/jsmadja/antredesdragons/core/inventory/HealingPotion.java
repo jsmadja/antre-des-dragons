@@ -1,7 +1,9 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.entities.Entity;
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +12,12 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public class HealingPotion extends HealingItem {
+
+    @Getter
     private final List<HealthPoints> doses;
 
     public HealingPotion(Dice dice) {
+        super("Potion Curative");
         this.doses = IntStream
                 .range(0, 6)
                 .mapToObj(i -> dice.roll(2).toHealthPoints()).collect(toList());

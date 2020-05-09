@@ -12,7 +12,7 @@ public class Chapter82 extends SingleFightChapter {
     }
 
     @Override
-    protected Foe getFoe() {
+    protected Foe createFoe() {
         return Foe.builder().name("Loup Siffleur").initialHealthPoints(hp(15)).build();
     }
 

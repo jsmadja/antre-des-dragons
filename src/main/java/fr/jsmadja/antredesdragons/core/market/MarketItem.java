@@ -1,6 +1,6 @@
 package fr.jsmadja.antredesdragons.core.market;
 
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -72,10 +72,10 @@ public enum MarketItem {
     private String getDescription() {
         String name = item.getName();
         if (item.isWeapon()) {
-            return name + " DMG+" + item.getDamagePoint().getValue();
+            return name + " DMG+" + item.getDamagePoints().getDamagePoints();
         }
         if (item.isArmor()) {
-            return name + " ARM+" + item.getArmorPoint().getValue();
+            return name + " ARM+" + item.getArmorPoints().getArmorPoints();
         }
         return name;
     }

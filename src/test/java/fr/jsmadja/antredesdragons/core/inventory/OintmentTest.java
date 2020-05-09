@@ -1,5 +1,6 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +12,7 @@ class OintmentTest {
         Ointment ointment = new Ointment();
         assertThat(ointment.isUsable()).isTrue();
         HealthPoints healthPoints = ointment.use();
-        assertThat(healthPoints.getValue()).isEqualTo(5);
+        assertThat(healthPoints.getHealthPoints()).isEqualTo(5);
         assertThat(ointment.isUsable()).isFalse();
     }
 

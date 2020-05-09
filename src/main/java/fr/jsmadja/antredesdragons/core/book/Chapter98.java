@@ -5,8 +5,8 @@ import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class Chapter98 extends MultipleFightChapter {
     }
 
     @Override
-    protected List<Foe> getFoes(Pip pip) {
+    protected List<Foe> createFoes(Pip pip) {
         return IntStream
                 .range(1, 7)
                 .mapToObj(operand -> {

@@ -9,9 +9,8 @@ import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.fight.Attack;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
-import fr.jsmadja.antredesdragons.core.ui.Events;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +115,6 @@ public class Chapter120 extends Chapter {
                 if (!other.isDead()) {
                     this.attack(attacker, other);
                 }
-                Events.statusEvent(attacker.toString());
             });
         }
         if (equipedWeapon.isPresent()) {
@@ -144,19 +142,18 @@ public class Chapter120 extends Chapter {
     }
 
     private void attack(Entity attacker, Entity target) {
-        Events.fightEvent(format("{0} attaque {1}", attacker.getName(), target.getName()));
+        attacker.logFight(format("{0} attaque {1}", attacker.getName(), target.getName()));
         Attack physicalAttack = attacker.createPhysicAttack(target);
         if (physicalAttack.getStatus() == Attack.Status.TOUCHED) {
             int damagePoints = physicalAttack.getDamagePoints();
-            Events.fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
+            attacker.logFight(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
             target.wounds(damagePoints);
             if (target.isDead()) {
-                Events.fightEvent(format("{0} est mort", target.getName()));
+                target.logFight(format("{0} est mort", target.getName()));
             }
         } else {
-            Events.fightEvent(format("{0} rate son attaque vers {1}", attacker.getName(), target.getName()));
+            attacker.logFight(format("{0} rate son attaque vers {1}", attacker.getName(), target.getName()));
         }
-        Events.statusEvent(target.toString());
     }
 
     private boolean isOver() {

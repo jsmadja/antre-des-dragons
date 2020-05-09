@@ -27,7 +27,7 @@ public class Chapter91 extends GoNextChapter {
                 "Je m'appelle Pip, dites-vous, vous demandant s'il n' est pas fou.\n" +
                 "Entendu parler dans le temps d'un Pip qu'a rectifié le sorcier Ansalom. Ça ne peut pas " +
                 "être toi, des fois ? Et avant que vous n'ayez eu le temps de répondre, il poursuit : Mais " +
-                "non, je me disais bien. Enfin, n'importe, si t'as débarqué par hasard à la Pierre-quiMue, tu dois bien te demander ce qui cloche ici. Eh bien, je vais te le dire, moi, " +
+                "non, je me disais bien. Enfin, n'importe, si t'as débarqué par hasard à la Pierre-qui-Mue, tu dois bien te demander ce qui cloche ici. Eh bien, je vais te le dire, moi, " +
                 "puisque tu m'as gentiment aidé à sortir de la tombe. C'est un endroit maudit, oui, mon " +
                 "petit. Le village tout entier, sauf moi. Deux maisons transformées en blocs de pierre. " +
                 "le banquier du coin a été transformé en Gnome. Le vicaire est un Fantôme " +

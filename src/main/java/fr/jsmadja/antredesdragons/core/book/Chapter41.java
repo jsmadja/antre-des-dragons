@@ -1,12 +1,14 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.market.SilverCoins;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.FOOD;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.THATCHED_CREATURE_DAGGERS;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter41 extends SingleFightChapter {
@@ -16,22 +18,22 @@ public class Chapter41 extends SingleFightChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (pip.has(Item.FOOD)) {
-            return pip.goToChapter(getSuccessChapter());
+    public Execution2 execute2(Pip pip) {
+        if (pip.has(FOOD)) {
+            return pip.goToChapter2(chapter(getSuccessChapter()));
         }
-        return super.execute(pip);
+        return super.execute2(pip);
     }
 
     @Override
     protected void onAfterSuccessfulFight(Pip pip) {
-        pip.add(Item.THATCHED_CREATURE_DAGGERS);
+        pip.add(THATCHED_CREATURE_DAGGERS);
         pip.addSilverCoins(SilverCoins.of(10));
         super.onAfterSuccessfulFight(pip);
     }
 
     @Override
-    protected Foe getFoe() {
+    protected Foe createFoe() {
         return Foe.builder().name("Créature de la chaumière").initialHealthPoints(hp(5)).build();
     }
 

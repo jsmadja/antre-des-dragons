@@ -1,20 +1,32 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
+import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 
 import java.util.List;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
+
 public abstract class SingleFightChapter extends Chapter {
+
     @Override
-    public Execution execute(Pip pip) {
+    public Execution2 execute2(Pip pip) {
         onBeforeFight(pip);
-        pip.fight(List.of(getFoe()));
+        Foe foe = createFoe();
+        pip.fight(List.of(foe));
+        LogEntries foeLogEntries = foe.getLogEntries();
         if (pip.isDead()) {
-            return pip.goTo(ChapterNumber.chapter(14));
+            return pip.goToChapter2(chapter(14))
+                    .add(foeLogEntries);
         }
         onAfterSuccessfulFight(pip);
-        return pip.goTo(ChapterNumber.chapter(getSuccessChapter()));
+        return Execution2.builder()
+                .logEntries(foeLogEntries)
+                .actions(List.of(goChapter(chapter(getSuccessChapter()))))
+                .build();
     }
 
     protected void onBeforeFight(Pip pip) {
@@ -26,6 +38,6 @@ public abstract class SingleFightChapter extends Chapter {
 
     protected abstract int getSuccessChapter();
 
-    protected abstract Foe getFoe();
+    protected abstract Foe createFoe();
 
 }

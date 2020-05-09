@@ -5,7 +5,7 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +53,6 @@ public class Chapter57 extends MultipleFightChapter {
         if (answerTo("Voulez-vous rebrousser chemin").isYes()) {
             return pip.goToPreviousChapter();
         }
-
         return super.execute(pip);
     }
 
@@ -69,7 +68,7 @@ public class Chapter57 extends MultipleFightChapter {
     }
 
     @Override
-    protected List<Foe> getFoes(Pip pip) {
+    protected List<Foe> createFoes(Pip pip) {
         return IntStream.range(1, 4).mapToObj(id -> {
             Foe foe = Foe.builder()
                     .name(format("Moine {0}", id))

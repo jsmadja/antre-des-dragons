@@ -1,9 +1,9 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 public class Chapter2 extends GoNextChapter {
     @Override
@@ -31,8 +31,8 @@ public class Chapter2 extends GoNextChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
+    public Execution2 execute2(Pip pip) {
         pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
-        return super.execute(pip);
+        return super.execute2(pip);
     }
 }

@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.execution.Action;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +16,9 @@ public class DiceWay {
 
     public boolean matches(Roll roll) {
         return roll.isBetween(from, to);
+    }
+
+    public Action toAction() {
+        return Action.builder().chapter(chapterNumber).build();
     }
 }

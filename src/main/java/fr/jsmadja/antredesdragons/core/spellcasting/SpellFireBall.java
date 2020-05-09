@@ -2,7 +2,7 @@ package fr.jsmadja.antredesdragons.core.spellcasting;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 public class SpellFireBall extends Spell {
     @Override

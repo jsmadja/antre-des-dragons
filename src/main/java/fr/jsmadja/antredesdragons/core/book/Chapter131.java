@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.core.inventory.Item.DWARF_SWORD;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-import static fr.jsmadja.antredesdragons.core.stuff.Item.DWARF_SWORD;
 
 public class Chapter131 extends MultipleFightChapter {
     @Override
@@ -19,7 +19,7 @@ public class Chapter131 extends MultipleFightChapter {
     }
 
     @Override
-    protected List<Foe> getFoes(Pip pip) {
+    protected List<Foe> createFoes(Pip pip) {
         Roll roll = pip.roll2Dices();
         return IntStream.range(1, 13).mapToObj(
                 i -> {
@@ -34,7 +34,7 @@ public class Chapter131 extends MultipleFightChapter {
     }
 
     @Override
-    public int getRequiredDeadFoes(Pip pip) {
+    public int getRequiredDeadFoesSize(Pip pip) {
         return 10;
     }
 

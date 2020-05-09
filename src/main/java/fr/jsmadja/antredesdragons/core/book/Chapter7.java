@@ -3,8 +3,8 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
-import static fr.jsmadja.antredesdragons.core.stuff.Item.CLEATS;
-import static fr.jsmadja.antredesdragons.core.stuff.Item.ROPE;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.CLEATS;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.ROPE;
 
 public class Chapter7 extends ManualChoiceChapter {
     @Override

@@ -2,15 +2,15 @@ package fr.jsmadja.antredesdragons.core.spellcasting;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.DamagePoint;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 
 import java.util.stream.IntStream;
 
 public class SpellFingerOfFire extends Spell {
 
     SpellFingerOfFire() {
-        super(DamagePoint.damage(3), true, 1);
+        super(DamagePoints.damage(3), true, 1);
     }
 
     @Override

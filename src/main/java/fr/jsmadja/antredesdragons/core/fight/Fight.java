@@ -3,15 +3,12 @@ package fr.jsmadja.antredesdragons.core.fight;
 import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.ui.Events;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-import static fr.jsmadja.antredesdragons.core.ui.Events.fightEvent;
-import static fr.jsmadja.antredesdragons.core.ui.Events.statusEvent;
 import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toList;
 
@@ -25,7 +22,7 @@ public class Fight {
     public Fight(Pip pip, List<Foe> foes) {
         this.pip = pip;
         this.foes = new Foes(foes, pip);
-        this.foes.getFriendlyFoes().forEach(foe -> fightEvent(String.format("%s a une réaction amicale", foe.getName())));
+        this.foes.getFriendlyFoes().forEach(foe -> foe.logFight(String.format("%s a une réaction amicale", foe.getName())));
     }
 
     public Fight(Pip pip, int maxTurn, List<Foe> foes) {
@@ -46,23 +43,16 @@ public class Fight {
         this.minimumFoesToKillCount = mininumDeadFoes;
     }
 
-    private void showTurn() {
-        Events.event("\n");
-        fightEvent(format("Tour no {0}", this.turn));
-    }
-
     public void start() {
         beforeFight();
         List<Entity> opponents = getOrderedOpponents();
         while (!this.isOver()) {
-            showTurn();
             opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
                 attack(attacker);
                 if (attacker.isAbleToStrikeTwice()) {
                     attack(attacker);
                 }
             });
-            opponents.forEach(p -> Events.statusEvent(p.toString()));
             this.endTurn();
         }
         if (this.isMaxTurnReached()) {
@@ -72,7 +62,10 @@ public class Fight {
     }
 
     private void beforeFight() {
-        getOrderedOpponents().forEach(o -> o.setLostHealthPointsDuringCurrentFight(hp(0)));
+        getOrderedOpponents().forEach(o -> {
+            o.resetStrikes();
+            o.setLostHealthPointsDuringCurrentFight(hp(0));
+        });
     }
 
     private void attack(Entity attacker) {
@@ -86,7 +79,7 @@ public class Fight {
                         .forEach(spell -> spell.getSpell().onAttack(pip, target));
             }
             this.attackPhysically(attacker, target);
-            if (attacker.getMagicDamagePoints().getValue() > 0) {
+            if (attacker.getMagicDamagePoints().getDamagePoints() > 0) {
                 this.attackMagically(attacker, target);
             }
         }
@@ -110,22 +103,22 @@ public class Fight {
         if (attack.getStatus() == TOUCHED) {
             attacker.setStrikesInARow(attacker.getStrikesInARow() + 1);
             int damagePoints = attack.getDamagePoints();
-            fightEvent(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
+            attacker.logFight(format("{0} fait {1} points de dégâts à {2}", attacker.getName(), damagePoints, target.getName()));
             if (attacker.hasPoisonedWeapon()) {
-                fightEvent(format("{0} est empoisonné", target.getName()));
+                target.logFight(format("{0} est empoisonné", target.getName()));
                 target.setPoisoned(true);
             }
             target.wounds(damagePoints);
             if (target.isDead()) {
-                fightEvent(format("{0} est mort", target.getName()));
+                target.logFight(format("{0} est mort", target.getName()));
             }
             if (target.isFoe() && target.isStuned()) {
-                fightEvent(format("{0} est étourdi", target.getName()));
+                target.logFight(format("{0} est étourdi", target.getName()));
             }
         } else {
-            fightEvent(format("{0} rate son attaque vers {1}", attacker.getName(), target.getName()));
+            attacker.logFight(format("{0} rate son attaque vers {1}", attacker.getName(), target.getName()));
         }
-        statusEvent(target.toString());
+        attacker.incrementStrikes();
     }
 
     private boolean isMaxTurnReached() {

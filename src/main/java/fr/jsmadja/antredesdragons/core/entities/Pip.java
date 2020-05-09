@@ -1,26 +1,28 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
-import fr.jsmadja.antredesdragons.core.Sleep;
 import fr.jsmadja.antredesdragons.core.book.Book;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DiceWay;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
+import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
+import fr.jsmadja.antredesdragons.core.inventory.HealingPotion;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Ointment;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.core.market.MarketItem;
 import fr.jsmadja.antredesdragons.core.market.SilverCoins;
+import fr.jsmadja.antredesdragons.core.skills.Skill;
+import fr.jsmadja.antredesdragons.core.sleep.Sleep;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellUsages;
-import fr.jsmadja.antredesdragons.core.stuff.HealingItem;
-import fr.jsmadja.antredesdragons.core.stuff.HealingPotion;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
-import fr.jsmadja.antredesdragons.core.stuff.Ointment;
-import fr.jsmadja.antredesdragons.core.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +31,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static fr.jsmadja.antredesdragons.core.book.Book.DEBUT;
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
@@ -52,7 +57,9 @@ public class Pip extends Entity {
     private ChapterNumber previousChapter;
     private int experiencePoints;
     private int level = 1;
-    private ChapterNumber currentChapter;
+
+    private ChapterNumber currentChapterNumber = chapter(DEBUT);
+
     private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
 
     @Setter
@@ -60,24 +67,29 @@ public class Pip extends Entity {
     private boolean nosferaxSnuffBoxUsed;
 
     public Pip(Dice dice) {
-        super("Pip", dice, computeInitialHealthPoints(dice), DEFAULT_MINIMUM_HIT_ROLL, null, false, null);
-
-        range(0, 3)
-                .mapToObj(i -> new HealingPotion(dice))
-                .forEach(this::add);
-
-        range(0, 5)
-                .mapToObj(i -> new Ointment())
-                .forEach(this::add);
+        super("Pip", dice);
     }
 
-    private static HealthPoints computeInitialHealthPoints(Dice dice) {
-        return hp(range(1, 4).map(i -> dice.roll(2).getValue()).max().orElse(0) * 4);
+    public void initialize() {
+        setInitialHealthPoints(computeInitialHealthPoints().getHealthPoints());
+        setCurrentHealthPoints(getInitialHealthPoints());
+        setMaximumHealthPoints(getInitialHealthPoints());
+        range(0, 3).mapToObj(i -> new HealingPotion(this.getDice())).forEach(this::add);
+        range(0, 5).mapToObj(i -> new Ointment()).forEach(this::add);
     }
 
-    public void add(HealingItem healingItem) {
-        Events.inventoryEvent(this.getName() + " ajoute " + healingItem + " dans son inventaire");
+    private HealthPoints computeInitialHealthPoints() {
+        return hp(range(1, 4).map(i -> {
+            Roll roll = this.getDice().roll(2);
+            this.log(roll);
+            return roll.getValue();
+        }).max().orElse(0) * 4);
+    }
+
+    public HealingItem add(HealingItem healingItem) {
+        super.log(healingItem);
         this.getInventory().add(healingItem);
+        return healingItem;
     }
 
     @Override
@@ -90,7 +102,7 @@ public class Pip extends Entity {
         Sleep sleep = new Sleep(this);
         if (sleep.isGood()) {
             HealthPoints healthPoints = sleep.getHealthPoints();
-            this.restoreHealthPoints(healthPoints.getValue());
+            this.restoreHealthPoints(healthPoints.getHealthPoints());
             this.setSleeping(false);
             return this.goToPreviousChapter();
         }
@@ -123,7 +135,28 @@ public class Pip extends Entity {
 
     // Navigation
     public Execution goToChapter(int chapter) {
-        return goTo(ChapterNumber.chapter(chapter));
+        return goTo(chapter(chapter));
+    }
+
+    public Execution2 goToChapter2(ChapterNumber chapterNumber) {
+        LogEntries currentChapterLogEntries = getCurrentChapterLogEntries();
+        this.getDiary().openNewPage();
+        if (this.isDead()) {
+            return Execution2.builder()
+                    .logEntries(currentChapterLogEntries)
+                    .actions(List.of(goChapter(chapter(14))))
+                    .build();
+        }
+        onChapterEnd();
+        super.log(chapterNumber);
+        this.currentChapterNumber = chapterNumber;
+        Chapter chapter = book.get(this.currentChapterNumber.getChapter());
+        chapter.setVisited(true);
+        return chapter.execute2(this);
+    }
+
+    public LogEntries getCurrentChapterLogEntries() {
+        return getDiary().getCurrentPage().getLogEntries();
     }
 
     public Execution goToPreviousChapter() {
@@ -132,21 +165,20 @@ public class Pip extends Entity {
 
     public Execution goTo(ChapterNumber chapterNumber) {
         if (this.isDead()) {
-            return goTo(ChapterNumber.chapter(14));
+            return goTo(chapter(14));
         }
 
         onChapterEnd();
-        this.currentChapter = chapterNumber;
-        Events.chapterEvent("Pip se rend au chapitre " + this.currentChapter.getChapter());
-        Events.statusEvent(this.toString());
-        Chapter chapter = book.get(this.currentChapter.getChapter());
+        this.currentChapterNumber = chapterNumber;
+        log(this.currentChapterNumber);
+        Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         System.err.println(chapter.getText() + "\n");
         chapter.setVisited(true);
         return chapter.execute(this);
     }
 
     private void onChapterEnd() {
-        this.previousChapter = currentChapter;
+        this.previousChapter = currentChapterNumber;
         this.usedSpellsInCurrentChapter.forEach(s -> s.getSpell().onChapterEnd(this));
 
     }
@@ -155,6 +187,16 @@ public class Pip extends Entity {
         Roll roll = this.roll2Dices();
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
         return goTo(way.getChapterNumber());
+    }
+
+    public Execution2 rollAndGo2(List<DiceWay> diceWays) {
+        Roll roll = this.roll2Dices();
+        log(roll);
+        DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
+        return Execution2.builder()
+                .logEntries(this.getCurrentChapterLogEntries())
+                .actions(List.of(way.toAction()))
+                .build();
     }
 
     // Spell
@@ -167,19 +209,19 @@ public class Pip extends Entity {
     }
 
     public SpellEffectResult use(SpellBook spell) {
-        if (this.getCurrentHealthPoints() <= spell.getSpell().getDamagePoints().getValue()) {
-            Events.spellEvent(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
+        if (this.getCurrentHealthPoints() <= spell.getSpell().getDamagePoints().getDamagePoints()) {
+            this.logSpell(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
             return FAILURE;
         }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.roll(6))) {
-            Events.spellEvent(this.getName() + " utilise le sort " + spell.name());
+            this.logSpell(this.getName() + " utilise le sort " + spell.name());
             spell.getSpell().onCast(this);
-            this.wounds(spell.getSpell().getDamagePoints().getValue());
+            this.wounds(spell.getSpell().getDamagePoints().getDamagePoints());
             this.spellUsages.increment(spell);
             this.addUsedSpellsInCurrentChapter(spell);
             return SUCCESS;
         }
-        Events.spellEvent(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
+        this.logSpell(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
         return FAILURE;
     }
 
@@ -208,7 +250,7 @@ public class Pip extends Entity {
 
     // Money
     public void addSilverCoins(SilverCoins silverCoins) {
-        Events.event("Pip obtient " + silverCoins + " pièces d'argent");
+        super.log("Pip obtient " + silverCoins + " pièces d'argent");
         this.silverCoins = this.silverCoins.plus(silverCoins);
     }
 
@@ -251,6 +293,10 @@ public class Pip extends Entity {
 
     public Execution goToDreamChapter(ChapterNumber dreamChapterNumber) {
         return Execution.empty();
+    }
+
+    public Chapter getCurrentChapter() {
+        return this.book.get(currentChapterNumber);
     }
 
 }

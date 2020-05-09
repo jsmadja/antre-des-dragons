@@ -1,11 +1,8 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Chapter;
-import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
-import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 
-public class Chapter85 extends Chapter {
+public class Chapter85 extends GoNextChapter {
     @Override
     public String getText() {
         return "Vous avez réussi ! Après toutes ces épreuves, vous avez réussi ! Vous avez franchi " +
@@ -13,7 +10,7 @@ public class Chapter85 extends Chapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        return pip.goTo(ChapterNumber.chapter(16));
+    public int getNextChapter() {
+        return 16;
     }
 }

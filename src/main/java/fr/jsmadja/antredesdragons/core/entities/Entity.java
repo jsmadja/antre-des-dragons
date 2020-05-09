@@ -1,16 +1,21 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
+import fr.jsmadja.antredesdragons.core.diary.Diary;
+import fr.jsmadja.antredesdragons.core.diary.LogEntry;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.fight.Attack;
+import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
+import fr.jsmadja.antredesdragons.core.inventory.Inventory;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.skills.SpecialSkill;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
-import fr.jsmadja.antredesdragons.core.stuff.ArmorPoint;
-import fr.jsmadja.antredesdragons.core.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.core.stuff.ArmorPoints;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
-import fr.jsmadja.antredesdragons.core.ui.Events;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static fr.jsmadja.antredesdragons.core.dices.Roll.roll;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.TOUCHED;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
@@ -29,13 +35,17 @@ public abstract class Entity {
     @Getter
     private final String name;
 
+    @JsonIgnore
+    @Getter
     private final Dice dice;
 
     @Setter
     @Getter
     private int initialHealthPoints;
 
+    @Setter
     private int currentHealthPoints;
+
     @Getter
     @Setter
     private int maximumHealthPoints;
@@ -43,8 +53,8 @@ public abstract class Entity {
     private HitRollRange hitRollRange = new HitRollRange(6);
     @Setter
     private HitRollRange forcedMinimumHitRoll;
-    private final Integer constantHitDamage;
-    private final boolean immuneToPhysicalDamages;
+    private Integer constantHitDamage;
+    private boolean immuneToPhysicalDamages;
 
     @Getter
     @Setter
@@ -55,10 +65,10 @@ public abstract class Entity {
     private boolean ableToStrikeTwice;
 
     @Getter
-    private ArmorPoint magicArmorPoints = ArmorPoint.armor(0);
+    private ArmorPoints magicArmorPoints = ArmorPoints.armor(0);
 
     @Getter
-    private DamagePoint magicDamagePoints = DamagePoint.damage(0);
+    private DamagePoints magicDamagePoints = DamagePoints.damage(0);
 
     @Getter
     private final Inventory inventory = new Inventory();
@@ -73,10 +83,8 @@ public abstract class Entity {
     @Setter
     private boolean sleeping;
 
-    public static final HitRollRange DEFAULT_MINIMUM_HIT_ROLL = new HitRollRange(6, 12);
-
     @Getter
-    private DamagePoint temporaryDamagePointsMalus = DamagePoint.damage(0);
+    private DamagePoints temporaryDamagePointsMalus = DamagePoints.damage(0);
 
     @Getter
     @Setter
@@ -112,17 +120,26 @@ public abstract class Entity {
     @Getter
     private HealthPoints lostHealthPointsDuringCurrentFight = hp(0);
 
+    @Getter
+    private Diary diary = new Diary();
+
     Entity(String name, Dice dice, HealthPoints initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
         this.name = name;
         this.dice = dice;
         if (hitRollRange != null) {
             this.hitRollRange = hitRollRange;
         }
-        this.initialHealthPoints = this.currentHealthPoints = initialHealthPoints.getValue();
+        this.initialHealthPoints = this.currentHealthPoints = initialHealthPoints.getHealthPoints();
         this.constantHitDamage = constantHitDamage;
         this.immuneToPhysicalDamages = immuneToPhysicalDamages;
         this.maximumHealthPoints = this.initialHealthPoints;
         this.requiredStrikesToHitInvisible = requiredStrikesToHitInvisible == null ? MAX_VALUE : requiredStrikesToHitInvisible;
+    }
+
+    Entity(String name, Dice dice) {
+        this.name = name;
+        this.dice = dice;
+        this.requiredStrikesToHitInvisible = MAX_VALUE;
     }
 
     public abstract boolean isFoe();
@@ -142,32 +159,37 @@ public abstract class Entity {
 
     // Rolling
     public Roll roll1Dice() {
-        return Roll.roll(this.dice.roll() - rollMalus);
+        Roll roll = roll(this.dice.roll() - rollMalus);
+        log(roll);
+        return roll;
     }
 
     public Roll roll2Dices() {
-        int result = this.dice.roll(2).getValue() - rollMalus;
-        Events.diceEvent(this.name + " lance 2 dés et fait " + result);
-        return Roll.roll(result);
+        Roll roll = this.dice.roll(2);
+        int result = roll.getValue() - rollMalus;
+        log(roll);
+        return roll(result);
     }
 
     public Roll roll3Dices() {
-        int result = this.dice.roll(3).getValue() - rollMalus;
-        Events.diceEvent(this.name + " lance 3 dés et fait " + result);
-        return Roll.roll(result);
+        Roll roll = this.dice.roll(3);
+        int result = roll.getValue() - rollMalus;
+        log(roll);
+        return roll(result);
     }
 
     public Roll roll4Dices() {
-        int result = this.dice.roll(4).getValue() - rollMalus;
-        Events.diceEvent(this.name + " lance 4 dés et fait " + result);
-        return Roll.roll(result);
+        Roll roll = this.dice.roll(4);
+        int result = roll.getValue() - rollMalus;
+        log(roll);
+        return roll(result);
     }
 
     // Status
     public int getAdditionalDamagePoints() {
         return this.getEquipedWeapon()
                 .filter(i -> !isSleeping() || i.isDreamItem())
-                .map(i -> i.getDamagePoint().getValue()).orElse(0);
+                .map(i -> i.getDamagePoints().getDamagePoints()).orElse(0);
     }
 
     public HitRollRange getHitRollRange() {
@@ -193,25 +215,29 @@ public abstract class Entity {
         return this.inventory.getEquipedItems()
                 .stream()
                 .filter(item -> !isSleeping() || item.isDreamItem())
-                .map(i -> i.getArmorPoint().getValue())
+                .map(i -> i.getArmorPoints().getArmorPoints())
                 .reduce(0, Integer::sum);
     }
 
-    public void addMagicalArmorPoints(ArmorPoint armorPoint) {
-        this.magicArmorPoints = ArmorPoint.armor(this.magicArmorPoints.getValue() + armorPoint.getValue());
+    public void addMagicalArmorPoints(ArmorPoints armorPoints) {
+        this.magicArmorPoints = ArmorPoints.armor(this.magicArmorPoints.getArmorPoints() + armorPoints.getArmorPoints());
     }
 
     public void removeAllMagicEffects() {
-        this.magicArmorPoints = ArmorPoint.armor(0);
-        this.magicDamagePoints = DamagePoint.damage(0);
+        this.magicArmorPoints = ArmorPoints.armor(0);
+        this.magicDamagePoints = DamagePoints.damage(0);
     }
 
-    public void addMagicDamagePoints(DamagePoint damagePoint) {
-        this.magicDamagePoints = DamagePoint.damage(this.magicDamagePoints.getValue() + damagePoint.getValue());
+    public void addMagicDamagePoints(DamagePoints damagePoints) {
+        this.magicDamagePoints = DamagePoints.damage(this.magicDamagePoints.getDamagePoints() + damagePoints.getDamagePoints());
     }
 
     public boolean isDead() {
-        return this.currentHealthPoints <= 0;
+        return hasBeenInitialized() && this.currentHealthPoints <= 0;
+    }
+
+    public boolean hasBeenInitialized() {
+        return this.initialHealthPoints > 0;
     }
 
     public boolean isStuned() {
@@ -232,8 +258,7 @@ public abstract class Entity {
     }
 
     public void attacks(int damagePoints, Entity target) {
-        Events.fightEvent(this.getName() + " cause " + damagePoints + " de dommages à " + target.getName());
-        Events.statusEvent(target.toString());
+        this.logFight(this.getName() + " cause " + damagePoints + " de dommages à " + target.getName());
         target.wounds(damagePoints);
     }
 
@@ -242,7 +267,7 @@ public abstract class Entity {
             return false;
         }
         if (target.immuneToPhysicalDamages) {
-            Events.fightEvent(target.getName() + " est immunisé contre les attaques physiques !");
+            target.logFight(target.getName() + " est immunisé contre les attaques physiques !");
             return false;
         }
         if (this.getMissMalusCount() > 0) {
@@ -280,7 +305,7 @@ public abstract class Entity {
     }
 
     public void wounds(int damagePoints) {
-        this.lostHealthPointsDuringCurrentFight = hp(this.lostHealthPointsDuringCurrentFight.getValue() + damagePoints);
+        this.lostHealthPointsDuringCurrentFight = hp(this.lostHealthPointsDuringCurrentFight.getHealthPoints() + damagePoints);
         this.currentHealthPoints -= damagePoints;
         if (this.currentHealthPoints < 0) {
             this.currentHealthPoints = 0;
@@ -293,7 +318,7 @@ public abstract class Entity {
     }
 
     public Attack createMagicAttack(Entity target) {
-        return new Attack(getMagicDamagePoints().getValue(), hasTouchedOpponentWithMagic(target) ? TOUCHED : MISSED);
+        return new Attack(getMagicDamagePoints().getDamagePoints(), hasTouchedOpponentWithMagic(target) ? TOUCHED : MISSED);
     }
 
     private int getPhysicalDamagePoints(Roll roll, Entity target) {
@@ -303,9 +328,9 @@ public abstract class Entity {
         int damages = roll.getValue();
         damages -= this.getAdjustedHitRollRange().getMin();
         damages -= target.getArmorPoints();
-        damages -= target.magicArmorPoints.getValue();
+        damages -= target.magicArmorPoints.getArmorPoints();
         damages += getAdditionalDamagePoints();
-        damages -= getTemporaryDamagePointsMalus().getValue();
+        damages -= getTemporaryDamagePointsMalus().getDamagePoints();
         if (!sleeping && has(Item.EXCALIBUR_JUNIOR_DRAGON_SLAYER) && target.isDragon()) {
             damages += 10;
         }
@@ -316,10 +341,12 @@ public abstract class Entity {
 
     // Inventory
     public void equip(Item item) {
+        this.log(format("{0} s''équipe de {1}", this.getName(), item.getName()));
         this.inventory.equip(item);
     }
 
     public Item unequip(Item item) {
+        this.log(format("{0} se déséquipe de {1}", this.getName(), item.getName()));
         this.inventory.unequip(item);
         return item;
     }
@@ -334,7 +361,7 @@ public abstract class Entity {
     }
 
     public void add(Item item) {
-        Events.inventoryEvent(this.getName() + " ajoute " + item.getName() + " dans son inventaire");
+        this.getDiary().log(this.getName(), item);
         this.inventory.add(item);
     }
 
@@ -350,12 +377,12 @@ public abstract class Entity {
         this.inventory.equipAll();
     }
 
-    public void addTemporaryDamagePointsMalus(DamagePoint damage) {
-        this.temporaryDamagePointsMalus = DamagePoint.damage(damage.getValue() + temporaryDamagePointsMalus.getValue());
+    public void addTemporaryDamagePointsMalus(DamagePoints damage) {
+        this.temporaryDamagePointsMalus = DamagePoints.damage(damage.getDamagePoints() + temporaryDamagePointsMalus.getDamagePoints());
     }
 
     public void removeTemporaryBonusAndMalus() {
-        this.temporaryDamagePointsMalus = DamagePoint.damage(0);
+        this.temporaryDamagePointsMalus = DamagePoints.damage(0);
     }
 
     public boolean hasPoisonedWeapon() {
@@ -392,6 +419,38 @@ public abstract class Entity {
     }
 
     public void wounds(HealthPoints healthPoints) {
-        this.wounds(healthPoints.getValue());
+        this.wounds(healthPoints.getHealthPoints());
+    }
+
+    public void log(Roll roll) {
+        this.diary.log(getName(), roll);
+    }
+
+    public void log(HealingItem healingItem) {
+        this.diary.log(getName(), healingItem);
+    }
+
+    public void log(ChapterNumber chapterNumber) {
+        this.diary.log(getName(), chapterNumber);
+    }
+
+    public void logFight(String message) {
+        this.diary.log(getName(), LogEntry.Type.FIGHT, message);
+    }
+
+    public void incrementStrikes() {
+        this.strikes++;
+    }
+
+    public void resetStrikes() {
+        this.strikes = 0;
+    }
+
+    public void logSpell(String message) {
+        this.diary.log(getName(), LogEntry.Type.SPELL, message);
+    }
+
+    public void log(String message) {
+        this.diary.log(getName(), LogEntry.Type.MISC, message);
     }
 }

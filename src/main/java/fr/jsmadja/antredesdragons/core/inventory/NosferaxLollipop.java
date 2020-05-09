@@ -1,9 +1,14 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 
 public class NosferaxLollipop extends HealingItem {
     private int usages = 0;
+
+    public NosferaxLollipop() {
+        super("Sucette de Nosferax");
+    }
 
     @Override
     public boolean isUsable() {
@@ -21,7 +26,7 @@ public class NosferaxLollipop extends HealingItem {
         if (isUsable()) {
             this.usages++;
             HealthPoints healthPoints = attacker.getLostHealthPointsDuringCurrentFight();
-            target.wounds(healthPoints.getValue());
+            target.wounds(healthPoints.getHealthPoints());
             return healthPoints;
         }
         return use();

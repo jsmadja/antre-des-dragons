@@ -1,12 +1,12 @@
 package fr.jsmadja.antredesdragons.core.spellcasting;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.DamagePoint;
+import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
 
 public class SpellInvisibility extends Spell {
 
     SpellInvisibility() {
-        super(DamagePoint.damage(15), false, 1);
+        super(DamagePoints.damage(15), false, 1);
     }
 
     @Override

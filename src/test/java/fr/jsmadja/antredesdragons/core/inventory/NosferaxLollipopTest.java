@@ -1,6 +1,7 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -19,7 +20,7 @@ class NosferaxLollipopTest {
         NosferaxLollipop nosferaxLollipop = new NosferaxLollipop();
         HealthPoints healthPoints = nosferaxLollipop.use();
         assertThat(nosferaxLollipop.isUsable()).isTrue();
-        assertThat(healthPoints.getValue()).isEqualTo(0);
+        assertThat(healthPoints.getHealthPoints()).isEqualTo(0);
     }
 
     @Test
@@ -32,7 +33,7 @@ class NosferaxLollipopTest {
 
         assertThat(nosferaxLollipop.isUsable()).isTrue();
         HealthPoints healthPoints = nosferaxLollipop.useDuringFight(attacker, target);
-        assertThat(healthPoints.getValue()).isEqualTo(10);
+        assertThat(healthPoints.getHealthPoints()).isEqualTo(10);
     }
 
     @Test

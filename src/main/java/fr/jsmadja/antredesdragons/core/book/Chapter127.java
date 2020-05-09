@@ -2,7 +2,7 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.NosferaxLollipop;
+import fr.jsmadja.antredesdragons.core.inventory.NosferaxLollipop;
 
 public class Chapter127 extends GoNextChapter {
     @Override

@@ -18,8 +18,8 @@ public class Chapter16 extends RollAndGoChapter {
                 "disparaît complètement, saprelotte, Pip, vous voilà perdu ! Il ne vous reste plus qu'une solution : " +
                 "lancer deux dés pour décider dans quelle direction poursuivre.\n" +
                 "Si vous faites : de 2 à 4 : rendez-vous au [5].\n" +
-                "de 5 à 7 : rendez-vous au [8].\n" +
-                "de 8 à 12 : rendez-vous au [64].";
+                "De 5 à 7 : rendez-vous au [8].\n" +
+                "De 8 à 12 : rendez-vous au [64].";
     }
 
     @Override

@@ -3,7 +3,7 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
@@ -14,7 +14,7 @@ public class Chapter141 extends SingleFightChapter {
     }
 
     @Override
-    protected Foe getFoe() {
+    protected Foe createFoe() {
         Foe foe = Foe.builder()
                 .name("Monstre")
                 .initialHealthPoints(hp(80))

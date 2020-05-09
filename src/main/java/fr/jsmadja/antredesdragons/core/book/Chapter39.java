@@ -3,8 +3,16 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import static java.text.MessageFormat.format;
 
 public class Chapter39 extends Chapter {
     @Override
@@ -58,17 +66,32 @@ public class Chapter39 extends Chapter {
     @Override
     public Execution execute(Pip pip) {
         GoldenCoins answerOnePrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerOnePrice) && Prompt.answerTo("Payer " + answerOnePrice + " pour avoir la réponse à la question n° 1").isYes()) {
+        if (pip.has(answerOnePrice) && answerTo(format("Payer {0} pour avoir la réponse à la question n° 1", answerOnePrice)).isYes()) {
             pip.remove(answerOnePrice);
             return pip.goToChapter(93);
         }
         GoldenCoins answerTwoPrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerTwoPrice) && Prompt.answerTo("Payer " + answerTwoPrice + " pour avoir la réponse à la question n° 2").isYes()) {
+        if (pip.has(answerTwoPrice) && answerTo(format("Payer {0} pour avoir la réponse à la question n° 2", answerTwoPrice)).isYes()) {
             pip.remove(answerTwoPrice);
             return pip.goToChapter(113);
         }
 
         return pip.goToChapter(10);
+    }
+
+    @Override
+    public Execution2 execute2(Pip pip) {
+        List<Action> actions = new ArrayList<>();
+        GoldenCoins answerOnePrice = getRandomAnswerPrice(pip);
+        if (pip.has(answerOnePrice)) {
+            actions.add(Action.question(chapter(39), format("Payer {0} pour avoir la réponse à la question n° 1", answerOnePrice)));
+        }
+        GoldenCoins answerTwoPrice = getRandomAnswerPrice(pip);
+        if (pip.has(answerTwoPrice)) {
+            actions.add(Action.question(chapter(39), format("Payer {0} pour avoir la réponse à la question n° 2", answerTwoPrice)));
+        }
+        actions.add(Action.goChapter(chapter(10)));
+        return Execution2.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
     }
 
     private GoldenCoins getRandomAnswerPrice(Pip pip) {

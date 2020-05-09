@@ -3,7 +3,7 @@ package fr.jsmadja.antredesdragons.core.spellcasting;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

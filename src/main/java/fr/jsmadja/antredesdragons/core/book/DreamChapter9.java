@@ -1,9 +1,9 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.Sleep;
 import fr.jsmadja.antredesdragons.core.chapters.DreamChapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.sleep.Sleep;
 
 public class DreamChapter9 extends DreamChapter {
     @Override

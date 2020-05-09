@@ -3,7 +3,7 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
-import static fr.jsmadja.antredesdragons.core.stuff.Item.MINOTAUR_KEY;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.MINOTAUR_KEY;
 
 public class Chapter134 extends ManualChoiceChapter {
     @Override

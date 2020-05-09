@@ -4,9 +4,11 @@ import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
+@ToString
 @RequiredArgsConstructor
 @Getter
 public class Roll {

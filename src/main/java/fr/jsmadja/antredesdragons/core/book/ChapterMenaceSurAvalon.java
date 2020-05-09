@@ -10,7 +10,7 @@ public class ChapterMenaceSurAvalon extends GoNextChapter {
 
     @Override
     public String getText() {
-        return "il arrivait toujours des catastrophes lorsqu'il pleuvait en août. En particulier pendant la " +
+        return "Il arrivait toujours des catastrophes lorsqu'il pleuvait en août. En particulier pendant la " +
                 "première quinzaine du mois. Les vieux du pays levaient alors les yeux vers le ciel " +
                 "plombé, et marmonnaient d'un air sombre : « Pluie en août, la première semaine, " +
                 "temps troublé pendant l'année prochaine ». Et ceux qui d'aventure, les avaient " +

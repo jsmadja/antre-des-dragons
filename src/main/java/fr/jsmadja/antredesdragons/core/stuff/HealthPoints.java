@@ -10,14 +10,14 @@ import static java.text.MessageFormat.format;
 @RequiredArgsConstructor
 public class HealthPoints {
     @Getter
-    private final int value;
+    private final int healthPoints;
 
-    public static HealthPoints hp(int value) {
-        return new HealthPoints(value);
+    public static HealthPoints hp(int healthPoints) {
+        return new HealthPoints(healthPoints);
     }
 
     @Override
     public String toString() {
-        return format("{0} HP", this.value);
+        return format("{0} HP", this.healthPoints);
     }
 }

@@ -1,18 +1,20 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import fr.jsmadja.antredesdragons.core.diary.LogEntry;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.fight.Attack;
+import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
+import fr.jsmadja.antredesdragons.core.inventory.HealingPotion;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
+import fr.jsmadja.antredesdragons.core.inventory.Ointment;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult;
-import fr.jsmadja.antredesdragons.core.stuff.HealingItem;
-import fr.jsmadja.antredesdragons.core.stuff.HealingPotion;
-import fr.jsmadja.antredesdragons.core.stuff.Item;
-import fr.jsmadja.antredesdragons.core.stuff.Ointment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.HEALING_ITEM;
 import static fr.jsmadja.antredesdragons.core.dices.Roll.roll;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.TOUCHED;
@@ -40,6 +42,7 @@ class PipTest {
     void should_initialize_pip_hp() {
         when(dice.roll(2)).thenReturn(roll(10));
         pip = new Pip(dice);
+        pip.initialize();
         assertThat(pip.getInitialHealthPoints()).isEqualTo(40);
     }
 
@@ -80,12 +83,14 @@ class PipTest {
 
     @Test
     void use_spell_causes_3_hp() {
+        pip.initialize();
         pip.use(AEP);
         assertThat(pip.getCurrentHealthPoints()).isEqualTo(pip.getInitialHealthPoints() - 3);
     }
 
     @Test
     void spell_can_only_be_used_3_times() {
+        pip.initialize();
         IntStream.of(1, 2, 3).forEach(i -> {
             assertThat(pip.canUse(AEP)).isTrue();
             pip.use(AEP);
@@ -95,6 +100,7 @@ class PipTest {
 
     @Test
     void spell_works_only_if_roll_is_greater_than_6() {
+        pip.initialize();
         when(dice.roll(2)).thenReturn(roll(7));
         SpellEffectResult spellEffectResult = pip.use(AEP);
         assertThat(spellEffectResult).isEqualTo(SUCCESS);
@@ -109,14 +115,26 @@ class PipTest {
 
     @Test
     void pip_should_have_3_potions_at_the_beginning() {
+        pip.initialize();
         List<HealingItem> potions = pip.getHealingItemsOfType(HealingPotion.class);
         assertThat(potions).hasSize(3);
     }
 
     @Test
     void pip_should_have_5_ointments_at_the_beginning() {
+        pip.initialize();
         List<HealingItem> ointments = pip.getHealingItemsOfType(Ointment.class);
         assertThat(ointments).hasSize(5);
+    }
+
+    @Test
+    public void should_generate_log_entries_at_initialization() {
+        pip.initialize();
+        long healingItemLogEntriesCount = pip.getCurrentChapterLogEntries().toList()
+                .stream()
+                .map(LogEntry::getType).filter(t -> t.equals(HEALING_ITEM))
+                .count();
+        assertThat(healingItemLogEntriesCount).isEqualTo(8);
     }
 
 }

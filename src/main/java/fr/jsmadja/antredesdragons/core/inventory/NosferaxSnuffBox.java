@@ -1,14 +1,18 @@
-package fr.jsmadja.antredesdragons.core.stuff;
+package fr.jsmadja.antredesdragons.core.inventory;
 
 import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import lombok.AllArgsConstructor;
+import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
-@AllArgsConstructor
 public class NosferaxSnuffBox extends HealingItem {
     private final Pip pip;
+
+    public NosferaxSnuffBox(Pip pip) {
+        super("Tabatière de Nosferax");
+        this.pip = pip;
+    }
 
     @Override
     public boolean isUsable() {

@@ -8,8 +8,8 @@ import fr.jsmadja.antredesdragons.core.fight.Fight;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 import fr.jsmadja.antredesdragons.core.skills.InstantKillWithStrikesInARowSpecialSkill;
 
+import static fr.jsmadja.antredesdragons.core.inventory.Item.MEDUSA_WEAPON;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-import static fr.jsmadja.antredesdragons.core.stuff.Item.MEDUSA_WEAPON;
 
 public class Chapter136 extends ManualChoiceChapter {
 

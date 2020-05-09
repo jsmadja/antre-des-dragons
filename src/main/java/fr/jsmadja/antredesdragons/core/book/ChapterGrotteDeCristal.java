@@ -2,6 +2,7 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution2;
 
 public class ChapterGrotteDeCristal extends ManualChoiceChapter {
 
@@ -125,6 +126,12 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 "plus merveilleuse petite épée que vous ayez jamais vue...\n" +
                 "— Si vous avez accompli une première mission dans le , Château des Ténèbres, " +
                 "rendez-vous au [1]. Sinon, rendez-vous au [2].\n";
+    }
+
+    @Override
+    public Execution2 execute2(Pip pip) {
+        pip.initialize();
+        return super.execute2(pip);
     }
 
     @Override
