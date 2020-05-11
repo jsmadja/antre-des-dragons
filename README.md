@@ -22,3 +22,10 @@
 - [ ] Gérer le respawn (combat déjà fait, garder certains items? comme la cassette de Minotaure?)
 - [ ] Où utiliser NIP ?
 - [ ] Devoir se soigner avant de quitter le village (Trouver les chapitres qui font sortir du village)
+
+# Deploy
+
+- mvn clean package
+- docker build -t jsmadja/antre-des-dragons-api .
+- docker run -p 8080:8080 jsmadja/antre-des-dragons-api
+- docker push jsmadja/antre-des-dragons-api

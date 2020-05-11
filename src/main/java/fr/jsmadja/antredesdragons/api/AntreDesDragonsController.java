@@ -15,11 +15,12 @@ import java.util.UUID;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
 @RestController
+@RequestMapping(path = "/api")
 public class AntreDesDragonsController {
 
     public static Pip pip = new Pip(new Dice());
 
-    @RequestMapping(path = "/")
+    @RequestMapping(path = "")
     @ResponseBody
     public Step createNewRun() {
         pip = new Pip(new Dice());
@@ -34,8 +35,13 @@ public class AntreDesDragonsController {
     @RequestMapping(path = "/chapter/{chapterNumber}")
     public Step read(@PathVariable("chapterNumber") int chapterNumber) {
         Execution2 execution2 = pip.goToChapter2(chapter(chapterNumber));
+        return createStep(execution2);
+    }
+
+    private Step createStep(Execution2 execution2) {
         return Step.builder()
                 .pip(pip)
+                .foes(execution2.getFoes())
                 .actions(execution2.getActions())
                 .logEntries(execution2.getLogEntries().toList())
                 .build();
@@ -44,11 +50,7 @@ public class AntreDesDragonsController {
     @RequestMapping(path = "/chapter/{chapterNumber}/questions/{questionId}/{answer}")
     public Step answer(@PathVariable("chapterNumber") int chapterNumber, @PathVariable("questionId") UUID questionId, @PathVariable("answer") String answer) {
         Execution2 execution2 = pip.goToChapter2WithAnswer(chapter(chapterNumber), questionId, Answer.of(answer));
-        return Step.builder()
-                .pip(pip)
-                .actions(execution2.getActions())
-                .logEntries(execution2.getLogEntries().toList())
-                .build();
+        return createStep(execution2);
     }
 
 }

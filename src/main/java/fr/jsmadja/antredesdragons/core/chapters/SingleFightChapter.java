@@ -25,6 +25,7 @@ public abstract class SingleFightChapter extends Chapter {
         onAfterSuccessfulFight(pip);
         return Execution2.builder()
                 .logEntries(foeLogEntries)
+                .foes(List.of(foe))
                 .actions(List.of(goChapter(chapter(getSuccessChapter()))))
                 .build();
     }

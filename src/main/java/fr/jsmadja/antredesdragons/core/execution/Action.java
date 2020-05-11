@@ -27,6 +27,6 @@ public class Action {
     }
 
     public String getUrl() {
-        return format("http://localhost:8080/chapter/{0}{1}", chapter, suffix == null ? "" : suffix);
+        return format("/chapter/{0}{1}", chapter, suffix == null ? "" : suffix);
     }
 }
