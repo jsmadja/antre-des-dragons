@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
+import fr.jsmadja.antredesdragons.core.entities.FoeFactory;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,9 @@ import lombok.Setter;
 public abstract class Chapter {
 
     private boolean visited;
+
+    @Getter
+    private FoeFactory foeFactory = new FoeFactory();
 
     public abstract String getText();
 

@@ -2,17 +2,14 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
-import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 import static java.util.stream.Collectors.toList;
 
 public class Chapter98 extends MultipleFightChapter {
@@ -69,15 +66,7 @@ public class Chapter98 extends MultipleFightChapter {
     protected List<Foe> createFoes(Pip pip) {
         return IntStream
                 .range(1, 7)
-                .mapToObj(operand -> {
-                    Foe foe = Foe.builder()
-                            .name("Troll des Rochers #" + operand)
-                            .dice(new Dice()).initialHealthPoints(hp(10))
-                            .build();
-                    foe.addAndEquip(Item.TROLL_SWORD);
-                    foe.addAndEquip(Item.TROLL_ARMOR);
-                    return foe;
-                })
+                .mapToObj(operand -> getFoeFactory().createRockTroll(operand))
                 .collect(toList());
     }
 

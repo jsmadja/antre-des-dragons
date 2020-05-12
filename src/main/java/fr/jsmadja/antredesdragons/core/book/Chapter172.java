@@ -1,12 +1,7 @@
 package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
-import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
-import fr.jsmadja.antredesdragons.core.skills.UseSpecialWeaponEveryNStrikes;
-
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter172 extends SingleFightChapter {
     @Override
@@ -16,15 +11,7 @@ public class Chapter172 extends SingleFightChapter {
 
     @Override
     protected Foe createFoe() {
-        Foe foe = Foe.builder()
-                .dragon(true)
-                .name("Dragon de Bronze")
-                .initialHealthPoints(hp(150))
-                .build();
-        foe.addAndEquip(Item.DRAGON_FANG);
-        foe.setInvisibleRequiredMinimumHitRoll(Roll.roll(8));
-        foe.add(new UseSpecialWeaponEveryNStrikes(Item.DRAGON_BLOW, 3));
-        return foe;
+        return getFoeFactory().createBronzeDragoon();
     }
 
     @Override

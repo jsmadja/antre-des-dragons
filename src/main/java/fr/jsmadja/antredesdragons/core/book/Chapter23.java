@@ -2,9 +2,6 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
-
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter23 extends SingleFightChapter {
     @Override
@@ -14,9 +11,7 @@ public class Chapter23 extends SingleFightChapter {
 
     @Override
     protected Foe createFoe() {
-        Foe foe = Foe.builder().initialHealthPoints(hp(28)).build();
-        foe.addAndEquip(Item.STONEMAN_SWORD);
-        return foe;
+        return getFoeFactory().createStoneMan();
     }
 
     @Override

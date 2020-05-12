@@ -9,8 +9,6 @@ import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.Optional;
 
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-
 public class Chapter123 extends Chapter {
     @Override
     public String getText() {
@@ -32,7 +30,7 @@ public class Chapter123 extends Chapter {
     public Execution execute(Pip pip) {
         Optional<Item> weapon = pip.getEquipedWeapon();
         weapon.ifPresent(pip::unequip);
-        Foe foe = Foe.builder().name("Poisson").initialHealthPoints(hp(10)).build();
+        Foe foe = getFoeFactory().createFish();
 
         new Fight(pip, foe, 3).start();
 

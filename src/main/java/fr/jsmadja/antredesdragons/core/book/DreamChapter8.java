@@ -6,7 +6,6 @@ import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import static fr.jsmadja.antredesdragons.core.dices.Roll.roll;
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class DreamChapter8 extends FightDreamChapter {
     @Override
@@ -43,12 +42,6 @@ public class DreamChapter8 extends FightDreamChapter {
 
     @Override
     protected Foe getFoe() {
-        Foe foe = Foe.builder()
-                .name("Chevalier Noir")
-                .initialHealthPoints(hp(25))
-                .build();
-        foe.addAndEquip(Item.BLACK_KNIGHT_ARMOR);
-        foe.addAndEquip(Item.BLACK_KNIGHT_SPEAR);
-        return foe;
+        return getFoeFactory().createBlackKnight();
     }
 }

@@ -9,7 +9,6 @@ import fr.jsmadja.antredesdragons.core.market.SilverCoins;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.core.inventory.Item.FOOD;
 import static fr.jsmadja.antredesdragons.core.inventory.Item.THATCHED_CREATURE_DAGGERS;
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter41 extends SingleFightChapter {
     @Override
@@ -34,7 +33,7 @@ public class Chapter41 extends SingleFightChapter {
 
     @Override
     protected Foe createFoe() {
-        return Foe.builder().name("Créature de la chaumière").initialHealthPoints(hp(5)).build();
+        return getFoeFactory().getThatchedCreature();
     }
 
     @Override

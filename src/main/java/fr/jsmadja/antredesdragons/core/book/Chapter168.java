@@ -3,7 +3,6 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.skills.DiesAfterNStrikesSpecialSkill;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -18,16 +17,7 @@ public class Chapter168 extends MultipleFightChapter {
 
     @Override
     protected List<Foe> createFoes(Pip pip) {
-        return IntStream.range(1, 6).mapToObj(
-                i -> {
-                    Foe foe = Foe.builder()
-                            .name("Forme #" + i)
-                            .constantHitDamage(15)
-                            .build();
-                    foe.add(new DiesAfterNStrikesSpecialSkill(1));
-                    return foe;
-                }
-        ).collect(toList());
+        return IntStream.range(1, 6).mapToObj(i -> getFoeFactory().createWeakForm(i)).collect(toList());
     }
 
     @Override

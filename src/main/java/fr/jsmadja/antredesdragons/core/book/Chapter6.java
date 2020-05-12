@@ -7,11 +7,9 @@ import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
-import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
-import static fr.jsmadja.antredesdragons.core.inventory.Item.RABBIT_FANGS;
 
 public class Chapter6 extends Chapter {
     @Override
@@ -54,11 +52,7 @@ public class Chapter6 extends Chapter {
     }
 
     private Foe createFoe() {
-        Foe foe = Foe.builder()
-                .name("Lapin Blanc")
-                .initialHealthPoints(HealthPoints.hp(25))
-                .build();
-        foe.addAndEquip(RABBIT_FANGS);
-        return foe;
+        return getFoeFactory().createWhiteRabbit();
     }
+
 }

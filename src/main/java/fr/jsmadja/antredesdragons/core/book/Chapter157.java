@@ -5,10 +5,9 @@ import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
 
 public class Chapter157 extends MultipleFightChapter {
     @Override
@@ -18,17 +17,7 @@ public class Chapter157 extends MultipleFightChapter {
 
     @Override
     protected List<Foe> createFoes(Pip pip) {
-        return IntStream.range(1, 7).mapToObj(
-                i -> {
-                    Foe foe = Foe.builder()
-                            .name("Forme #" + i)
-                            .initialHealthPoints(hp(4))
-                            .constantHitDamage(15)
-                            .build();
-                    foe.loseInitiative();
-                    return foe;
-                }
-        ).collect(Collectors.toList());
+        return range(1, 7).mapToObj(i -> getFoeFactory().createForm(i)).collect(toList());
     }
 
     @Override

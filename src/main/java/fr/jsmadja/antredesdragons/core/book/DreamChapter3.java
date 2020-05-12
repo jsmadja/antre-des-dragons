@@ -18,9 +18,7 @@ public class DreamChapter3 extends DreamChapter {
 
     @Override
     public Execution execute(Pip pip) {
-        Foe foe = Foe.builder()
-                .name("Vampire")
-                .build();
+        Foe foe = getFoeFactory().createVampire();
         if (foe.roll2Dices().getValue() - pip.roll2Dices().getValue() >= 5) {
             return pip.goTo(ChapterNumber.chapter(14));
         }

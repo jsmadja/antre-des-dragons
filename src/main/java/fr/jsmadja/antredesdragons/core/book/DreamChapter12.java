@@ -22,7 +22,7 @@ public class DreamChapter12 extends DreamChapter {
 
     @Override
     public Execution execute(Pip pip) {
-        Foe foe = Foe.builder().name("Sorcier Malfaisant").build();
+        Foe foe = getFoeFactory().createWickedSorcerer();
         Roll pipRoll = pip.roll1Dice();
         Roll sorcererRoll = foe.roll1Dice();
         if (pipRoll.isLesserThan(sorcererRoll)) {

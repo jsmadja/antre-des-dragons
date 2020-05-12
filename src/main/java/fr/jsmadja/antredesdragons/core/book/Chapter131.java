@@ -6,11 +6,9 @@ import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.inventory.Item.DWARF_SWORD;
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
+import static java.util.stream.Collectors.toList;
 
 public class Chapter131 extends MultipleFightChapter {
     @Override
@@ -21,16 +19,9 @@ public class Chapter131 extends MultipleFightChapter {
     @Override
     protected List<Foe> createFoes(Pip pip) {
         Roll roll = pip.roll2Dices();
-        return IntStream.range(1, 13).mapToObj(
-                i -> {
-                    Foe foe = Foe.builder().initialHealthPoints(hp(10)).build();
-                    if (i <= roll.getValue()) {
-                        foe.loseInitiative();
-                    }
-                    foe.addAndEquip(DWARF_SWORD);
-                    return foe;
-                }
-        ).collect(Collectors.toList());
+        return IntStream.range(1, 13)
+                .mapToObj(i -> getFoeFactory().createDwarf(roll, i))
+                .collect(toList());
     }
 
     @Override

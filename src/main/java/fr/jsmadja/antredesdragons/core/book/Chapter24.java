@@ -2,9 +2,6 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
-
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter24 extends SingleFightChapter {
     @Override
@@ -37,11 +34,7 @@ public class Chapter24 extends SingleFightChapter {
 
     @Override
     public Foe createFoe() {
-        Foe foe = Foe.builder()
-                .name("Fantôme")
-                .initialHealthPoints(hp(30))
-                .build();
-        foe.addAndEquip(Item.GHOST_SWORD);
-        return foe;
+        return getFoeFactory().createGhost();
     }
+
 }

@@ -5,15 +5,12 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
-import static java.text.MessageFormat.format;
+import static java.util.stream.Collectors.toList;
 
 public class Chapter57 extends MultipleFightChapter {
     @Override
@@ -69,13 +66,7 @@ public class Chapter57 extends MultipleFightChapter {
 
     @Override
     protected List<Foe> createFoes(Pip pip) {
-        return IntStream.range(1, 4).mapToObj(id -> {
-            Foe foe = Foe.builder()
-                    .name(format("Moine {0}", id))
-                    .initialHealthPoints(hp(25))
-                    .build();
-            foe.addAndEquip(Item.MONK_FIGHTING);
-            return foe;
-        }).collect(Collectors.toList());
+        return IntStream.range(1, 4).mapToObj(id -> getFoeFactory().createMonk(id)).collect(toList());
     }
+
 }

@@ -4,11 +4,8 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.skills.InstantKillWithStrikesInARowSpecialSkill;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
-import static fr.jsmadja.antredesdragons.core.inventory.Item.RAMPANT_TONGUE;
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter153 extends SingleFightChapter {
 
@@ -28,13 +25,7 @@ public class Chapter153 extends SingleFightChapter {
 
     @Override
     protected Foe createFoe() {
-        Foe foe = Foe.builder()
-                .name("Rampant")
-                .initialHealthPoints(hp(20))
-                .build();
-        foe.addAndEquip(RAMPANT_TONGUE);
-        foe.add(new InstantKillWithStrikesInARowSpecialSkill(1));
-        return foe;
+        return getFoeFactory().createRampant();
     }
 
     @Override

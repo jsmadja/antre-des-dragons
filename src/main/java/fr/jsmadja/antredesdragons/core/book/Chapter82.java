@@ -3,8 +3,6 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-
 public class Chapter82 extends SingleFightChapter {
     @Override
     protected int getSuccessChapter() {
@@ -13,7 +11,7 @@ public class Chapter82 extends SingleFightChapter {
 
     @Override
     protected Foe createFoe() {
-        return Foe.builder().name("Loup Siffleur").initialHealthPoints(hp(15)).build();
+        return getFoeFactory().getWhistleWolf();
     }
 
     @Override

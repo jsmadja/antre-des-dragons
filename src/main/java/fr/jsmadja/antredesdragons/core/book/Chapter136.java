@@ -6,22 +6,11 @@ import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
-import fr.jsmadja.antredesdragons.core.skills.InstantKillWithStrikesInARowSpecialSkill;
-
-import static fr.jsmadja.antredesdragons.core.inventory.Item.MEDUSA_WEAPON;
-import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 
 public class Chapter136 extends ManualChoiceChapter {
 
     protected Foe getFoe() {
-        Foe foe = Foe.builder()
-                .name("Méduse")
-                .initialHealthPoints(hp(100))
-                .requiredStrikesInARowToHitInvisible(3)
-                .build();
-        foe.addAndEquip(MEDUSA_WEAPON);
-        foe.add(new InstantKillWithStrikesInARowSpecialSkill(2));
-        return foe;
+        return getFoeFactory().createMedusa();
     }
 
     @Override

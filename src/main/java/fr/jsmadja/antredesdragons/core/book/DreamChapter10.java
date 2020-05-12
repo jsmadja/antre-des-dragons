@@ -3,7 +3,6 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.FightDreamChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
 
 import java.util.stream.IntStream;
 
@@ -39,11 +38,6 @@ public class DreamChapter10 extends FightDreamChapter {
 
     @Override
     protected Foe getFoe() {
-        Foe foe = Foe.builder()
-                .name("Ogre gigantesque")
-                .initialHealthPoints(hp(40))
-                .build();
-        foe.addAndEquip(Item.OGRE_CLUB);
-        return foe;
+        return getFoeFactory().createBigOgre();
     }
 }
