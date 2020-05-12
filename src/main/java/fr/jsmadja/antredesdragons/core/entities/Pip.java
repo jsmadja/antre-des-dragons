@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
-import fr.jsmadja.antredesdragons.core.Answer;
 import fr.jsmadja.antredesdragons.core.book.Book;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DiceWay;
@@ -9,7 +9,6 @@ import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
 import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
 import fr.jsmadja.antredesdragons.core.inventory.HealingPotion;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import static fr.jsmadja.antredesdragons.core.book.Book.DEBUT;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -67,6 +65,14 @@ public class Pip extends Entity {
     @Setter
     @Getter
     private boolean nosferaxSnuffBoxUsed;
+
+    @Setter
+    @Getter
+    private GoldenCoins dwarfAnswerOnePrice;
+    @Setter
+    @Getter
+    private GoldenCoins dwarfAnswerTwoPrice;
+
 
     public Pip(Dice dice) {
         super("Pip", dice);
@@ -140,11 +146,11 @@ public class Pip extends Entity {
         return goTo(chapter(chapter));
     }
 
-    public Execution2 goToChapter2(ChapterNumber chapterNumber) {
+    public Execution goToChapter2(ChapterNumber chapterNumber) {
         LogEntries currentChapterLogEntries = getCurrentChapterLogEntries();
         this.getDiary().openNewPage();
         if (this.isDead()) {
-            return Execution2.builder()
+            return Execution.builder()
                     .logEntries(currentChapterLogEntries)
                     .actions(List.of(goChapter(chapter(14))))
                     .build();
@@ -154,15 +160,15 @@ public class Pip extends Entity {
         this.currentChapterNumber = chapterNumber;
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         chapter.setVisited(true);
-        return chapter.execute2(this);
+        return chapter.execute(this);
     }
 
 
-    public Execution2 goToChapter2WithAnswer(ChapterNumber chapterNumber, UUID questionId, Answer answer) {
+    public Execution goToChapter2WithAnswer(ChapterNumber chapterNumber, String questionId, Answer answer) {
         LogEntries currentChapterLogEntries = getCurrentChapterLogEntries();
         this.getDiary().openNewPage();
         if (this.isDead()) {
-            return Execution2.builder()
+            return Execution.builder()
                     .logEntries(currentChapterLogEntries)
                     .actions(List.of(goChapter(chapter(14))))
                     .build();
@@ -172,7 +178,7 @@ public class Pip extends Entity {
         this.currentChapterNumber = chapterNumber;
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         chapter.setVisited(true);
-        return chapter.execute2(this, questionId, answer);
+        return chapter.execute(this, questionId, answer);
     }
 
     public LogEntries getCurrentChapterLogEntries() {
@@ -180,7 +186,7 @@ public class Pip extends Entity {
     }
 
     public Execution goToPreviousChapter() {
-        return goTo(getPreviousChapter());
+        return goToChapter2(getPreviousChapter());
     }
 
     public Execution goTo(ChapterNumber chapterNumber) {
@@ -204,16 +210,14 @@ public class Pip extends Entity {
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
-        Roll roll = this.roll2Dices();
-        DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
-        return goTo(way.getChapterNumber());
+        return rollAndGo2(diceWays);
     }
 
-    public Execution2 rollAndGo2(List<DiceWay> diceWays) {
+    public Execution rollAndGo2(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
         log(roll);
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
-        return Execution2.builder()
+        return Execution.builder()
                 .logEntries(this.getCurrentChapterLogEntries())
                 .actions(List.of(way.toAction()))
                 .build();
@@ -312,7 +316,7 @@ public class Pip extends Entity {
     }
 
     public Execution goToDreamChapter(ChapterNumber dreamChapterNumber) {
-        return Execution.empty();
+        return Execution.builder().build();
     }
 
     public Chapter getCurrentChapter() {

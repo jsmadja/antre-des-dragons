@@ -5,6 +5,8 @@ import fr.jsmadja.antredesdragons.core.entities.Pip;
 
 import java.util.List;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+
 public abstract class FightDreamChapter extends DreamChapter {
 
     @Override
@@ -14,7 +16,7 @@ public abstract class FightDreamChapter extends DreamChapter {
         pip.fight(List.of(foe));
         onAfterFight(pip);
         if (pip.isDead()) {
-            return pip.goTo(ChapterNumber.chapter(14));
+            return pip.goTo(chapter(14));
         }
         return super.execute(pip);
     }

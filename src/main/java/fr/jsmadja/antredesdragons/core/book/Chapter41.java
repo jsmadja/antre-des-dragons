@@ -1,9 +1,9 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.SingleFightChapter;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.market.SilverCoins;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -18,11 +18,11 @@ public class Chapter41 extends SingleFightChapter {
     }
 
     @Override
-    public Execution2 execute2(Pip pip) {
+    public Execution execute(Pip pip) {
         if (pip.has(FOOD)) {
             return pip.goToChapter2(chapter(getSuccessChapter()));
         }
-        return super.execute2(pip);
+        return super.execute(pip);
     }
 
     @Override

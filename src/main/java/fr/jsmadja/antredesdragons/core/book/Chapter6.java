@@ -1,13 +1,17 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.fight.Fight;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
 import fr.jsmadja.antredesdragons.core.stuff.HealthPoints;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.RABBIT_FANGS;
 
 public class Chapter6 extends Chapter {
     @Override
@@ -24,18 +28,25 @@ public class Chapter6 extends Chapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (Prompt.answerTo("Voulez-vous combattre le Lapin Blanc").isNo()) {
-            return pip.goToChapter(getSuccessChapter());
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (answer != null) {
+            if (answer.isNo()) {
+                return pip.goToChapter2(chapter(getSuccessChapter()));
+            }
+            pip.setRollMalus(2);
+            Fight fight = new Fight(pip, createFoe());
+            fight.start();
+            if (pip.isDead()) {
+                return pip.goToChapter2(chapter(14));
+            }
+            pip.setRollMalus(0);
+            return pip.goToChapter2(chapter(getSuccessChapter()));
         }
-        pip.setRollMalus(2);
-        Fight fight = new Fight(pip, createFoe());
-        fight.start();
-        if (pip.isDead()) {
-            return pip.goToChapter(14);
-        }
-        pip.setRollMalus(0);
-        return pip.goToChapter(getSuccessChapter());
+        YesOrNoQuestion question = question("Q6", "Voulez-vous combattre le Lapin Blanc");
+        return Execution.builder()
+                .logEntries(pip.getCurrentChapterLogEntries())
+                .actions(question.toActionsForChapter(chapter(6)))
+                .build();
     }
 
     private int getSuccessChapter() {
@@ -47,7 +58,7 @@ public class Chapter6 extends Chapter {
                 .name("Lapin Blanc")
                 .initialHealthPoints(HealthPoints.hp(25))
                 .build();
-        foe.addAndEquip(Item.RABBIT_FANGS);
+        foe.addAndEquip(RABBIT_FANGS);
         return foe;
     }
 }

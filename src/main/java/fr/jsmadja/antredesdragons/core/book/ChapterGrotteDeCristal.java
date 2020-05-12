@@ -1,8 +1,8 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 
 public class ChapterGrotteDeCristal extends ManualChoiceChapter {
 
@@ -129,9 +129,9 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution2 execute2(Pip pip) {
+    public Execution execute(Pip pip) {
         pip.initialize();
-        return super.execute2(pip);
+        return super.execute(pip);
     }
 
     @Override

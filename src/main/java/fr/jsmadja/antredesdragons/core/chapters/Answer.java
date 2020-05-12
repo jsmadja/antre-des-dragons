@@ -1,4 +1,4 @@
-package fr.jsmadja.antredesdragons.core;
+package fr.jsmadja.antredesdragons.core.chapters;
 
 public enum Answer {
     Yes,

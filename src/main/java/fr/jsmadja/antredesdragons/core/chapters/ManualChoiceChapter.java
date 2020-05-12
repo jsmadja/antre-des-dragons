@@ -2,7 +2,6 @@ package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.ui.Prompt;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,12 +16,6 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class ManualChoiceChapter extends Chapter {
 
-    @Override
-    public Execution execute(Pip pip) {
-        this.beforeLeavingChapter(pip);
-        return askWhichWay(pip);
-    }
-
     public Execution askWhichWay(Pip pip) {
         Paths possiblesPath = getPossiblesPath(pip);
         possiblesPath.print();
@@ -33,8 +26,8 @@ public abstract class ManualChoiceChapter extends Chapter {
     public abstract Paths getPossiblesPath(Pip pip);
 
     @Override
-    public Execution2 execute2(Pip pip) {
-        return Execution2.builder()
+    public Execution execute(Pip pip) {
+        return Execution.builder()
                 .logEntries(pip.getCurrentChapterLogEntries())
                 .actions(getPossiblesPath(pip).toActions())
                 .build();

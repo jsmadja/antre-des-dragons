@@ -24,6 +24,6 @@ public class Chapter14 extends Chapter {
     @Override
     public Execution execute(Pip pip) {
         pip.die();
-        return Execution.empty();
+        return Execution.builder().build();
     }
 }

@@ -1,7 +1,6 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 
 import java.util.List;
 
@@ -16,9 +15,9 @@ public abstract class GoNextChapter extends Chapter {
     public abstract int getNextChapter();
 
     @Override
-    public Execution2 execute2(Pip pip) {
+    public Execution execute(Pip pip) {
         beforeLeavingChapter(pip);
-        return Execution2.builder()
+        return Execution.builder()
                 .logEntries(pip.getCurrentChapterLogEntries())
                 .actions(List.of(goChapter(chapter(getNextChapter()))))
                 .build();

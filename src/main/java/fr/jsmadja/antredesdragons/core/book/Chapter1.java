@@ -3,7 +3,8 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
+
+import static fr.jsmadja.antredesdragons.core.inventory.Item.EXCALIBUR_JUNIOR;
 
 public class Chapter1 extends GoNextChapter {
 
@@ -32,7 +33,7 @@ public class Chapter1 extends GoNextChapter {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.addAndEquip(Item.EXCALIBUR_JUNIOR);
+        pip.addAndEquip(EXCALIBUR_JUNIOR);
         return super.execute(pip);
     }
 

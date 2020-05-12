@@ -1,16 +1,18 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
 import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
 import static java.text.MessageFormat.format;
 
@@ -80,18 +82,32 @@ public class Chapter39 extends Chapter {
     }
 
     @Override
-    public Execution2 execute2(Pip pip) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
         List<Action> actions = new ArrayList<>();
-        GoldenCoins answerOnePrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerOnePrice)) {
-            actions.add(Action.question(chapter(39), format("Payer {0} pour avoir la réponse à la question n° 1", answerOnePrice)));
+        if (questionId == null) {
+            GoldenCoins answerOnePrice = getRandomAnswerPrice(pip);
+            pip.setDwarfAnswerOnePrice(answerOnePrice);
+            if (pip.has(answerOnePrice)) {
+                YesOrNoQuestion question = question("Q39-1", format("Payer {0} pour avoir la réponse à la question n° 1", answerOnePrice));
+                actions.addAll(question.toActionsForChapter(chapter(39)));
+            }
+            GoldenCoins answerTwoPrice = getRandomAnswerPrice(pip);
+            pip.setDwarfAnswerTwoPrice(answerTwoPrice);
+            if (pip.has(answerTwoPrice)) {
+                YesOrNoQuestion question = question("Q39-2", format("Payer {0} pour avoir la réponse à la question n° 2", answerTwoPrice));
+                actions.addAll(question.toActionsForChapter(chapter(39)));
+            }
+            actions.add(Action.goChapter(chapter(10)));
         }
-        GoldenCoins answerTwoPrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerTwoPrice)) {
-            actions.add(Action.question(chapter(39), format("Payer {0} pour avoir la réponse à la question n° 2", answerTwoPrice)));
+        if (questionId.equals("Q39-1") && answer.isYes() && pip.has(pip.getDwarfAnswerOnePrice())) {
+            pip.remove(pip.getDwarfAnswerOnePrice());
+            return pip.goToChapter(93);
         }
-        actions.add(Action.goChapter(chapter(10)));
-        return Execution2.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        if (questionId.equals("Q39-2") && answer.isYes() && pip.has(pip.getDwarfAnswerTwoPrice())) {
+            pip.remove(pip.getDwarfAnswerTwoPrice());
+            return pip.goToChapter(113);
+        }
+        return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
     }
 
     private GoldenCoins getRandomAnswerPrice(Pip pip) {

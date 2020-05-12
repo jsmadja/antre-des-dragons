@@ -3,7 +3,6 @@ package fr.jsmadja.antredesdragons.core.chapters;
 import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.execution.Execution2;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
 public abstract class SingleFightChapter extends Chapter {
 
     @Override
-    public Execution2 execute2(Pip pip) {
+    public Execution execute(Pip pip) {
         onBeforeFight(pip);
         Foe foe = createFoe();
         pip.fight(List.of(foe));
@@ -23,7 +22,7 @@ public abstract class SingleFightChapter extends Chapter {
                     .add(foeLogEntries);
         }
         onAfterSuccessfulFight(pip);
-        return Execution2.builder()
+        return Execution.builder()
                 .logEntries(foeLogEntries)
                 .foes(List.of(foe))
                 .actions(List.of(goChapter(chapter(getSuccessChapter()))))
