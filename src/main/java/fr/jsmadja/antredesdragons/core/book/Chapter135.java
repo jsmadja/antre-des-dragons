@@ -1,11 +1,12 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
-import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
 public class Chapter135 extends ManualChoiceChapter {
     @Override
@@ -17,13 +18,18 @@ public class Chapter135 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        Roll roll = pip.roll2Dices();
-        if (roll.isBetween(2, 4)) {
-            return pip.goToChapter(14);
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            return Execution.builder()
+                    .logEntries(pip.getCurrentChapterLogEntries())
+                    .actions(YesOrNoQuestion.question("Q135", "Avez-vous déchiffré le parchemin").toActionsForChapter(chapter(135)))
+                    .build();
         }
-        if (answerTo("Avez-vous déchiffré le parchemin").isYes()) {
+        if (questionId.equals("Q135") && answer.isYes()) {
             pip.addExperiencePoints(1);
+        }
+        if (pip.roll2Dices().isBetween(2, 4)) {
+            return pip.goToChapter(14);
         }
         return super.execute(pip);
     }

@@ -1,11 +1,17 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
-import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.FIREBALL;
 
 public class Chapter99 extends ManualChoiceChapter {
     @Override
@@ -33,20 +39,26 @@ public class Chapter99 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (Prompt.answerTo("Voulez vous déplacer le rocher").isYes()) {
-            Roll roll = pip.roll2Dices();
-            if (roll.isBetween(7, 12)) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            List<Action> actions = new ArrayList<>();
+            actions.addAll(YesOrNoQuestion.question("Q99-1", "Voulez vous déplacer le rocher").toActionsForChapter(chapter(99)));
+            if (pip.has(FIREBALL)) {
+                actions.addAll(YesOrNoQuestion.question("Q99-2", "Voulez-vous utiliser une boule de feu").toActionsForChapter(chapter(99)));
+            }
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        }
+
+        if (questionId.equals("Q99-1") && answer.isYes()) {
+            if (pip.roll2Dices().isBetween(7, 12)) {
                 return pip.goToChapter(102);
             }
         }
-        if (pip.has(Item.FIREBALL)) {
-            if (Prompt.answerTo("Voulez-vous utiliser une boule de feu").isYes()) {
-                pip.remove(Item.FIREBALL);
-                return pip.goToChapter(102);
-            }
+        if (questionId.equals("Q99-2") && pip.has(FIREBALL) && answer.isYes()) {
+            pip.remove(FIREBALL);
+            return pip.goToChapter(102);
         }
-        return super.askWhichWay(pip);
+        return super.execute(pip);
     }
 
     @Override

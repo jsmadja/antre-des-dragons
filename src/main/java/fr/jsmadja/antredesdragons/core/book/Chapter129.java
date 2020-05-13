@@ -1,10 +1,12 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
 
 public class Chapter129 extends ManualChoiceChapter {
 
@@ -18,8 +20,14 @@ public class Chapter129 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (answerTo("Avez-vous déchiffré le parchemin").isYes()) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            return Execution.builder()
+                    .logEntries(pip.getCurrentChapterLogEntries())
+                    .actions(question("Q129", "Avez-vous déchiffré le parchemin").toActionsForChapter(chapter(129)))
+                    .build();
+        }
+        if (questionId.equals("Q129") && answer.isYes()) {
             pip.addExperiencePoints(1);
         }
         return super.execute(pip);

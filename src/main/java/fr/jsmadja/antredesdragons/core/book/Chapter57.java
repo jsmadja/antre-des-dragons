@@ -1,15 +1,18 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static java.util.stream.Collectors.toList;
 
 public class Chapter57 extends MultipleFightChapter {
@@ -43,11 +46,17 @@ public class Chapter57 extends MultipleFightChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (answerTo("Voulez-vous rester avec eux à jamais").isYes()) {
-            return pip.goTo(ChapterNumber.chapter(110));
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            List<Action> actions = new ArrayList<>();
+            actions.addAll(YesOrNoQuestion.question("Q57-1", "Voulez-vous rester avec eux à jamais").toActionsForChapter(chapter(57)));
+            actions.addAll(YesOrNoQuestion.question("Q57-2", "Voulez-vous rebrousser chemin").toActionsForChapter(chapter(57)));
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
         }
-        if (answerTo("Voulez-vous rebrousser chemin").isYes()) {
+        if (questionId.equals("Q57-1") && answer.isYes()) {
+            return pip.goTo(chapter(110));
+        }
+        if (questionId.equals("Q57-2") && answer.isYes()) {
             return pip.goToPreviousChapter();
         }
         return super.execute(pip);

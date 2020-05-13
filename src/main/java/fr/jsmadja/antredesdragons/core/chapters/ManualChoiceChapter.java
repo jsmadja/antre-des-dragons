@@ -2,7 +2,7 @@ package fr.jsmadja.antredesdragons.core.chapters;
 
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,13 +15,6 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public abstract class ManualChoiceChapter extends Chapter {
-
-    public Execution askWhichWay(Pip pip) {
-        Paths possiblesPath = getPossiblesPath(pip);
-        possiblesPath.print();
-        Prompt.NumberAnswer path = Prompt.answerTo("Quel est votre choix", possiblesPath.getChapter());
-        return pip.goTo(chapter(path.getAnswer()));
-    }
 
     public abstract Paths getPossiblesPath(Pip pip);
 

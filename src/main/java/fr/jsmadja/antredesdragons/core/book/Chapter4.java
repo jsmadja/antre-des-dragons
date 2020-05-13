@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
+import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 
-public class Chapter4 extends ManualChoiceChapter {
+public class Chapter4 extends GoNextChapter {
 
     public static final int DICE_GOLDEN_COIN = 1;
 
@@ -224,22 +224,16 @@ public class Chapter4 extends ManualChoiceChapter {
 
     @Override
     protected void beforeLeavingChapter(Pip pip) {
-        // TODO MARKET
-        // new Market().enter(pip);
-        // pip.equipAll();
         initializeMoney(pip);
+    }
+
+    @Override
+    public int getNextChapter() {
+        return -11;
     }
 
     private void initializeMoney(Pip pip) {
         pip.add(GoldenCoins.of(pip.roll2Dices().getValue() * DICE_GOLDEN_COIN));
     }
 
-    @Override
-    public Paths getPossiblesPath(Pip pip) {
-        return new Paths(
-                Path.builder().chapter(21).build(),
-                Path.builder().chapter(65).build(),
-                Path.builder().chapter(58).build(),
-                Path.builder().chapter(155).build());
-    }
 }

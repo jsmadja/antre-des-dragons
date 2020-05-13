@@ -1,14 +1,18 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DiceWay;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.RollAndGoChapter;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
 public class Chapter27 extends RollAndGoChapter {
     @Override
@@ -24,8 +28,13 @@ public class Chapter27 extends RollAndGoChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (answerTo("Retourner au 7").isYes()) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            YesOrNoQuestion question = YesOrNoQuestion.question("Q27", "Retourner au 7");
+            List<Action> actions = new ArrayList<>(question.toActionsForChapter(chapter(27)));
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        }
+        if (questionId.equals("Q27") && answer.isYes()) {
             return pip.goTo(ChapterNumber.chapter(7));
         }
         return super.execute(pip);

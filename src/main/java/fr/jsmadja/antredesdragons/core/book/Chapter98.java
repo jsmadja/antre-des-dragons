@@ -1,15 +1,19 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.MultipleFightChapter;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.INVISIBILITY;
 import static java.util.stream.Collectors.toList;
 
 public class Chapter98 extends MultipleFightChapter {
@@ -44,14 +48,21 @@ public class Chapter98 extends MultipleFightChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (pip.hasSpell(SpellBook.INVISIBILITY)) {
-            if (this.useInvisibilitySpell()) {
-                pip.removeSpell(SpellBook.INVISIBILITY);
-                return pip.goToChapter(99);
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            List<Action> actions = new ArrayList<>();
+            actions.addAll(YesOrNoQuestion.question("Q98-1", "Parler aux trolls").toActionsForChapter(chapter(98)));
+            if (pip.hasSpell(INVISIBILITY)) {
+                actions.addAll(YesOrNoQuestion.question("Q98-2", "Utiiser le sort d'invisibilité").toActionsForChapter(chapter(98)));
             }
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
         }
-        if (this.talkToTrolls()) {
+
+        if (pip.hasSpell(INVISIBILITY) && questionId.equals("Q98-1") && answer.isYes()) {
+            pip.removeSpell(INVISIBILITY);
+            return pip.goToChapter(99);
+        }
+        if (questionId.equals("Q98-2") && answer.isYes()) {
             return pip.goToChapter(103);
         }
         return super.execute(pip);
@@ -68,14 +79,6 @@ public class Chapter98 extends MultipleFightChapter {
                 .range(1, 7)
                 .mapToObj(operand -> getFoeFactory().createRockTroll(operand))
                 .collect(toList());
-    }
-
-    private boolean talkToTrolls() {
-        return Prompt.answerTo("Parler aux trolls").isYes();
-    }
-
-    private boolean useInvisibilitySpell() {
-        return Prompt.answerTo("Utiliser le sort d'invisibilité").isYes();
     }
 
 }

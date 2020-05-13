@@ -2,10 +2,10 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.List;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
 import static java.text.MessageFormat.format;
 
 public class Chapter39 extends Chapter {
@@ -63,22 +62,6 @@ public class Chapter39 extends Chapter {
                 "Si vous payez pour une réponse à la Question n° 2, rendez-vous au [113]. " +
                 "Si vous payez pour les deux réponses, vous pouvez choisir de vous rendre soit au [93], " +
                 "soit au [113].";
-    }
-
-    @Override
-    public Execution execute(Pip pip) {
-        GoldenCoins answerOnePrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerOnePrice) && answerTo(format("Payer {0} pour avoir la réponse à la question n° 1", answerOnePrice)).isYes()) {
-            pip.remove(answerOnePrice);
-            return pip.goToChapter(93);
-        }
-        GoldenCoins answerTwoPrice = getRandomAnswerPrice(pip);
-        if (pip.has(answerTwoPrice) && answerTo(format("Payer {0} pour avoir la réponse à la question n° 2", answerTwoPrice)).isYes()) {
-            pip.remove(answerTwoPrice);
-            return pip.goToChapter(113);
-        }
-
-        return pip.goToChapter(10);
     }
 
     @Override

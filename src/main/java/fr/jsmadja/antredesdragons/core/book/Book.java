@@ -3,12 +3,14 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DreamChapter;
+import fr.jsmadja.antredesdragons.core.market.Market;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Book {
 
+    public static final int MARKET = -11;
     public static final int DEBUT = -10;
     public static final int MERLIN = -9;
     public static final int MENACE_SUR_AVALAON = -8;
@@ -33,6 +35,7 @@ public class Book {
         put(MERLIN, new ChapterMerlin());
         put(MENACE_SUR_AVALAON, new ChapterMenaceSurAvalon());
         put(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN, new ChapterGrotteDeCristal());
+        put(MARKET, new Market());
 
         put(1, new Chapter1());
         put(2, new Chapter2());

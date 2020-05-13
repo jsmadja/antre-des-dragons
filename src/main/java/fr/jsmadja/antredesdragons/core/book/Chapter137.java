@@ -1,15 +1,18 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.DiceWay;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
 import fr.jsmadja.antredesdragons.core.chapters.RollAndGoChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion.question;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.INVISIBILITY;
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
 
 public class Chapter137 extends RollAndGoChapter {
     @Override
@@ -40,11 +43,19 @@ public class Chapter137 extends RollAndGoChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (pip.canUse(INVISIBILITY) && answerTo("Utiliser le sort d'invisibilité").isYes() && pip.use(INVISIBILITY).withSuccess()) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            List<Action> actions = new ArrayList<>();
+            if (pip.canUse(INVISIBILITY)) {
+                actions.addAll(question("Q137-1", "Utiliser le sort d'invisibilité").toActionsForChapter(chapter(137)));
+            }
+            actions.addAll(question("Q137-2", "Voulez-vous combattre les Nains").toActionsForChapter(chapter(137)));
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        }
+        if (pip.canUse(INVISIBILITY) && questionId.equals("Q137-1") && answer.isYes() && pip.use(INVISIBILITY).withSuccess()) {
             return pip.goToPreviousChapter();
         }
-        if (answerTo("Voulez-vous combattre les Nains").isYes()) {
+        if (questionId.equals("Q137-2") && answer.isYes()) {
             return pip.goToChapter(131);
         }
         return super.execute(pip);
@@ -54,7 +65,7 @@ public class Chapter137 extends RollAndGoChapter {
     protected List<DiceWay> getDiceWays(Pip pip) {
         return List.of(
                 DiceWay.builder().from(2).to(8).chapterNumber(pip.getPreviousChapter()).build(),
-                DiceWay.builder().from(9).to(12).chapterNumber(ChapterNumber.chapter(131)).build()
+                DiceWay.builder().from(9).to(12).chapterNumber(chapter(131)).build()
         );
     }
 }

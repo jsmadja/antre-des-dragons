@@ -1,10 +1,16 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
 public class Chapter146 extends ManualChoiceChapter {
     @Override
@@ -16,8 +22,13 @@ public class Chapter146 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (answerTo("Avez-vous déchiffré le parchemin").isYes()) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            YesOrNoQuestion question = YesOrNoQuestion.question("Q146", "Avez-vous déchiffré le parchemin");
+            List<Action> actions = new ArrayList<>(question.toActionsForChapter(chapter(146)));
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        }
+        if (questionId.equals("Q146") && answer.isYes()) {
             pip.addExperiencePoints(1);
         }
         return super.execute(pip);

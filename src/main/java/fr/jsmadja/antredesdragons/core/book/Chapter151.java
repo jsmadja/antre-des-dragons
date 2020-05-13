@@ -1,13 +1,18 @@
 package fr.jsmadja.antredesdragons.core.book;
 
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
-import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.MAGIC_WAND;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.FIREBALL;
-import static fr.jsmadja.antredesdragons.core.ui.Prompt.answerTo;
 
 public class Chapter151 extends Chapter {
     @Override
@@ -44,32 +49,42 @@ public class Chapter151 extends Chapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        Roll roll = pip.roll2Dices();
-        if (roll.isBetween(10, 12)) {
-            return goToNextChapter(pip);
-        }
-        while (pip.canUse(FIREBALL) && answerTo("Utiliser une boule de feu").isYes()) {
-            if (pip.use(FIREBALL).withSuccess()) {
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        if (questionId == null) {
+            List<Action> actions = new ArrayList<>();
+            if (pip.canUse(FIREBALL)) {
+                YesOrNoQuestion question = YesOrNoQuestion.question("Q151-1", "Utiliser une boule de feu");
+                actions.addAll(question.toActionsForChapter(chapter(151)));
+            }
+            if (pip.has(MAGIC_WAND)) {
+                YesOrNoQuestion question = YesOrNoQuestion.question("Q151-2", "Utiliser la baguette magique");
+                actions.addAll(question.toActionsForChapter(chapter(151)));
+            }
+            if (!actions.isEmpty()) {
+                return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+            }
+            if (pip.roll2Dices().isBetween(10, 12)) {
                 return goToNextChapter(pip);
             }
         }
-        if (pip.has(Item.MAGIC_WAND) && answerTo("Utiliser la baguette magique").isYes()) {
+        if (questionId.equals("Q151-1") && answer.isYes() && pip.canUse(FIREBALL)) {
+            if (pip.use(FIREBALL).withSuccess()) {
+                return goToNextChapter(pip);
+            }
+            return pip.goToChapter(151);
+        }
+        if (questionId.equals("Q151-2") && answer.isYes() && pip.has(MAGIC_WAND)) {
             pip.wounds(25);
             if (pip.isDead()) {
-                return goTo14(pip);
+                return pip.goToChapter(14);
             }
             return goToNextChapter(pip);
         }
-
-        return goTo14(pip);
+        return pip.goToChapter(14);
     }
 
     private Execution goToNextChapter(Pip pip) {
         return pip.goToChapter(153);
     }
 
-    private Execution goTo14(Pip pip) {
-        return pip.goToChapter(14);
-    }
 }

@@ -1,28 +1,69 @@
 package fr.jsmadja.antredesdragons.core.market;
 
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
+import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class Market {
-    public void enter(Pip pip) {
-        Prompt.YesNoAnswer wantBuyAnswer = Prompt.answerTo("Souhaitez-vous acheter un article");
-        if (wantBuyAnswer.isYes()) {
-            Prompt.NumberAnswer itemAnswer = Prompt.answerTo("Quel article souhaitez-vous acheter", Arrays.stream(MarketItem.values()).map(Enum::ordinal).collect(Collectors.toList()));
-            MarketItem marketItem = getItem(itemAnswer.getAnswer());
-            if (pip.has(marketItem.getPrice())) {
-                pip.buy(marketItem);
-            } else {
-                pip.log("Vous n'avez pas assez d'argent");
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
+import static java.lang.Integer.parseInt;
+
+public class Market extends ManualChoiceChapter {
+
+    @Override
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        List<Action> actions = new ArrayList<>();
+        actions.add(leaveMarketAction());
+        if (questionId != null) {
+            if (questionId.equals("QM") && answer.isYes()) {
+                return super.execute(pip);
             }
-            enter(pip);
+            MarketItem itemToBuy = getItem(parseInt(questionId));
+            if (pip.has(itemToBuy.getPrice())) {
+                pip.buy(itemToBuy);
+            }
         }
+        List<Action> itemActions = Arrays.stream(MarketItem.values())
+                .filter(i -> pip.has(i.getPrice()))
+                .map(this::toAction)
+                .collect(Collectors.toList());
+        actions.addAll(itemActions);
+        return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+    }
+
+    public Action leaveMarketAction() {
+        return Action.builder()
+                .question("Quitter le marché")
+                .suffix("/questions/QM/yes")
+                .chapter(chapter(4))
+                .build();
+    }
+
+    public Action toAction(MarketItem i) {
+        return Action.builder().chapter(chapter(-11)).suffix("/questions/" + i.ordinal() + "/yes").question("Acheter " + i.toString()).build();
     }
 
     private MarketItem getItem(int ordinal) {
         return Arrays.stream(MarketItem.values()).collect(Collectors.toMap(MarketItem::ordinal, p -> p)).get(ordinal);
     }
 
+    @Override
+    public String getText() {
+        return "";
+    }
+
+    @Override
+    public Paths getPossiblesPath(Pip pip) {
+        return new Paths(
+                Path.builder().chapter(21).build(),
+                Path.builder().chapter(65).build(),
+                Path.builder().chapter(58).build(),
+                Path.builder().chapter(155).build());
+    }
 }

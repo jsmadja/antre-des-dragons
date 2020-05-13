@@ -1,6 +1,5 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
-
 import fr.jsmadja.antredesdragons.core.execution.Action;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

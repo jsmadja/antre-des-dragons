@@ -1,8 +1,7 @@
-package fr.jsmadja.antredesdragons.core.chapters;
+package fr.jsmadja.antredesdragons.core.execution;
 
 import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
-import fr.jsmadja.antredesdragons.core.execution.Action;
 import lombok.Builder;
 import lombok.Data;
 

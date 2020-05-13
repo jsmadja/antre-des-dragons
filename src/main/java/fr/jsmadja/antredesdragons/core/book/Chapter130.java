@@ -1,14 +1,19 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Execution;
+import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
-import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.chapters.YesOrNoQuestion;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Action;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult;
-import fr.jsmadja.antredesdragons.core.ui.Prompt;
-import fr.jsmadja.antredesdragons.core.ui.Prompt.YesNoAnswer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.INVISIBILITY;
+import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 
 public class Chapter130 extends ManualChoiceChapter {
     @Override
@@ -20,22 +25,27 @@ public class Chapter130 extends ManualChoiceChapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (pip.hasSpell(INVISIBILITY)) {
-            YesNoAnswer answer = Prompt.answerTo("Voulez-vous utiliser le sort d'invisibilité");
-            if (answer.isYes()) {
-                SpellEffectResult result = pip.use(INVISIBILITY);
-                if (result == SpellEffectResult.SUCCESS) {
-                    return pip.goToChapter(136);
-                }
+    public Execution execute(Pip pip, String questionId, Answer answer) {
+        List<Action> actions = new ArrayList<>();
+        if (questionId == null) {
+            if (pip.hasSpell(INVISIBILITY)) {
+                YesOrNoQuestion question = YesOrNoQuestion.question("Q130-1", "Voulez-vous utiliser le sort d'invisibilité");
+                actions.addAll(question.toActionsForChapter(chapter(130)));
+            }
+            YesOrNoQuestion question = YesOrNoQuestion.question("Q130-2", "Voulez-vous combattre la Méduse");
+            actions.addAll(question.toActionsForChapter(chapter(130)));
+            return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+        }
+        if (questionId.equals("Q130-1") && answer.isYes()) {
+            SpellEffectResult result = pip.use(INVISIBILITY);
+            if (result == SUCCESS) {
+                return super.execute(pip);
             }
         }
-        YesNoAnswer answer = Prompt.answerTo("Voulez-vous combattre la Méduse");
-        if (answer.isYes()) {
+        if (questionId.equals("Q130-2") && answer.isYes()) {
             return pip.goToChapter(136);
         }
-        Roll roll = pip.roll2Dices();
-        if (roll.isBetween(2, 6)) {
+        if (pip.roll2Dices().isBetween(2, 6)) {
             return super.execute(pip);
         }
         return pip.goToChapter(14);
