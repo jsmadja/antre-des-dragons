@@ -25,6 +25,7 @@ public abstract class Chapter {
     }
 
     public Execution execute(Pip pip, String questionId, Answer answer) {
+        beforeLeavingChapter(pip);
         return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).build();
     }
 

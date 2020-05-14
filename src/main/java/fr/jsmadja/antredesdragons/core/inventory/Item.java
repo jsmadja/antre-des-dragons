@@ -41,7 +41,6 @@ public enum Item {
     FOOD("Nourriture"),
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative"),
-    PARTIAL_MAP_OF_THE_DRAGONS_LAIR("Carte partielle de l'antre du dragon"),
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
     MINOTAUR_KEY("Clef"),
     MAGIC_WAND("Baguette Magique"),

@@ -2,9 +2,13 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
+import fr.jsmadja.antredesdragons.core.execution.Execution;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static fr.jsmadja.antredesdragons.core.entities.AdventureMap.VILLAGE_EAST;
+import static fr.jsmadja.antredesdragons.core.entities.AdventureMap.VILLAGE_WEST;
 
 public class Chapter10 extends ManualChoiceChapter {
     @Override
@@ -28,6 +32,13 @@ public class Chapter10 extends ManualChoiceChapter {
                 "il vous suffira de vous rendre au paragraphe portant le numéro que vous aurez choisi " +
                 "sur la carte.\n" +
                 "Ah. une dernière chose... Avez-vous remarqué qu'il n'y a pas d'issue ?";
+    }
+
+    @Override
+    public Execution execute(Pip pip) {
+        pip.add(VILLAGE_EAST);
+        pip.add(VILLAGE_WEST);
+        return super.execute(pip);
     }
 
     @Override

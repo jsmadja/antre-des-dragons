@@ -38,12 +38,15 @@ import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAI
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
 import static java.text.MessageFormat.format;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class Pip extends Entity {
 
     public static final int NUMBER_OF_EXPERIENCE_POINTS_TO_LEVEL_UP = 20;
     private final Book book = new Book();
+
     private final List<SpellBook> spells = new ArrayList<>();
     private final Set<Skill> skills = new HashSet<>();
     private SilverCoins silverCoins = SilverCoins.of(0);
@@ -73,6 +76,8 @@ public class Pip extends Entity {
     @Getter
     private GoldenCoins dwarfAnswerTwoPrice;
 
+    @Getter
+    private Set<AdventureMap> maps = new HashSet<>();
 
     public Pip(Dice dice) {
         super("Pip", dice);
@@ -257,6 +262,12 @@ public class Pip extends Entity {
         return this.spellUsages.getUsagesOf(spell) < spell.getSpell().getMaxUsages();
     }
 
+    public List<SpellBook> getSpellBook() {
+        return stream(SpellBook.values())
+                .filter(this::canUse)
+                .collect(toList());
+    }
+
     // Skill
     public boolean hasSkill(Skill skill) {
         return this.skills.contains(skill);
@@ -323,4 +334,9 @@ public class Pip extends Entity {
         return this.book.get(currentChapterNumber);
     }
 
+    // Map
+    public void add(AdventureMap adventureMap) {
+        super.log("Pip obtient " + adventureMap.name());
+        this.maps.add(adventureMap);
+    }
 }

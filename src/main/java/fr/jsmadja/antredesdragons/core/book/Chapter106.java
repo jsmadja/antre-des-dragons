@@ -2,7 +2,8 @@ package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
+
+import static fr.jsmadja.antredesdragons.core.entities.AdventureMap.PARTIAL_DRAGONS_LAIR_MAP;
 
 public class Chapter106 extends GoNextChapter {
     @Override
@@ -12,7 +13,7 @@ public class Chapter106 extends GoNextChapter {
 
     @Override
     protected void beforeLeavingChapter(Pip pip) {
-        pip.add(Item.PARTIAL_MAP_OF_THE_DRAGONS_LAIR);
+        pip.add(PARTIAL_DRAGONS_LAIR_MAP);
         super.beforeLeavingChapter(pip);
     }
 
