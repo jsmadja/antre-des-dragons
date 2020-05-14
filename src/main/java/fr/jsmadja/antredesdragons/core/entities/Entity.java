@@ -120,6 +120,7 @@ public abstract class Entity {
     @Getter
     private HealthPoints lostHealthPointsDuringCurrentFight = hp(0);
 
+    @JsonIgnore
     @Getter
     private Diary diary = new Diary();
 
@@ -142,6 +143,7 @@ public abstract class Entity {
         this.requiredStrikesToHitInvisible = MAX_VALUE;
     }
 
+    @JsonIgnore
     public abstract boolean isFoe();
 
     public void restoreHealthPoints(int restoredHealthPoints) {
@@ -337,6 +339,7 @@ public abstract class Entity {
         return Math.max(0, damages);
     }
 
+    @JsonIgnore
     protected abstract boolean isDragon();
 
     // Inventory
@@ -402,6 +405,7 @@ public abstract class Entity {
         return Objects.hash(name);
     }
 
+    @JsonIgnore
     public boolean isPip() {
         return !this.isFoe();
     }

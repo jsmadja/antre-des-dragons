@@ -140,7 +140,10 @@ public class FoeFactory {
     }
 
     public Foe createStoneMan() {
-        Foe foe = Foe.builder().initialHealthPoints(hp(28)).build();
+        Foe foe = Foe.builder()
+                .name("Homme de Pierre")
+                .initialHealthPoints(hp(28))
+                .build();
         foe.addAndEquip(STONEMAN_SWORD);
         return foe;
     }

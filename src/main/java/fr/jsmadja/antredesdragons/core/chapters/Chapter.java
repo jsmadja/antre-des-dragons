@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.chapters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.jsmadja.antredesdragons.core.entities.FoeFactory;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
@@ -12,6 +13,7 @@ public abstract class Chapter {
 
     private boolean visited;
 
+    @JsonIgnore
     @Getter
     private FoeFactory foeFactory = new FoeFactory();
 

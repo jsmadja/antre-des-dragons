@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.jsmadja.antredesdragons.core.book.Book;
 import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
@@ -186,6 +187,7 @@ public class Pip extends Entity {
         return chapter.execute(this, questionId, answer);
     }
 
+    @JsonIgnore
     public LogEntries getCurrentChapterLogEntries() {
         return getDiary().getCurrentPage().getLogEntries();
     }

@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.jsmadja.antredesdragons.core.diary.LogEntries;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
@@ -26,6 +27,7 @@ public class Foe extends Entity {
         return dragon;
     }
 
+    @JsonIgnore
     public LogEntries getLogEntries() {
         return this.getDiary().getLogEntries();
     }
