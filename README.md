@@ -29,3 +29,9 @@
 - docker build -t jsmadja/antre-des-dragons-api .
 - docker run -p 8080:8080 jsmadja/antre-des-dragons-api
 - docker push jsmadja/antre-des-dragons-api
+
+# Deploy AWS
+- mvn clean package
+- aws s3 cp target/antredesdragons-1.0-SNAPSHOT.jar  s3://antre-des-dragons
+- aws elasticbeanstalk create-application-version --application-name antre-des-dragons --version-label snapshot --source-bundle S3Bucket="antre-des-dragons",S3Key="antredesdragons-1.0-SNAPSHOT.jar"
+- aws elasticbeanstalk update-environment --application-name antre-des-dragons --environment-name AntreDesDragons-env --version-label snapshot
