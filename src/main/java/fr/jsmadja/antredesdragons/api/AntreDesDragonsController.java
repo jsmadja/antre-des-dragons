@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/")
 public class AntreDesDragonsController {
 
     public static Pip pip = new Pip(new Dice());
