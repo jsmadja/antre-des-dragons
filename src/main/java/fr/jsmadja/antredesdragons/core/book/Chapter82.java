@@ -25,7 +25,7 @@ public class Chapter82 extends SingleFightChapter {
                 "? ») et, à l'attaque !\n" +
                 "Le Loup Siffleur possède 15 POINTS DE VIE, mais ses dents sont émoussées. Il ne" +
                 "vous infligera donc pas plus de Points de Dommage que ceux indiqués par les dés.\n" +
-                "Si vous gagnez le combat, ou si vous avez obtenu une Réaction Amicale, rendez-vous\n" +
+                "Si vous gagnez le combat, ou si vous avez obtenu une Réaction Amicale, rendez-vous " +
                 "au [11]. Sinon vous êtes bon pour le redoutable (et redouté) [14].";
     }
 }
