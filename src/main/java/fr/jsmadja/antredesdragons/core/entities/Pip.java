@@ -50,6 +50,8 @@ public class Pip extends Entity {
 
     private final List<SpellBook> spells = new ArrayList<>();
     private final Set<Skill> skills = new HashSet<>();
+
+    @Getter
     private SilverCoins silverCoins = SilverCoins.of(0);
     private SpellUsages spellUsages = new SpellUsages();
 

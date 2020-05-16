@@ -16,6 +16,8 @@ public abstract class Chapter {
     @JsonIgnore
     @Getter
     private FoeFactory foeFactory = new FoeFactory();
+    private int number;
+    private String title;
 
     public abstract String getText();
 
@@ -31,4 +33,17 @@ public abstract class Chapter {
         return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).build();
     }
 
+    public Chapter withNumber(int number) {
+        this.number = number;
+        return this;
+    }
+
+    public Chapter withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public String getTitle() {
+        return this.title == null ? Integer.toString(this.number) : this.title;
+    }
 }

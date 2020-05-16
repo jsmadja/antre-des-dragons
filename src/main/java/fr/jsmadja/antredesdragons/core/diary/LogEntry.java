@@ -12,7 +12,6 @@ import lombok.ToString;
 
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Getter
@@ -21,7 +20,7 @@ public class LogEntry implements Comparable<LogEntry> {
     private final Date date;
     private final Type type;
     private final String author;
-    private final UUID id;
+    private static int IDS = 0;
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Roll roll;
@@ -31,10 +30,11 @@ public class LogEntry implements Comparable<LogEntry> {
     private ChapterNumber chapterNumber;
     private Item item;
     private String message;
+    private final Integer id;
 
     @Builder
     public LogEntry(Type type, Roll roll, String author, HealingItem healingItem, ChapterNumber chapterNumber, String message, Item item) {
-        this.id = UUID.randomUUID();
+        this.id = IDS++;
         this.type = type;
         this.roll = roll;
         this.author = author;
