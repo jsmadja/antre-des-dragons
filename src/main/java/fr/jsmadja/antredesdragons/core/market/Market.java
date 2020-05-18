@@ -17,6 +17,22 @@ import static java.lang.Integer.parseInt;
 public class Market extends ManualChoiceChapter {
 
     @Override
+    public Execution execute(Pip pip) {
+        List<Action> actions = new ArrayList<>();
+        actions.add(leaveMarketAction());
+        insertItemActions(pip, actions);
+        return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
+    }
+
+    public void insertItemActions(Pip pip, List<Action> actions) {
+        List<Action> itemActions = Arrays.stream(MarketItem.values())
+                .filter(i -> pip.has(i.getPrice()))
+                .map(this::toAction)
+                .collect(Collectors.toList());
+        actions.addAll(itemActions);
+    }
+
+    @Override
     public Execution execute(Pip pip, String questionId, Answer answer) {
         List<Action> actions = new ArrayList<>();
         actions.add(leaveMarketAction());
@@ -29,11 +45,7 @@ public class Market extends ManualChoiceChapter {
                 pip.buy(itemToBuy);
             }
         }
-        List<Action> itemActions = Arrays.stream(MarketItem.values())
-                .filter(i -> pip.has(i.getPrice()))
-                .map(this::toAction)
-                .collect(Collectors.toList());
-        actions.addAll(itemActions);
+        insertItemActions(pip, actions);
         return Execution.builder().logEntries(pip.getCurrentChapterLogEntries()).actions(actions).build();
     }
 

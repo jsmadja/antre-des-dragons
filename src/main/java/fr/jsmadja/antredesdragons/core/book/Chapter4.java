@@ -4,6 +4,7 @@ import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.market.GoldenCoins;
 
+import static fr.jsmadja.antredesdragons.core.book.Book.MARKET;
 import static fr.jsmadja.antredesdragons.core.entities.AdventureMap.BEGINNER_MAP;
 
 public class Chapter4 extends GoNextChapter {
@@ -232,7 +233,7 @@ public class Chapter4 extends GoNextChapter {
 
     @Override
     public int getNextChapter() {
-        return -11;
+        return MARKET;
     }
 
     private void initializeMoney(Pip pip) {
