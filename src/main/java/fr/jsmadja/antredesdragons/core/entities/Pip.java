@@ -88,6 +88,7 @@ public class Pip extends Entity {
 
     public void initialize() {
         setInitialHealthPoints(computeInitialHealthPoints().getHealthPoints());
+        log(format("a désormais {0} points de vie", getInitialHealthPoints()));
         setCurrentHealthPoints(getInitialHealthPoints());
         setMaximumHealthPoints(getInitialHealthPoints());
         range(0, 3).mapToObj(i -> new HealingPotion(this.getDice())).forEach(this::add);
@@ -103,7 +104,7 @@ public class Pip extends Entity {
     }
 
     public HealingItem add(HealingItem healingItem) {
-        super.log(healingItem);
+        this.log(format("ajoute {0} dans son sac à dos", healingItem.getName()));
         this.getInventory().add(healingItem);
         return healingItem;
     }
