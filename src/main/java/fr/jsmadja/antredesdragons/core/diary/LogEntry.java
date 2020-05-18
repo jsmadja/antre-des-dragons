@@ -64,5 +64,5 @@ public class LogEntry implements Comparable<LogEntry> {
         return Objects.hash(id);
     }
 
-    public enum Type {HEALING_ITEM, CHAPTER, ROLL, ITEM, SPELL, MISC, FIGHT}
+    public enum Type {HEALING_ITEM, CHAPTER, ROLL, SPELL, MISC, FIGHT}
 }

@@ -38,6 +38,7 @@ import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
+import static java.text.MessageFormat.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -277,12 +278,13 @@ public class Pip extends Entity {
 
     // Money
     public void addSilverCoins(SilverCoins silverCoins) {
-        super.log("Pip obtient " + silverCoins + " pièces d'argent");
+        super.log(format("Pip obtient {0} pièces d''argent", silverCoins.getValue()));
         this.silverCoins = this.silverCoins.plus(silverCoins);
     }
 
     public void add(GoldenCoins goldenCoins) {
-        this.addSilverCoins(goldenCoins.toSilverCoins());
+        super.log(format("Pip obtient {0} pièces d''or", goldenCoins.getValue()));
+        this.silverCoins = this.silverCoins.plus(goldenCoins.toSilverCoins());
     }
 
     public boolean has(SilverCoins coins) {
@@ -292,13 +294,19 @@ public class Pip extends Entity {
     public void buy(MarketItem marketItem) {
         range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {
-                    this.silverCoins = this.silverCoins.minus(marketItem.getPrice());
+                    this.remove(marketItem.getPrice());
                     this.add(marketItem.getItem());
                 });
 
     }
 
+    private void remove(SilverCoins silverCoins) {
+        super.log(format("Pip donne {0} pièces d''argent", silverCoins.getValue()));
+        this.silverCoins = this.silverCoins.minus(silverCoins);
+    }
+
     public void remove(GoldenCoins goldenCoins) {
+        super.log(format("Pip donne {0} pièces d''or", silverCoins.getValue()));
         this.silverCoins = this.silverCoins.minus(goldenCoins.toSilverCoins());
     }
 
