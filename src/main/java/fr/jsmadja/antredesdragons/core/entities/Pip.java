@@ -279,12 +279,12 @@ public class Pip extends Entity {
 
     // Money
     public void addSilverCoins(SilverCoins silverCoins) {
-        super.log(format("Pip obtient {0} pièces d''argent", silverCoins.getValue()));
+        super.log(format("obtient {0} pièces d''argent", silverCoins.getValue()));
         this.silverCoins = this.silverCoins.plus(silverCoins);
     }
 
     public void add(GoldenCoins goldenCoins) {
-        super.log(format("Pip obtient {0} pièces d''or", goldenCoins.getValue()));
+        super.log(format("obtient {0} pièces d''or", goldenCoins.getValue()));
         this.silverCoins = this.silverCoins.plus(goldenCoins.toSilverCoins());
     }
 
@@ -337,7 +337,7 @@ public class Pip extends Entity {
 
     // Map
     public void add(AdventureMap adventureMap) {
-        super.log("Pip obtient " + adventureMap.getName());
+        super.log("obtient " + adventureMap.getName());
         this.maps.add(adventureMap);
     }
 }

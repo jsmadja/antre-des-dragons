@@ -66,7 +66,7 @@ public class Diary {
 
     public void log(String author, Item item) {
         addToCurrentPage(withAuthor(author)
-                .message(format("Pip ajoute {0} dans son sac à dos", item.getName()))
+                .message(format("ajoute {0} dans son sac à dos", item.getName()))
                 .type(MISC)
                 .build());
     }
