@@ -11,6 +11,6 @@ public abstract class RollAndGoChapter extends Chapter {
 
     @Override
     public Execution execute(Pip pip) {
-        return pip.rollAndGo2(getDiceWays(pip));
+        return pip.rollAndGo(getDiceWays(pip));
     }
 }

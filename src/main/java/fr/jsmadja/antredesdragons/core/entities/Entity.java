@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.core.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
+import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.diary.Diary;
 import fr.jsmadja.antredesdragons.core.diary.LogEntry;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
@@ -434,8 +434,8 @@ public abstract class Entity {
         this.diary.log(getName(), healingItem);
     }
 
-    public void log(ChapterNumber chapterNumber) {
-        this.diary.log(getName(), chapterNumber);
+    public void log(Chapter chapter) {
+        this.diary.log(getName(), chapter);
     }
 
     public void logFight(String message) {

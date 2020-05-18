@@ -28,18 +28,22 @@ public class LogEntry implements Comparable<LogEntry> {
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private ChapterNumber chapterNumber;
+    @JsonUnwrapped
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String chapterTitle;
     private Item item;
     private String message;
     private final Integer id;
 
     @Builder
-    public LogEntry(Type type, Roll roll, String author, HealingItem healingItem, ChapterNumber chapterNumber, String message, Item item) {
+    public LogEntry(Type type, Roll roll, String author, HealingItem healingItem, ChapterNumber chapterNumber, String message, Item item, String chapterTitle) {
         this.id = IDS++;
         this.type = type;
         this.roll = roll;
         this.author = author;
         this.healingItem = healingItem;
         this.chapterNumber = chapterNumber;
+        this.chapterTitle = chapterTitle;
         this.message = message;
         this.item = item;
         this.date = new Date();

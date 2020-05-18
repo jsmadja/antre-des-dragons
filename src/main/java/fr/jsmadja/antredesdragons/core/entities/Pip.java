@@ -38,7 +38,6 @@ import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.SUCCESS;
 import static fr.jsmadja.antredesdragons.core.stuff.HealthPoints.hp;
-import static java.text.MessageFormat.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -164,7 +163,7 @@ public class Pip extends Entity {
                     .build();
         }
         onChapterEnd();
-        super.log(chapterNumber);
+        super.log(book.get(chapterNumber));
         this.currentChapterNumber = chapterNumber;
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         chapter.setVisited(true);
@@ -182,7 +181,7 @@ public class Pip extends Entity {
                     .build();
         }
         onChapterEnd();
-        super.log(chapterNumber);
+        super.log(book.get(chapterNumber));
         this.currentChapterNumber = chapterNumber;
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
         chapter.setVisited(true);
@@ -202,12 +201,10 @@ public class Pip extends Entity {
         if (this.isDead()) {
             return goTo(chapter(14));
         }
-
         onChapterEnd();
         this.currentChapterNumber = chapterNumber;
-        log(this.currentChapterNumber);
+        log(book.get(this.currentChapterNumber));
         Chapter chapter = book.get(this.currentChapterNumber.getChapter());
-        System.err.println(chapter.getText() + "\n");
         chapter.setVisited(true);
         return chapter.execute(this);
     }
@@ -219,10 +216,6 @@ public class Pip extends Entity {
     }
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
-        return rollAndGo2(diceWays);
-    }
-
-    public Execution rollAndGo2(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
         log(roll);
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
@@ -275,11 +268,6 @@ public class Pip extends Entity {
     // Skill
     public boolean hasSkill(Skill skill) {
         return this.skills.contains(skill);
-    }
-
-    @Override
-    public String toString() {
-        return format("{0} ~ HP: {1}/{6}, XP: {6}, STR: {2}, TCH: {3}, ARMOR: {4}, SC: {5}", this.getName(), this.getCurrentHealthPoints(), this.getAdditionalDamagePoints(), this.getHitRollRange().getMin(), this.getArmorPoints(), this.silverCoins, this.getMaximumHealthPoints(), this.experiencePoints);
     }
 
     @Override

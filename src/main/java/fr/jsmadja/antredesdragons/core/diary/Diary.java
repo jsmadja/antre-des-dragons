@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.diary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
@@ -50,9 +51,10 @@ public class Diary {
         pages.add(new DiaryPage());
     }
 
-    public void log(String author, ChapterNumber chapterNumber) {
+    public void log(String author, Chapter chapter) {
         addToCurrentPage(withAuthor(author)
-                .chapterNumber(chapterNumber)
+                .chapterNumber(ChapterNumber.chapter(chapter.getNumber()))
+                .chapterTitle(chapter.getTitle())
                 .type(CHAPTER)
                 .build());
     }
