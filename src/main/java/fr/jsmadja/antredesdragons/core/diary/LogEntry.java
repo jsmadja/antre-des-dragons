@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.dices.Roll;
 import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -31,12 +30,11 @@ public class LogEntry implements Comparable<LogEntry> {
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String chapterTitle;
-    private Item item;
     private String message;
     private final Integer id;
 
     @Builder
-    public LogEntry(Type type, Roll roll, String author, HealingItem healingItem, ChapterNumber chapterNumber, String message, Item item, String chapterTitle) {
+    public LogEntry(Type type, Roll roll, String author, HealingItem healingItem, ChapterNumber chapterNumber, String message, String chapterTitle) {
         this.id = IDS++;
         this.type = type;
         this.roll = roll;
@@ -45,7 +43,6 @@ public class LogEntry implements Comparable<LogEntry> {
         this.chapterNumber = chapterNumber;
         this.chapterTitle = chapterTitle;
         this.message = message;
-        this.item = item;
         this.date = new Date();
     }
 

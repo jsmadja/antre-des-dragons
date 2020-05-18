@@ -328,7 +328,7 @@ public class Pip extends Entity {
 
     // Map
     public void add(AdventureMap adventureMap) {
-        super.log("Pip obtient " + adventureMap.name());
+        super.log("Pip obtient " + adventureMap.getName());
         this.maps.add(adventureMap);
     }
 }

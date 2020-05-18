@@ -13,8 +13,9 @@ import java.util.List;
 
 import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.CHAPTER;
 import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.HEALING_ITEM;
-import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.ITEM;
+import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.MISC;
 import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.ROLL;
+import static java.text.MessageFormat.format;
 
 public class Diary {
     @Getter
@@ -65,8 +66,8 @@ public class Diary {
 
     public void log(String author, Item item) {
         addToCurrentPage(withAuthor(author)
-                .item(item)
-                .type(ITEM)
+                .message(format("Pip ajoute {0} dans son sac à dos", item.getName()))
+                .type(MISC)
                 .build());
     }
 
