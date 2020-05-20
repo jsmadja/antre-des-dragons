@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.HEALING_ITEM;
+import static fr.jsmadja.antredesdragons.core.diary.LogEntry.Type.MISC;
 import static fr.jsmadja.antredesdragons.core.dices.Roll.roll;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.MISSED;
 import static fr.jsmadja.antredesdragons.core.fight.Attack.Status.TOUCHED;
@@ -132,9 +132,9 @@ class PipTest {
         pip.initialize();
         long healingItemLogEntriesCount = pip.getCurrentChapterLogEntries().toList()
                 .stream()
-                .map(LogEntry::getType).filter(t -> t.equals(HEALING_ITEM))
+                .map(LogEntry::getType).filter(t -> t.equals(MISC))
                 .count();
-        assertThat(healingItemLogEntriesCount).isEqualTo(8);
+        assertThat(healingItemLogEntriesCount).isEqualTo(9);
     }
 
 }
