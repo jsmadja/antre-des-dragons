@@ -106,6 +106,10 @@ public enum Item {
         this.dreamItem = dreamItem;
     }
 
+    public int getId() {
+        return this.ordinal();
+    }
+
     // Object Constructor
     Item(String name) {
         this(name, armor(0), damage(0), false, null, false, false, false, false);

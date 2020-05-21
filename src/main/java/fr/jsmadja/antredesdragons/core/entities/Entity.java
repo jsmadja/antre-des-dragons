@@ -147,6 +147,7 @@ public abstract class Entity {
     public abstract boolean isFoe();
 
     public void restoreHealthPoints(int restoredHealthPoints) {
+        log("regagne " + restoredHealthPoints + " points de vie");
         this.currentHealthPoints = Math.min(this.currentHealthPoints + restoredHealthPoints, this.maximumHealthPoints);
     }
 
@@ -376,6 +377,14 @@ public abstract class Entity {
         this.inventory.equipAll();
     }
 
+    public Optional<HealingItem> getHealingItemByName(String healingItemName) {
+        return this.inventory.getHealingItemByName(healingItemName);
+    }
+
+    public Optional<Item> getItemByName(String itemName) {
+        return this.inventory.getItemByName(itemName);
+    }
+
     public void addTemporaryDamagePointsMalus(DamagePoints damage) {
         this.temporaryDamagePointsMalus = DamagePoints.damage(damage.getDamagePoints() + temporaryDamagePointsMalus.getDamagePoints());
     }
@@ -458,4 +467,5 @@ public abstract class Entity {
     public String toString() {
         return String.format("%s (%d/%d)", name, currentHealthPoints, maximumHealthPoints);
     }
+
 }

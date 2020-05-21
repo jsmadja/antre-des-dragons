@@ -69,4 +69,16 @@ public class Inventory {
     public void add(HealingItem healingItem) {
         this.healingItems.add(healingItem);
     }
+
+    public void remove(HealingItem healingItem) {
+        this.healingItems.remove(healingItem);
+    }
+
+    public Optional<HealingItem> getHealingItemByName(String healingItemName) {
+        return this.healingItems.stream().filter(item -> item.getName().equalsIgnoreCase(healingItemName)).findFirst();
+    }
+
+    public Optional<Item> getItemByName(String itemName) {
+        return this.items.stream().filter(item -> item.getName().equalsIgnoreCase(itemName)).findFirst();
+    }
 }

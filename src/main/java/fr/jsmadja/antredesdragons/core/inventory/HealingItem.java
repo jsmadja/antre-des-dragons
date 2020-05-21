@@ -16,4 +16,5 @@ public abstract class HealingItem {
     public abstract HealthPoints use();
 
     public abstract HealthPoints useDuringFight(Entity attacker, Entity target);
+
 }

@@ -5,10 +5,14 @@ import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
+import fr.jsmadja.antredesdragons.core.inventory.HealingItem;
+import fr.jsmadja.antredesdragons.core.inventory.Item;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 
@@ -34,6 +38,39 @@ public class AntreDesDragonsController {
     public Step read(@PathVariable("chapterNumber") int chapterNumber) {
         Execution execution = pip.goToChapter(chapter(chapterNumber));
         return createStep(execution);
+    }
+
+    @RequestMapping(path = "/inventory/healingItems/{healingItemName}:use")
+    public Step useHealingItem(@PathVariable("healingItemName") String healingItemName) {
+        Optional<HealingItem> healingItem = pip.getHealingItemByName(healingItemName);
+        pip.getDiary().openNewPage();
+        healingItem.ifPresent(item -> pip.use(item));
+        return Step.builder()
+                .pip(pip)
+                .logEntries(pip.getCurrentChapterLogEntries().toList())
+                .build();
+    }
+
+    @RequestMapping(path = "/inventory/items/{itemName}:equip")
+    public Step equipItem(@PathVariable("itemName") String itemName) {
+        Optional<Item> item = pip.getItemByName(itemName);
+        pip.getDiary().openNewPage();
+        item.ifPresent(i -> pip.equip(i));
+        return Step.builder()
+                .pip(pip)
+                .logEntries(pip.getCurrentChapterLogEntries().toList())
+                .build();
+    }
+
+    @RequestMapping(path = "/inventory/items/{itemName}:unequip")
+    public Step unequipItem(@PathVariable("itemName") String itemName) {
+        Optional<Item> item = pip.getItemByName(itemName);
+        pip.getDiary().openNewPage();
+        item.ifPresent(i -> pip.unequip(i));
+        return Step.builder()
+                .pip(pip)
+                .logEntries(pip.getCurrentChapterLogEntries().toList())
+                .build();
     }
 
     private Step createStep(Execution execution) {
