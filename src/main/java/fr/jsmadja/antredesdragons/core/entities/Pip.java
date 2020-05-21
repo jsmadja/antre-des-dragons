@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static fr.jsmadja.antredesdragons.core.book.Book.DEBUT;
+import static fr.jsmadja.antredesdragons.core.book.Book.COUVERTURE;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static fr.jsmadja.antredesdragons.core.execution.Action.goChapter;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
@@ -65,7 +65,7 @@ public class Pip extends Entity {
     @Getter
     private final Set<AdventureMap> maps = new HashSet<>();
 
-    private ChapterNumber currentChapterNumber = chapter(DEBUT);
+    private ChapterNumber currentChapterNumber = chapter(COUVERTURE);
     @Getter
     private int experiencePoints;
 

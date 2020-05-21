@@ -18,6 +18,7 @@ public abstract class Chapter {
     private FoeFactory foeFactory = new FoeFactory();
     private int number;
     private String title;
+    private boolean illustrated;
 
     public abstract String getText();
 
@@ -45,5 +46,10 @@ public abstract class Chapter {
 
     public String getTitle() {
         return this.title == null ? Integer.toString(this.number) : this.title;
+    }
+
+    public Chapter withIllustration() {
+        this.illustrated = true;
+        return this;
     }
 }
