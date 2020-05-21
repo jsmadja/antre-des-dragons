@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Getter
-@ToString(exclude = {"id", "date"})
+@ToString(exclude = {"date", "healingItem", "chapterNumber", "chapterTitle"})
 public class LogEntry implements Comparable<LogEntry> {
     private final Date date;
     private final Type type;
@@ -22,15 +22,15 @@ public class LogEntry implements Comparable<LogEntry> {
     private static int IDS = 0;
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Roll roll;
-    private HealingItem healingItem;
+    private final Roll roll;
+    private final HealingItem healingItem;
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ChapterNumber chapterNumber;
+    private final ChapterNumber chapterNumber;
     @JsonUnwrapped
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String chapterTitle;
-    private String message;
+    private final String chapterTitle;
+    private final String message;
     private final Integer id;
 
     @Builder

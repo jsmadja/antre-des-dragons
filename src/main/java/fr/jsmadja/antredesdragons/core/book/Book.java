@@ -3,7 +3,6 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.chapters.ChapterNumber;
 import fr.jsmadja.antredesdragons.core.chapters.DreamChapter;
-import fr.jsmadja.antredesdragons.core.market.Market;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +30,11 @@ public class Book {
     }};
 
     private final Map<Integer, Chapter> chapters = new HashMap<>() {{
-        put(DEBUT, new ChapterDebut().withTitle("Avis aux lecteurs téméraires !"));
-        put(MERLIN, new ChapterMerlin().withTitle("Merlin"));
-        put(MENACE_SUR_AVALAON, new ChapterMenaceSurAvalon().withTitle("Menace sur Avalon"));
-        put(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN, new ChapterGrotteDeCristal().withTitle("Dans la grotte de cristal de Merlin"));
-        put(MARKET, new Market().withTitle("Liste de courses de Pip"));
+        put(DEBUT, new ChapterDebut().withNumber(DEBUT).withTitle("Avis aux lecteurs téméraires !"));
+        put(MERLIN, new ChapterMerlin().withTitle("Merlin").withNumber(MERLIN));
+        put(MENACE_SUR_AVALAON, new ChapterMenaceSurAvalon().withNumber(MENACE_SUR_AVALAON).withTitle("Menace sur Avalon"));
+        put(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN, new ChapterGrotteDeCristal().withNumber(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN).withTitle("Dans la grotte de cristal de Merlin"));
+        put(MARKET, new MarketChapter().withNumber(MARKET).withTitle("Liste de courses de Pip"));
 
         put(1, new Chapter1().withNumber(1));
         put(2, new Chapter2().withNumber(2));

@@ -1,10 +1,11 @@
-package fr.jsmadja.antredesdragons.core.market;
+package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.Answer;
 import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
+import fr.jsmadja.antredesdragons.core.market.MarketItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static java.lang.Integer.parseInt;
 
-public class Market extends ManualChoiceChapter {
+public class MarketChapter extends ManualChoiceChapter {
 
     @Override
     public Execution execute(Pip pip) {
@@ -53,7 +54,7 @@ public class Market extends ManualChoiceChapter {
         return Action.builder()
                 .question("Quitter le marché")
                 .suffix("/questions/QM/yes")
-                .chapter(chapter(4))
+                .chapter(chapter(this.getNumber()))
                 .build();
     }
 
@@ -74,8 +75,8 @@ public class Market extends ManualChoiceChapter {
     public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().chapter(21).build(),
-                Path.builder().chapter(65).build(),
                 Path.builder().chapter(58).build(),
+                Path.builder().chapter(65).build(),
                 Path.builder().chapter(155).build());
     }
 }

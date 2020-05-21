@@ -82,11 +82,11 @@ public class Chapter39 extends Chapter {
             }
             actions.add(Action.goChapter(chapter(10)));
         }
-        if (questionId.equals("Q39-1") && answer.isYes() && pip.has(pip.getDwarfAnswerOnePrice())) {
+        if ("Q39-1".equals(questionId) && answer.isYes() && pip.has(pip.getDwarfAnswerOnePrice())) {
             pip.remove(pip.getDwarfAnswerOnePrice());
             return pip.goToChapter(93);
         }
-        if (questionId.equals("Q39-2") && answer.isYes() && pip.has(pip.getDwarfAnswerTwoPrice())) {
+        if ("Q39-2".equals(questionId) && answer.isYes() && pip.has(pip.getDwarfAnswerTwoPrice())) {
             pip.remove(pip.getDwarfAnswerTwoPrice());
             return pip.goToChapter(113);
         }

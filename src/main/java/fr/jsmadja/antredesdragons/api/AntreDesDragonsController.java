@@ -32,7 +32,7 @@ public class AntreDesDragonsController {
 
     @RequestMapping(path = "/chapter/{chapterNumber}")
     public Step read(@PathVariable("chapterNumber") int chapterNumber) {
-        Execution execution = pip.goToChapter2(chapter(chapterNumber));
+        Execution execution = pip.goToChapter(chapter(chapterNumber));
         return createStep(execution);
     }
 

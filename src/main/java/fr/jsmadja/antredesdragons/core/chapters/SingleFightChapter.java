@@ -19,18 +19,21 @@ public abstract class SingleFightChapter extends Chapter {
         pip.fight(List.of(foe));
         LogEntries foeLogEntries = foe.getLogEntries();
         if (pip.isDead()) {
-            return pip.goToChapter2(chapter(14))
+            return pip.goToChapter(chapter(14))
                     .add(foeLogEntries);
         }
         onAfterSuccessfulFight(pip);
         return Execution.builder()
-                .logEntries(foeLogEntries)
+                .logEntries(foeLogEntries.add(pip.getCurrentChapterLogEntries()))
                 .foes(List.of(foe))
                 .actions(List.of(goChapter(chapter(getSuccessChapter()))))
                 .build();
     }
 
     protected void onBeforeFight(Pip pip) {
+        if (!pip.hasBeenInitialized()) {
+            throw new RuntimeException("Pip has not been initialized");
+        }
     }
 
     protected void onAfterSuccessfulFight(Pip pip) {

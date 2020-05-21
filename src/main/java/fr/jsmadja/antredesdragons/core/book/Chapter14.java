@@ -1,10 +1,10 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Chapter;
+import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
 
-public class Chapter14 extends Chapter {
+public class Chapter14 extends GoNextChapter {
     @Override
     public String getText() {
         return "Vous ouvrez lentement les yeux. Quelque part dam le lointain, un orchestre invisible " +
@@ -19,6 +19,11 @@ public class Chapter14 extends Chapter {
                 "Là-dessus, il s'éloigne en marmonnant dans sa barbe à propos des jeunes de nos " +
                 "jours... tandis que lentement , mais inexorablement, la grotte commence à s'effacer, " +
                 "pour disparaître bientôt complètement.";
+    }
+
+    @Override
+    public int getNextChapter() {
+        return Book.DEBUT;
     }
 
     @Override

@@ -112,7 +112,7 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 "les points qu'il obtiendra au-dessus du chiffre qu'il lui sera demandé de faire, ou de 6 si " +
                 "rien n'est précisé, sont des Points de Dommage qui seront soustraits de tes POINTS DE " +
                 "VIE. Les combats prennent fin de deux façons. La première , et tu t'en serais douté, " +
-                "lorsque les POINTS DE vIE de ton adversaire, ou les tiens, atteignent zéro, dans ce " +
+                "lorsque les POINTS DE VIE de ton adversaire, ou les tiens, atteignent zéro, dans ce " +
                 "cas, l'un de vous est mort. Mais ne t'inquiete pas trop, je veille sur toi. La deuxième " +
                 "façon, lorsque le total de POINTS DE VIE de ton adversaire est égal à 5. Tu peux alors " +
                 "considérer que tu as gagné le combat, car tu auras mis ton adversaire dans un piètre " +

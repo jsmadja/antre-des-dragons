@@ -53,7 +53,7 @@ public class Pip extends Entity {
 
     @Getter
     private SilverCoins silverCoins = SilverCoins.of(0);
-    private SpellUsages spellUsages = new SpellUsages();
+    private final SpellUsages spellUsages = new SpellUsages();
 
     @Setter
     @Getter
@@ -61,12 +61,13 @@ public class Pip extends Entity {
 
     @Getter
     private ChapterNumber previousChapter;
-    private int experiencePoints;
-    private int level = 1;
+    private final List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
+    @Getter
+    private final Set<AdventureMap> maps = new HashSet<>();
 
     private ChapterNumber currentChapterNumber = chapter(DEBUT);
-
-    private List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
+    @Getter
+    private int experiencePoints;
 
     @Setter
     @Getter
@@ -78,9 +79,8 @@ public class Pip extends Entity {
     @Setter
     @Getter
     private GoldenCoins dwarfAnswerTwoPrice;
-
     @Getter
-    private Set<AdventureMap> maps = new HashSet<>();
+    private int level = 1;
 
     public Pip(Dice dice) {
         super("Pip", dice);
@@ -155,7 +155,7 @@ public class Pip extends Entity {
         return goTo(chapter(chapter));
     }
 
-    public Execution goToChapter2(ChapterNumber chapterNumber) {
+    public Execution goToChapter(ChapterNumber chapterNumber) {
         LogEntries currentChapterLogEntries = getCurrentChapterLogEntries();
         this.getDiary().openNewPage();
         if (this.isDead()) {
@@ -196,7 +196,7 @@ public class Pip extends Entity {
     }
 
     public Execution goToPreviousChapter() {
-        return goToChapter2(getPreviousChapter());
+        return goToChapter(getPreviousChapter());
     }
 
     public Execution goTo(ChapterNumber chapterNumber) {
@@ -219,7 +219,6 @@ public class Pip extends Entity {
 
     public Execution rollAndGo(List<DiceWay> diceWays) {
         Roll roll = this.roll2Dices();
-        log(roll);
         DiceWay way = diceWays.stream().filter(diceWay -> diceWay.matches(roll)).findFirst().orElse(diceWays.get(0));
         return Execution.builder()
                 .logEntries(this.getCurrentChapterLogEntries())
@@ -238,7 +237,7 @@ public class Pip extends Entity {
 
     public SpellEffectResult use(SpellBook spell) {
         if (this.getCurrentHealthPoints() <= spell.getSpell().getDamagePoints().getDamagePoints()) {
-            this.logSpell(this.getName() + " ne peut pas utiliser ce sort car il est trop couteux en points de vie");
+            this.logSpell("ne peut pas utiliser ce sort car il est trop couteux en points de vie");
             return FAILURE;
         }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.roll(6))) {
@@ -249,7 +248,7 @@ public class Pip extends Entity {
             this.addUsedSpellsInCurrentChapter(spell);
             return SUCCESS;
         }
-        this.logSpell(this.getName() + " ne peut pas utiliser ce sort car il a été utilisé trop de fois");
+        this.logSpell("ne peut pas utiliser ce sort car il a été utilisé trop de fois");
         return FAILURE;
     }
 
@@ -293,21 +292,20 @@ public class Pip extends Entity {
     }
 
     public void buy(MarketItem marketItem) {
+        this.remove(marketItem.getPrice());
         range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {
-                    this.remove(marketItem.getPrice());
                     this.add(marketItem.getItem());
                 });
-
     }
 
     private void remove(SilverCoins silverCoins) {
-        super.log(format("Pip donne {0} pièces d''argent", silverCoins.getValue()));
+        super.log(format("donne {0} pièces d''argent", silverCoins.getValue()));
         this.silverCoins = this.silverCoins.minus(silverCoins);
     }
 
     public void remove(GoldenCoins goldenCoins) {
-        super.log(format("Pip donne {0} pièces d''or", silverCoins.getValue()));
+        super.log(format("donne {0} pièces d''or", silverCoins.getValue()));
         this.silverCoins = this.silverCoins.minus(goldenCoins.toSilverCoins());
     }
 
@@ -339,5 +337,9 @@ public class Pip extends Entity {
     public void add(AdventureMap adventureMap) {
         super.log("obtient " + adventureMap.getName());
         this.maps.add(adventureMap);
+    }
+
+    public boolean has(AdventureMap adventureMap) {
+        return this.maps.contains(adventureMap);
     }
 }

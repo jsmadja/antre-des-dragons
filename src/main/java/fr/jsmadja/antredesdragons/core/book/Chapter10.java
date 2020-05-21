@@ -36,8 +36,12 @@ public class Chapter10 extends ManualChoiceChapter {
 
     @Override
     public Execution execute(Pip pip) {
-        pip.add(VILLAGE_EAST);
-        pip.add(VILLAGE_WEST);
+        if (!pip.has(VILLAGE_EAST)) {
+            pip.add(VILLAGE_EAST);
+        }
+        if (!pip.has(VILLAGE_WEST)) {
+            pip.add(VILLAGE_WEST);
+        }
         return super.execute(pip);
     }
 

@@ -111,10 +111,10 @@ public abstract class Entity {
     private int missMalusCount;
 
     @Getter
-    private List<SpellBook> spellsToCastDuringFight = new ArrayList<>();
+    private final List<SpellBook> spellsToCastDuringFight = new ArrayList<>();
 
     @Getter
-    private List<SpecialSkill> specialSkills = new ArrayList<>();
+    private final List<SpecialSkill> specialSkills = new ArrayList<>();
 
     @Setter
     @Getter
@@ -122,7 +122,7 @@ public abstract class Entity {
 
     @JsonIgnore
     @Getter
-    private Diary diary = new Diary();
+    private final Diary diary = new Diary();
 
     Entity(String name, Dice dice, HealthPoints initialHealthPoints, HitRollRange hitRollRange, Integer constantHitDamage, boolean immuneToPhysicalDamages, Integer requiredStrikesToHitInvisible) {
         this.name = name;
@@ -151,12 +151,8 @@ public abstract class Entity {
     }
 
     public void restoreAllHealthPoints() {
+        log("regagne tous ses points de vie");
         this.restoreHealthPoints(this.maximumHealthPoints);
-    }
-
-    @Override
-    public String toString() {
-        return format("{0} ~ HP: {1}/{5}, STR: {2}, TCH: {3}, ARMOR: {4}", this.name, this.currentHealthPoints, this.getAdditionalDamagePoints(), this.hitRollRange.getMin(), this.getArmorPoints(), this.getMaximumHealthPoints());
     }
 
     // Rolling
@@ -344,12 +340,12 @@ public abstract class Entity {
 
     // Inventory
     public void equip(Item item) {
-        this.log(format("{0} s''équipe de {1}", this.getName(), item.getName()));
+        this.log(format("s''équipe de {0}", item.getName()));
         this.inventory.equip(item);
     }
 
     public Item unequip(Item item) {
-        this.log(format("{0} se déséquipe de {1}", this.getName(), item.getName()));
+        this.log(format("se déséquipe de {0}", item.getName()));
         this.inventory.unequip(item);
         return item;
     }
@@ -456,5 +452,10 @@ public abstract class Entity {
 
     public void log(String message) {
         this.diary.log(getName(), LogEntry.Type.MISC, message);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d/%d)", name, currentHealthPoints, maximumHealthPoints);
     }
 }

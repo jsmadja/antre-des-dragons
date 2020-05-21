@@ -1,5 +1,6 @@
 package fr.jsmadja.antredesdragons.core.inventory;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.core.stuff.ArmorPoints;
 import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
@@ -9,6 +10,7 @@ import static fr.jsmadja.antredesdragons.core.stuff.ArmorPoints.armor;
 import static fr.jsmadja.antredesdragons.core.stuff.DamagePoints.damage;
 
 @Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Item {
     HORSESHOE("Fer à cheval"),
     GHOST_RING("Anneau du fantôme"),

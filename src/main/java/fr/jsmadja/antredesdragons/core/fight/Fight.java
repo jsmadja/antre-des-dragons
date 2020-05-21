@@ -45,12 +45,14 @@ public class Fight {
 
     public void start() {
         beforeFight();
-        List<Entity> opponents = getOrderedOpponents();
+        List<Entity> opponents = createOrderedOpponents();
         while (!this.isOver()) {
             opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
-                attack(attacker);
-                if (attacker.isAbleToStrikeTwice()) {
+                if (attacker.isAbleToFight()) {
                     attack(attacker);
+                    if (attacker.isAbleToStrikeTwice()) {
+                        attack(attacker);
+                    }
                 }
             });
             this.endTurn();
@@ -62,7 +64,7 @@ public class Fight {
     }
 
     private void beforeFight() {
-        getOrderedOpponents().forEach(o -> {
+        this.foes.getUnfriendlyFoes().forEach(o -> {
             o.resetStrikes();
             o.setLostHealthPointsDuringCurrentFight(hp(0));
         });
@@ -86,7 +88,7 @@ public class Fight {
     }
 
     private void endFight() {
-        getOrderedOpponents().forEach(Entity::removeTemporaryBonusAndMalus);
+        this.foes.getUnfriendlyFoes().forEach(Entity::removeTemporaryBonusAndMalus);
     }
 
     private void attackMagically(Entity attacker, Entity target) {
@@ -126,11 +128,11 @@ public class Fight {
     }
 
     private void endTurn() {
-        getOrderedOpponents().forEach(Entity::removeAllMagicEffects);
+        this.foes.getUnfriendlyFoes().forEach(Entity::removeAllMagicEffects);
         this.turn++;
     }
 
-    public List<Entity> getOrderedOpponents() {
+    private List<Entity> createOrderedOpponents() {
         List<Entity> opponents = new ArrayList<>();
         opponents.add(pip);
         opponents.addAll(foes.getUnfriendlyFoes());

@@ -130,31 +130,6 @@ public class Chapter4 extends GoNextChapter {
                 "Un petit, qui tiendra facilement dans ton sac à dos. Il ne contient que quelques sorts. " +
                 "mais efficaces, je te le garantis. Tu peux y jeter un rapide coup d'œil, si tu le désires, " +
                 "avant de te mettre en route.\n\n" +
-                "Premier livre de Sortilèges de Pip\n" +
-                "\n" +
-                "Sortilèges Effets\n" +
-                "Armure Étincellante : Crée un mur de lumière d un " +
-                "eclat insoutenable, " +
-                "de Pip. (AEP) tourbillonnant autour de " +
-                "celui qui a formulé le " +
-                "sortilège. Cette lumière agit " +
-                "comme une armure, et permet " +
-                "donc de retrancher 4 points des " +
-                "Points de Dommage " +
-                "éventuellement reçus. Ces " +
-                "points s'ajoutent à tous ceux qui " +
-                "pourraient être retranchés de la " +
-                "protection due à une véri table " +
-                "armure, un pourpoint en peau de " +
-                "dragon, etc.\n" +
-                "\n" +
-                "Horion Épouvantable de Pip. " +
-                "(HEP) " +
-                "Permet d'ajouter 10 points " +
-                "aux Points de Dommage pouvant " +
-                "être infligés à un adversaire au " +
-                "prochain Assaut.\n" +
-                "\n" +
                 "REMARQUE IMPORTANTE POUR PIP " +
                 "\n" +
                 "Mais à part le sortilège INVISIBILITÉ, tous les sortilèges peuvent être " +

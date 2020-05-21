@@ -11,9 +11,10 @@ import java.util.TreeSet;
 @ToString
 @Getter
 public class LogEntries {
-    private Set<LogEntry> logEntries = new TreeSet<>();
+    private final Set<LogEntry> logEntries = new TreeSet<>();
 
     public void add(LogEntry logEntry) {
+        System.err.println(logEntry);
         this.logEntries.add(logEntry);
     }
 

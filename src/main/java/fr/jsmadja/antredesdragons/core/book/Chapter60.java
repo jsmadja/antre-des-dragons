@@ -4,7 +4,10 @@ import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
-import fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult;
+
+import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.FIP;
+import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.HEP;
+import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
 
 public class Chapter60 extends Chapter {
     @Override
@@ -23,17 +26,17 @@ public class Chapter60 extends Chapter {
 
     @Override
     public Execution execute(Pip pip) {
-        if (pip.canUse(SpellBook.HEP)) {
-            return use(pip, SpellBook.HEP);
+        if (pip.canUse(HEP)) {
+            return use(pip, HEP);
         }
-        if (pip.canUse(SpellBook.FIP)) {
-            return use(pip, SpellBook.FIP);
+        if (pip.canUse(FIP)) {
+            return use(pip, FIP);
         }
         return pip.goToChapter(14);
     }
 
     private Execution use(Pip pip, SpellBook spell) {
-        if (pip.use(spell) == SpellEffectResult.FAILURE) return execute(pip);
+        if (pip.use(spell) == FAILURE) return execute(pip);
         pip.addExperiencePoints(1);
         return pip.goToChapter(10);
     }

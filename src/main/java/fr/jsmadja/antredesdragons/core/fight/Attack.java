@@ -3,6 +3,8 @@ package fr.jsmadja.antredesdragons.core.fight;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import static java.text.MessageFormat.format;
+
 @AllArgsConstructor
 @Getter
 public class Attack {
@@ -11,5 +13,10 @@ public class Attack {
 
     public enum Status {
         TOUCHED, MISSED
+    }
+
+    @Override
+    public String toString() {
+        return format("{0} {1} DMG", status, damagePoints);
     }
 }

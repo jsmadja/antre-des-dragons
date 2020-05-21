@@ -19,7 +19,7 @@ public class Chapter41 extends SingleFightChapter {
     @Override
     public Execution execute(Pip pip) {
         if (pip.has(FOOD)) {
-            return pip.goToChapter2(chapter(getSuccessChapter()));
+            return pip.goToChapter(chapter(getSuccessChapter()));
         }
         return super.execute(pip);
     }

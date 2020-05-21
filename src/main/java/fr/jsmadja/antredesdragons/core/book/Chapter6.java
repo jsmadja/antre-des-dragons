@@ -29,16 +29,16 @@ public class Chapter6 extends Chapter {
     public Execution execute(Pip pip, String questionId, Answer answer) {
         if (answer != null) {
             if (answer.isNo()) {
-                return pip.goToChapter2(chapter(getSuccessChapter()));
+                return pip.goToChapter(chapter(getSuccessChapter()));
             }
             pip.setRollMalus(2);
             Fight fight = new Fight(pip, createFoe());
             fight.start();
             if (pip.isDead()) {
-                return pip.goToChapter2(chapter(14));
+                return pip.goToChapter(chapter(14));
             }
             pip.setRollMalus(0);
-            return pip.goToChapter2(chapter(getSuccessChapter()));
+            return pip.goToChapter(chapter(getSuccessChapter()));
         }
         YesOrNoQuestion question = question("Q6", "Voulez-vous combattre le Lapin Blanc");
         return Execution.builder()
