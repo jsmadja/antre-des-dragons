@@ -81,4 +81,8 @@ public class Inventory {
     public Optional<Item> getItemByName(String itemName) {
         return this.items.stream().filter(item -> item.getName().equalsIgnoreCase(itemName)).findFirst();
     }
+
+    public boolean hasHealingItem() {
+        return !this.healingItems.isEmpty();
+    }
 }

@@ -342,10 +342,4 @@ public class Pip extends Entity {
     public boolean has(AdventureMap adventureMap) {
         return this.maps.contains(adventureMap);
     }
-
-    public void use(HealingItem healingItem) {
-        this.log(healingItem);
-        this.restoreHealthPoints(healingItem.use().getHealthPoints());
-        this.getInventory().remove(healingItem);
-    }
 }

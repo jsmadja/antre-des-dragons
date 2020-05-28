@@ -468,4 +468,28 @@ public abstract class Entity {
         return String.format("%s (%d/%d)", name, currentHealthPoints, maximumHealthPoints);
     }
 
+    public void autoHealIfNecessary() {
+        if (this.shouldAutoHeal() && this.canAutoHeal()) {
+            this.autoHeal();
+            autoHealIfNecessary();
+        }
+    }
+
+    private void autoHeal() {
+        this.use(this.inventory.getHealingItems().get(0));
+    }
+
+    private boolean canAutoHeal() {
+        return this.inventory.hasHealingItem();
+    }
+
+    private boolean shouldAutoHeal() {
+        return this.getCurrentHealthPoints() < 10;
+    }
+
+    public void use(HealingItem healingItem) {
+        this.log(healingItem);
+        this.restoreHealthPoints(healingItem.use().getHealthPoints());
+        this.getInventory().remove(healingItem);
+    }
 }

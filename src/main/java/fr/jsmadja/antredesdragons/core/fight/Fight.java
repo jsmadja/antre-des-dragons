@@ -47,20 +47,25 @@ public class Fight {
         beforeFight();
         List<Entity> opponents = createOrderedOpponents();
         while (!this.isOver()) {
-            opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
-                if (attacker.isAbleToFight()) {
-                    attack(attacker);
-                    if (attacker.isAbleToStrikeTwice()) {
-                        attack(attacker);
-                    }
-                }
-            });
-            this.endTurn();
+            doTurn(opponents);
         }
         if (this.isMaxTurnReached()) {
             pip.die();
         }
         this.endFight();
+    }
+
+    public void doTurn(List<Entity> opponents) {
+        opponents.stream().filter(Entity::isAbleToFight).forEach(attacker -> {
+            if (attacker.isAbleToFight()) {
+                attacker.autoHealIfNecessary();
+                attack(attacker);
+                if (attacker.isAbleToStrikeTwice()) {
+                    attack(attacker);
+                }
+            }
+        });
+        this.endTurn();
     }
 
     private void beforeFight() {
