@@ -18,8 +18,8 @@ public class Chapter42 extends ManualChoiceChapter {
     public Paths getPossiblesPath(Pip pip) {
         return new Paths(
                 Path.builder().chapter(21).build(),
-                Path.builder().chapter(65).build(),
                 Path.builder().chapter(58).build(),
+                Path.builder().chapter(65).build(),
                 Path.builder().chapter(155).build());
     }
 }

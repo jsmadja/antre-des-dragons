@@ -53,7 +53,6 @@ public class Chapter39 extends Chapter {
                 "éventuellement obtenir les réponses à vos questions pour 20 Pièces, mais il se peut que " +
                 "vous ayez à débourser jusqu'à 120 Pièces d'Or. Inscrivez ci-dessous les chiffres que " +
                 "vous obtenez en lançant les dés, et multipliez-les par 10.\n" +
-                "Question n° 1 : Question n° 2 : \n" +
                 "Avez-vous les moyens de payer pour obtenir des réponses à vos questions ? Vérifiez " +
                 "l'argent et les objets de valeur dont vous disposez. Si vous ne voulez pas payer, que " +
                 "vous en ayez les moyens ou non, reprenez votre carte et allez explorer un autre endroit " +
