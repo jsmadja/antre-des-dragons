@@ -29,6 +29,6 @@ public class Chapter14 extends GoNextChapter {
     @Override
     public Execution execute(Pip pip) {
         pip.die();
-        return Execution.builder().build();
+        return super.execute(pip);
     }
 }
