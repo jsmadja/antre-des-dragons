@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.fight;
 
 import fr.jsmadja.antredesdragons.core.dices.Roll;
+import fr.jsmadja.antredesdragons.core.entities.Entity;
 import fr.jsmadja.antredesdragons.core.entities.Foe;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import lombok.Getter;
@@ -44,5 +45,9 @@ public class Foes {
 
     public int getFriendlyCount() {
         return this.friendlyFoes.size();
+    }
+
+    public void removeUnfriendlyFoe(Entity entity) {
+        this.unfriendlyFoes.remove(entity);
     }
 }

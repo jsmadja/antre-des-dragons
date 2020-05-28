@@ -89,6 +89,7 @@ public class Fight {
             if (attacker.getMagicDamagePoints().getDamagePoints() > 0) {
                 this.attackMagically(attacker, target);
             }
+            target.autoHealIfNecessary();
         }
     }
 
@@ -121,6 +122,9 @@ public class Fight {
             }
             if (target.isFoe() && target.isStuned()) {
                 target.logFight(format("{0} est étourdi", target.getName()));
+            }
+            if (!target.isAbleToFight()) {
+                this.foes.removeUnfriendlyFoe(target);
             }
         } else {
             attacker.logFight(format("{0} rate son attaque vers {1}", attacker.getName(), target.getName()));

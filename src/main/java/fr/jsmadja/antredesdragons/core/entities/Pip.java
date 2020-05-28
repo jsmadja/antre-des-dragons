@@ -295,7 +295,12 @@ public class Pip extends Entity {
         this.remove(marketItem.getPrice());
         range(0, marketItem.getQuantity().getValue())
                 .forEach(mi -> {
-                    this.add(marketItem.getItem());
+                    Item item = marketItem.getItem();
+                    if (item.isHealingItem()) {
+                        this.add(item.getHealingItem());
+                    } else {
+                        this.add(item);
+                    }
                 });
     }
 

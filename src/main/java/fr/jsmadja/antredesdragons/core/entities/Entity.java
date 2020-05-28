@@ -476,7 +476,9 @@ public abstract class Entity {
     }
 
     private void autoHeal() {
-        this.use(this.inventory.getHealingItems().get(0));
+        log("a besoin de se soigner");
+        HealingItem healingItem = this.inventory.getHealingItems().get(0);
+        this.use(healingItem);
     }
 
     private boolean canAutoHeal() {
@@ -490,6 +492,8 @@ public abstract class Entity {
     public void use(HealingItem healingItem) {
         this.log(healingItem);
         this.restoreHealthPoints(healingItem.use().getHealthPoints());
-        this.getInventory().remove(healingItem);
+        if (!healingItem.isUsable()) {
+            this.getInventory().remove(healingItem);
+        }
     }
 }

@@ -25,11 +25,11 @@ public class Chapter52 extends RollAndGoChapter {
                 "Beaucoup de plantes grimpantes. Il y en a partout et elles bougent ! Elles s'enroulent " +
                 "autour de vous. Pip ! Lancez deux dés pour voir si vous pouvez dégager le bras qui " +
                 "manie l'épée.\n" +
-                "Si vous faites de 2 à 6, vous êtes fermement immobilisé. Incapable de lutter, vous\n" +
-                "serez lentement étranglé et digéré par les plantes grimpantes. Abrégez vos souffrances\n" +
-                "en vous rendant immédiatement au [14] Si vous faites de 7 à 12, vous dégainez votre\n" +
-                "épée. Dès lors, le problème est réglé. Vous hachez menu ces horribles plantes\n" +
-                "grimpantes sans subir le moindre dommage. Ça leur apprendra ! Maintenant reprenez\n" +
+                "Si vous faites de 2 à 6, vous êtes fermement immobilisé. Incapable de lutter, vous " +
+                "serez lentement étranglé et digéré par les plantes grimpantes. Abrégez vos souffrances " +
+                "en vous rendant immédiatement au [14] Si vous faites de 7 à 12, vous dégainez votre " +
+                "épée. Dès lors, le problème est réglé. Vous hachez menu ces horribles plantes " +
+                "grimpantes sans subir le moindre dommage. Ça leur apprendra ! Maintenant reprenez " +
                 "votre carte et allez explorer une autre partie du village.";
     }
 }

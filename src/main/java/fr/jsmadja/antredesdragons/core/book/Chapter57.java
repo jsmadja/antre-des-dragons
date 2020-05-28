@@ -46,6 +46,11 @@ public class Chapter57 extends MultipleFightChapter {
     }
 
     @Override
+    public Execution execute(Pip pip) {
+        return this.execute(pip, "", null);
+    }
+
+    @Override
     public Execution execute(Pip pip, String questionId, Answer answer) {
         if (questionId == null) {
             List<Action> actions = new ArrayList<>();

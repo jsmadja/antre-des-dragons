@@ -1,6 +1,7 @@
 package fr.jsmadja.antredesdragons.core.inventory;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import fr.jsmadja.antredesdragons.core.dices.Dice;
 import fr.jsmadja.antredesdragons.core.dices.HitRollRange;
 import fr.jsmadja.antredesdragons.core.stuff.ArmorPoints;
 import fr.jsmadja.antredesdragons.core.stuff.DamagePoints;
@@ -42,7 +43,7 @@ public enum Item {
     PEN_AND_GOOSE_INK("Plume d'oie et encre en poudre"),
     FOOD("Nourriture"),
     COOKING_TOOLS("Ustensiles de cuisine"),
-    HEALING_POTION("Potion curative"),
+    HEALING_POTION("Potion curative", new HealingPotion(new Dice())),
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),
     MINOTAUR_KEY("Clef"),
     MAGIC_WAND("Baguette Magique"),
@@ -93,8 +94,9 @@ public enum Item {
     private final boolean weapon;
     private final boolean armor;
     private final boolean poisoned;
+    private final HealingItem healingItem;
 
-    Item(String name, ArmorPoints armorPoints, DamagePoints damagePoints, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned, boolean dreamItem) {
+    Item(String name, ArmorPoints armorPoints, DamagePoints damagePoints, boolean equipable, HitRollRange hitRollRange, boolean weapon, boolean armor, boolean poisoned, boolean dreamItem, HealingItem healingItem) {
         this.name = name;
         this.armorPoints = armorPoints;
         this.damagePoints = damagePoints;
@@ -104,6 +106,7 @@ public enum Item {
         this.armor = armor;
         this.poisoned = poisoned;
         this.dreamItem = dreamItem;
+        this.healingItem = healingItem;
     }
 
     public int getId() {
@@ -112,7 +115,7 @@ public enum Item {
 
     // Object Constructor
     Item(String name) {
-        this(name, armor(0), damage(0), false, null, false, false, false, false);
+        this(name, armor(0), damage(0), false, null, false, false, false, false, null);
     }
 
     // Weapon Constructor
@@ -121,15 +124,15 @@ public enum Item {
     }
 
     Item(String name, DamagePoints damagePoints, HitRollRange hitRollRange) {
-        this(name, armor(0), damagePoints, true, hitRollRange, true, false, false, false);
+        this(name, armor(0), damagePoints, true, hitRollRange, true, false, false, false, null);
     }
 
     Item(String name, DamagePoints damagePoints, HitRollRange hitRollRange, boolean poisoned) {
-        this(name, armor(0), damagePoints, true, hitRollRange, true, false, poisoned, false);
+        this(name, armor(0), damagePoints, true, hitRollRange, true, false, poisoned, false, null);
     }
 
     Item(String name, DamagePoints damagePoints, boolean dreamItem) {
-        this(name, armor(0), damagePoints, true, null, true, false, false, dreamItem);
+        this(name, armor(0), damagePoints, true, null, true, false, false, dreamItem, null);
     }
 
     // Armor Constructor
@@ -138,6 +141,15 @@ public enum Item {
     }
 
     Item(String name, ArmorPoints armorPoints, boolean dreamItem) {
-        this(name, armorPoints, damage(0), true, null, false, true, false, dreamItem);
+        this(name, armorPoints, damage(0), true, null, false, true, false, dreamItem, null);
+    }
+
+    // Healing Item Constructor
+    Item(String name, HealingItem healingItem) {
+        this(name, armor(0), damage(0), false, null, false, false, false, false, healingItem);
+    }
+
+    public boolean isHealingItem() {
+        return this.healingItem != null;
     }
 }

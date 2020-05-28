@@ -20,7 +20,8 @@ public abstract class SingleFightChapter extends Chapter {
         LogEntries foeLogEntries = foe.getLogEntries();
         if (pip.isDead()) {
             return pip.goToChapter(chapter(14))
-                    .add(foeLogEntries);
+                    .withFoes(List.of(foe))
+                    .add(foeLogEntries.add(pip.getCurrentChapterLogEntries()));
         }
         onAfterSuccessfulFight(pip);
         return Execution.builder()

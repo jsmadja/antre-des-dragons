@@ -24,4 +24,9 @@ public class Execution {
         this.logEntries.add(logEntries);
         return this;
     }
+
+    public Execution withFoes(List<Foe> foes) {
+        this.foes = foes;
+        return this;
+    }
 }

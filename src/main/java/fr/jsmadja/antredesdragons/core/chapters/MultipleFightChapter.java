@@ -19,7 +19,8 @@ public abstract class MultipleFightChapter extends Chapter {
         LogEntries foesLogEntries = foes.stream().map(Foe::getLogEntries).reduce(LogEntries::add).orElse(new LogEntries());
         if (pip.isDead()) {
             return pip.goToChapter(chapter(14))
-                    .add(foesLogEntries);
+                    .withFoes(foes)
+                    .add(foesLogEntries.add(pip.getCurrentChapterLogEntries()));
         }
         onAfterSuccessfulFight(pip);
         return Execution.builder()
