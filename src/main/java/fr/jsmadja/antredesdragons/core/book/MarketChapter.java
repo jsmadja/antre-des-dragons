@@ -1,7 +1,7 @@
 package fr.jsmadja.antredesdragons.core.book;
 
 import fr.jsmadja.antredesdragons.core.chapters.Answer;
-import fr.jsmadja.antredesdragons.core.chapters.ManualChoiceChapter;
+import fr.jsmadja.antredesdragons.core.chapters.Chapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Action;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
@@ -12,10 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.jsmadja.antredesdragons.core.book.Book.START;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 import static java.lang.Integer.parseInt;
 
-public class MarketChapter extends ManualChoiceChapter {
+public class MarketChapter extends Chapter {
 
     @Override
     public Execution execute(Pip pip) {
@@ -27,7 +28,7 @@ public class MarketChapter extends ManualChoiceChapter {
 
     public void insertItemActions(Pip pip, List<Action> actions) {
         List<Action> itemActions = Arrays.stream(MarketItem.values())
-                .filter(i -> pip.has(i.getPrice()))
+                .filter(i -> pip.has(i.getPrice()) && !pip.has(i.getItem()))
                 .map(this::toAction)
                 .collect(Collectors.toList());
         actions.addAll(itemActions);
@@ -53,8 +54,7 @@ public class MarketChapter extends ManualChoiceChapter {
     public Action leaveMarketAction() {
         return Action.builder()
                 .question("Quitter le marché")
-                .suffix("/questions/QM/yes")
-                .chapter(chapter(this.getNumber()))
+                .chapter(chapter(START))
                 .build();
     }
 
@@ -71,12 +71,4 @@ public class MarketChapter extends ManualChoiceChapter {
         return "";
     }
 
-    @Override
-    public Paths getPossiblesPath(Pip pip) {
-        return new Paths(
-                Path.builder().chapter(21).build(),
-                Path.builder().chapter(58).build(),
-                Path.builder().chapter(65).build(),
-                Path.builder().chapter(155).build());
-    }
 }

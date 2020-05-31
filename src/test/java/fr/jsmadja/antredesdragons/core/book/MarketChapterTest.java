@@ -7,6 +7,7 @@ import fr.jsmadja.antredesdragons.core.execution.Action;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
 import org.junit.jupiter.api.Test;
 
+import static fr.jsmadja.antredesdragons.core.book.Book.START;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -18,10 +19,11 @@ class MarketChapterTest {
         Pip pip = mock(Pip.class);
         Execution execution = marketChapter.execute(pip, "QM", Answer.Yes);
         assertThat(execution.getActions()).containsExactly(
-                goChapter(21),
-                goChapter(58),
-                goChapter(65),
-                goChapter(155));
+                Action.builder()
+                        .chapter(ChapterNumber.chapter(START))
+                        .question("Quitter le marché")
+                        .build()
+        );
     }
 
     public Action goChapter(int chapter) {

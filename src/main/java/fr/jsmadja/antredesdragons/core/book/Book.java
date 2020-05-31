@@ -15,6 +15,7 @@ public class Book {
     public static final int MERLIN = -9;
     public static final int MENACE_SUR_AVALAON = -8;
     public static final int DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN = -7;
+    public static final int START = -6;
 
     private final Map<Integer, DreamChapter> dreamChapters = new HashMap<>() {{
         put(2, new DreamChapter2());
@@ -37,6 +38,7 @@ public class Book {
         put(MENACE_SUR_AVALAON, new ChapterMenaceSurAvalon().withNumber(MENACE_SUR_AVALAON).withTitle("Menace sur Avalon").withIllustration());
         put(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN, new ChapterGrotteDeCristal().withNumber(DANS_LA_GROTTE_DE_CRISTAL_DE_MERLIN).withTitle("Dans la grotte de cristal de Merlin").withIllustration());
         put(MARKET, new MarketChapter().withNumber(MARKET).withTitle("Liste de courses de Pip").withIllustration());
+        put(START, new StartChapter().withNumber(START).withTitle("L'aventure commence !").withIllustration());
         put(1, new Chapter1().withNumber(1));
         put(2, new Chapter2().withNumber(2));
         put(3, new Chapter3().withNumber(3));
