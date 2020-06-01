@@ -24,7 +24,7 @@ public class Chapter91 extends GoNextChapter {
                 "ressortir d'une tombe. Je me présente Cedric, à ton service. Long John cedric on " +
                 "m'appelle, parce que j'ai beaucoup navigué. Ancien commandant. Ancien pirate. " +
                 "Maintenant à la retraite, et employé comme fossoyeur.\n" +
-                "Je m'appelle Pip, dites-vous, vous demandant s'il n' est pas fou.\n" +
+                "Je m'appelle Pip, dites-vous, vous demandant s'il n'est pas fou.\n" +
                 "Entendu parler dans le temps d'un Pip qu'a rectifié le sorcier Ansalom. Ça ne peut pas " +
                 "être toi, des fois ? Et avant que vous n'ayez eu le temps de répondre, il poursuit : Mais " +
                 "non, je me disais bien. Enfin, n'importe, si t'as débarqué par hasard à la Pierre-qui-Mue, tu dois bien te demander ce qui cloche ici. Eh bien, je vais te le dire, moi, " +

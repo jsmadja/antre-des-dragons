@@ -12,17 +12,17 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 "tourbillons fantastique ,comme si vous étiez tombé dans un kaléidoscope géant. Les " +
                 "couleurs vibrent, se fondant en dessins fabuleux, en motifs délicats. Votre joue droite " +
                 "brule comme si vous aviez été giflé.\n" +
-                "—Allons, allons ! il n'y a pas de temps à perdre.\n" +
+                "— Allons, allons ! il n'y a pas de temps à perdre.\n" +
                 "un vieillard à la barbe blanche est penché sur vous, son chapeau pointu de travers. " +
                 "Derrière lui, les couleurs chatoyantes dessinent un arc en ciel.\n" +
-                "—Quoi ? demandez-vous stupidement.\n" +
-                "—Allons, Pip, reprend le vieil homme d'un ton irrité. Réveille-toi. Et ne fais pas " +
+                "— Quoi ? demandez-vous stupidement.\n" +
+                "— Allons, Pip, reprend le vieil homme d'un ton irrité. Réveille-toi. Et ne fais pas " +
                 "mine de ne pas me reconnaître. Tu sais très bien qui je suis. Ou tu vas " +
                 "l'apprendre. Merlin. Tu as compris ? Merlin. Allez, répéte : Merlin.\n" +
-                "—Merlin, répétez-vous, en fronçant les sourcils.\n" +
+                "— Merlin, répétez-vous, en fronçant les sourcils.\n" +
                 "Voilà : Merlin. Bien. Parfait. Nous faisons des progrès. Et tu es Pip. Il pointe un doigt " +
                 "osseux sur sa poitrine, puis dans votre direction. Moi Merlin. Toi Pip.\n" +
-                "—Moi Pip. Vous Merlin, répétez-vous, vous sentant un peu ridicule.\n" +
+                "— Moi Pip. Vous Merlin, répétez-vous, vous sentant un peu ridicule.\n" +
                 "Vous vous redressez sur votre séant. Vous vous trouvez dans l'endroit le plus étrange " +
                 "que vous ayez jamais vu : une vaste grotte de pur cristal. Des stalagmites de cristal " +
                 "montent du sol. Des stalactites de cristal pendent du plafond. Les parois sont " +
@@ -34,8 +34,8 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 ": il y a des tables de cristal, des bancs de cristal et même un siège qui ressemble " +
                 "singulièrement à un trône de cristal, sous un dais de cristal. Les placards et les " +
                 "commodes mêmes sont en cristal, si bien que l'on distingue aisément leur contenu.\n" +
-                "—Merlin ? répétez-vous. C'est vous ?\n" +
-                "—Oui, oui, marmonne Merlin avec impatience. Moi sans le moindre doute, et en grand " +
+                "— Merlin ? répétez-vous. C'est vous ?\n" +
+                "— Oui, oui, marmonne Merlin avec impatience. Moi sans le moindre doute, et en grand " +
                 "danger de " +
                 "voir ma pension supprimée. Sale affaire ! Es-tu enfin bien réveillé ?\n" +
                 "Vous acquiescez d'un signe de tête, encore médusé par le décor qui vous entoure.\n" +
@@ -56,28 +56,28 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 "trouves une solution, Pip. Car c'est réellement une mission qui ne peut être confiée " +
                 "qu'à un spécialiste. Un aventurier capable de se débarrasser des Dragons de Bronze. " +
                 "Tu sais comment on s'en débarrasse, n'est-ce pas ?\n" +
-                "—Non, dites-vous en secouant la tête.\n" +
-                "—Peu importe, tu le sauras bientôt. Le truc, avec les Dragons de Bronze, c'est de les " +
+                "— Non, dites-vous en secouant la tête.\n" +
+                "— Peu importe, tu le sauras bientôt. Le truc, avec les Dragons de Bronze, c'est de les " +
                 "tuer avant qu'ils ne vous tuent. Rien de plus simple, tout compte fait. A part la " +
                 "fermeture de la Porte, bien entendu.\n" +
-                "—La Porte ? demandez-vous d'un air stupide.\n" +
-                "—La Porte, répète Merlin. Tu n'es pas de ces imbéciles qui s'imaginent que les " +
+                "— La Porte ? demandez-vous d'un air stupide.\n" +
+                "— La Porte, répète Merlin. Tu n'es pas de ces imbéciles qui s'imaginent que les " +
                 "Dragons de Bronze viennent de l'Enfer, j'espère ?\n" +
-                "—Non, répondez-vous prudemment, bien qu'en vérité, vous n'ayez pas la moindre idée " +
+                "— Non, répondez-vous prudemment, bien qu'en vérité, vous n'ayez pas la moindre idée " +
                 "sur la question. Bien, dit Merlin. Car ils n'en proviennent pas. Ils viennent du Sinistre " +
                 "Royaume des Morts. Absolument ! Tous sans exception. Le Sinistre Royaume des " +
                 "Morts est ce qu'on pourrait appeler leur habitat naturel. Et c'est un habitat naturel " +
                 "particulièrement affreux. Mais ça, c'est une autre histoire. Alors, quand on trouve un " +
-                "Dragon de Bronze se promenant autour d'Avalon, ou n'importe où sur terre, d' ailleurs, " +
+                "Dragon de Bronze se promenant autour d'Avalon, ou n'importe où sur terre, d'ailleurs, " +
                 "cela prouve que l'une des Portes du Sinistre Royaume des Morts doit être ouverte. " +
                 "Sinon, le Dragon n'aurait pas pu sortir, pas vrai ? alors, nous devons, ou plutôt tu dois, " +
                 "tuer le Dragon puis refermer la Porte. Il n'y a pas d'autre solution. Si nous laissons, si " +
                 "tu laisses la porte ouverte, Dieu sait ce qui pourrait encore sortir. Les Dragons de " +
                 "Bronze ne sont pas ce qu'on peut trouver de pire dans le Sinistre Royaume des Morts ; " +
-                "c'est pour cela qu' on le qualifie de sinistre. Alors tu vas te mettre en route pour nous " +
+                "c'est pour cela qu'on le qualifie de sinistre. Alors tu vas te mettre en route pour nous " +
                 "retirer cette épine du pied. Je vais filer à Camelot et dire au Roi que tout est arrangé.\n" +
-                "—Hé, un instant ! protestez-vous. Merlin lève une main osseuse.\n" +
-                "—Tu as raison ! tu as raison ! Tu as besoin de POINTS DE VIE. Dans mon époque, on ne " +
+                "— Hé, un instant ! protestez-vous. Merlin lève une main osseuse.\n" +
+                "— Tu as raison ! tu as raison ! Tu as besoin de POINTS DE VIE. Dans mon époque, on ne " +
                 "peut guère s'en passerr. n'est-ce pas ? Non, vraiment pas. Très bien. Tu as apporté tes " +
                 "dés ? Parfait. Alors, lance-les. Deux dès une fois, ou un dé deux fois. Peu importe. " +
                 "Sous l'œil en vrille de Merlin, vous lancez vos dés.\n" +
@@ -89,7 +89,7 @@ public class ChapterGrotteDeCristal extends ManualChoiceChapter {
                 "votre équipement à venir, et des combats qui vous attendent (voir pages 34 et 35). Il " +
                 "jette ensuite autour de lui un regard furtif, comme s'il craignait que quelqu'un " +
                 "n'écoute, et il vous chuchote à l'oreille :\n" +
-                "—Si tu penses ne pas avoir assez de points, recommence tout. Trois fois, si tu le veux.\n" +
+                "— Si tu penses ne pas avoir assez de points, recommence tout. Trois fois, si tu le veux.\n" +
                 "Et choisis le meilleur total. Mais pas plus de trois fois, sinon le sortilège n'agit plus, et " +
                 "voilà bien une chose que nous tenons à éviter, n'est-ce pas? D'autant plus que ma " +
                 "pension est en jeu !\n" +

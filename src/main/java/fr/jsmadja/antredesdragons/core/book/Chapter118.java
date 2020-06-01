@@ -18,7 +18,7 @@ public class Chapter118 extends GoNextChapter {
                 "Je vous provoque en combat singulier, répliquez-vous, brûlant de dégainer votre épée.\n" +
                 "Pourquoi cette idée saugrenue ?\n" +
                 "Parce que, répondez-vous, vous êtes le redoutable Chevalier Noir que chacun désigne " +
-                "à voix basse Comme le plus infâme de tous les chevaliers du Royaume. Je veux " +
+                "à voix basse comme le plus infâme de tous les chevaliers du Royaume. Je veux " +
                 "débarrasser Avalon de votre présence nauséabonde.\n" +
                 "Ne soyez pas ridicule, réplique le Chevalier Noir. Je suis le roi Pellinore.\n" +
                 "Là-dessus, il enlève son heaume, apportant la preuve de ce qu'il avance. Quelle gaffe ! " +

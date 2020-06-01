@@ -16,7 +16,7 @@ public class Chapter123 extends Chapter {
                 "plonger dans les eaux glacées du lac souterrain pour vous retrouver dans la gueule d'un " +
                 "énorme Poisson qui rôdait dans les profondeurs ! " +
                 "la situation est délicate. Cette brave E.J. est ficelée dans le paquet, et il vous faut " +
-                "essayer d'étrangler ce poisson de vos mains nues. Ou de l'assommer, ou d' en venir à " +
+                "essayer d'étrangler ce poisson de vos mains nues. Ou de l'assommer, ou d'en venir à " +
                 "bout d'une façon quelconque. Il ne possède que 10 POINTS DE VIE et la tâche ne " +
                 "devrait pas etre trop difficile ; mais le problème, c'est que vous etes au fond de l'eau, " +
                 "autrement dit, il va falloir vous debarrasser du Poisson en trois coups, sinon vous allez " +

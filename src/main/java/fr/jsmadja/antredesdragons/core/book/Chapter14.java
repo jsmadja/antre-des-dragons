@@ -15,7 +15,7 @@ public class Chapter14 extends GoNextChapter {
                 "tu as perdu. Tiens, voilà les listes. Tu as toujours ta carte au moins ? C'est heureux ! " +
                 "Allez ! va retrouver ta vache, et choisis le bon chemin, cette fois.\n" +
                 "Là-dessus, il s'éloigne en marmonnant dans sa barbe à propos des jeunes de nos " +
-                "jours... tandis que lentement , mais inexorablement, la grotte commence à s'effacer, " +
+                "jours... tandis que lentement, mais inexorablement, la grotte commence à s'effacer, " +
                 "pour disparaître bientôt complètement.";
     }
 

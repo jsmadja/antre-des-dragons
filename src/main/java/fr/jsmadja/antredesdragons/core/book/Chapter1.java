@@ -11,8 +11,8 @@ public class Chapter1 extends GoNextChapter {
 
     @Override
     public String getText() {
-        return "—E. J. ! vous exclamez-vous ! Vous avez gardé E J. !\n" +
-                "—Bonjour, Pip, vous dit Excalibur Junior, l'épée parlante.\n\n" +
+        return "— E. J. ! vous exclamez-vous ! Vous avez gardé E J. !\n" +
+                "— Bonjour, Pip, vous dit Excalibur Junior, l'épée parlante.\n\n" +
                 "Vous la regardez avec émotion, vous souvenant de l'aide qu'elle vous a apportée tout " +
                 "au long de vos aventures dans Le Château des Ténèbres, pour vaincre le redoutable " +
                 "Sorcier Ansalom. La présence d'E.J. est vraiment une bonne surprise. Car, grâce à " +

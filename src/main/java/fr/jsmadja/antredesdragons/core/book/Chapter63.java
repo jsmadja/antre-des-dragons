@@ -3,7 +3,9 @@ package fr.jsmadja.antredesdragons.core.book;
 import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
-import fr.jsmadja.antredesdragons.core.inventory.Item;
+
+import static fr.jsmadja.antredesdragons.core.inventory.Item.COOKING_TOOLS;
+import static fr.jsmadja.antredesdragons.core.inventory.Item.FOOD;
 
 public class Chapter63 extends GoNextChapter {
     @Override
@@ -14,8 +16,12 @@ public class Chapter63 extends GoNextChapter {
     @Override
     public Execution execute(Pip pip) {
         pip.restoreAllHealthPoints();
-        if (pip.has(Item.COOKING_TOOLS)) {
-            pip.add(Item.FOOD);
+        if (pip.has(COOKING_TOOLS)) {
+            pip.add(FOOD);
+        }
+        if (pip.isPoisoned()) {
+            pip.log("n'est plus empoisonné");
+            pip.setPoisoned(false);
         }
         return super.execute(pip);
     }
@@ -32,27 +38,27 @@ public class Chapter63 extends GoNextChapter {
                 "— Je pensais bien que vous alliez arriver d'un moment à l'autre, déclare-t-il en vous " +
                 "dévisageant d'un regard à la fois soulagé, soupçonneux et vindicatif. Vous êtes à la " +
                 "recherche du Dragon de Bronze, pas vrai ?\n" +
-                "—Eh bien, à vrai dire... commencez-vous. Mais comme la plupart des Vieux du Pays, " +
-                "il parle plus qu' il n'écoute et il vous interrompt en secouant la " +
+                "— Eh bien, à vrai dire... commencez-vous. Mais comme la plupart des Vieux du Pays, " +
+                "il parle plus qu'il n'écoute et il vous interrompt en secouant la " +
                 "tete.\n" +
-                "—Eh bien, jeune homme, c'est pas ici que vous le trouverez, faites-moi confiance.\n" +
+                "— Eh bien, jeune homme, c'est pas ici que vous le trouverez, faites-moi confiance.\n" +
                 "Tous les présages sont mauvais.\n" +
-                "—Non, répondez-vous. Je ne m'attendais pas vraiment à trouver...\n" +
-                "—Il faut aller jeter un coup d'oeil dans l'Antre du Dragon, vous coupe-t-il. C'est là que " +
+                "— Non, répondez-vous. Je ne m'attendais pas vraiment à trouver...\n" +
+                "— Il faut aller jeter un coup d'oeil dans l'Antre du Dragon, vous coupe-t-il. C'est là que " +
                 "vous avez le plus de chance de le trouver, s'il n'est pas en train de ravager et de piller " +
                 "le pays, et de dévorer des évêques presbytériens ou autres personnages du même " +
                 "acabit.\n" +
-                "—Ma foi, en réalité, je cherchais justement l'Antre du Dragon. Vous ne savez pas, par " +
+                "— Ma foi, en réalité, je cherchais justement l'Antre du Dragon. Vous ne savez pas, par " +
                 "hasard, où...\n" +
-                "—Et ne me demandez pas où peut bien se trouver l'Antre du Dragon, interrompt " +
+                "— Et ne me demandez pas où peut bien se trouver l'Antre du Dragon, interrompt " +
                 "encore une fois le Vieux du Pays. Je n'approuve pas ce genre d'endroits. Ce sont des " +
                 "repaires d'iniquités, je les évite donc.\n" +
                 "Il se lève, la pipe toujours fermement coincée entre ses dents.\n" +
-                "—Vous mangeriez bien un peu de ragoût, je parie. Les jeunes de votre âge ont toujours " +
+                "— Vous mangeriez bien un peu de ragoût, je parie. Les jeunes de votre âge ont toujours " +
                 "faim.\n" +
-                "—Non, sincèrement... dites-vous poliment, bien qu'en vérité vous vous sentiez un petit " +
+                "— Non, sincèrement... dites-vous poliment, bien qu'en vérité vous vous sentiez un petit " +
                 "creux.\n" +
-                "—C'est bien ce que je pensais, dit le Vieux du Pays. Je vais vous en donner un bol " +
+                "— C'est bien ce que je pensais, dit le Vieux du Pays. Je vais vous en donner un bol " +
                 "maintenant et un bol à emporter, si vous avez de quoi le transporter. Il contient de la " +
                 "feuille de laurier et de l'armoise, et il guérira tous les maux dont vous souffrez.\n" +
                 "Un ragoût curatif ? demandez-vous en regardant la marmite noire posée sur le feu.\n" +

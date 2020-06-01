@@ -14,7 +14,7 @@ public class Chapter36 extends ManualChoiceChapter {
 
     @Override
     public String getText() {
-        return "—Très aimable à vous, Votre Honneur, dit le petit homme. Ce sera bien volontiers, " +
+        return "— Très aimable à vous, Votre Honneur, dit le petit homme. Ce sera bien volontiers, " +
                 "puisque vous me le proposez. Et il se hisse sur la souche pour s'installer " +
                 "confortablement. Pendant qu'il mange (et il a un fameux coup de fourchette pour " +
                 "quelqu'un de sa taille), il vous examine, vous, vos vêtements et vos armes. Ai-je raison " +

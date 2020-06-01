@@ -16,7 +16,7 @@ public class Chapter173 extends GoNextChapter {
                 "Puis, s'inclinant légèrement, il se présente : Ethelbert, Moine Guerrier et fidèle " +
                 "serviteur d'Arturus Rex, fils de Uthur Pendragon et légitime Suzerain du Royaume " +
                 "d'Avalon, à votre service.\n" +
-                "Il hésite, jette un coup d'oeil au Dragon de Bronze. —En somme, si je comprends bien, " +
+                "Il hésite, jette un coup d'oeil au Dragon de Bronze.\n— En somme, si je comprends bien, " +
                 "tu n'as guère besoin de mes services aujourd'hui, Pip l'Aventurier, alors que j'ai mille " +
                 "raisons de t'être reconnaissant de celui que tu m'as rendu. Mais du moins... Il hausse " +
                 "les épaules et rajuste plus confortablement son épée à sa hanche. Je peux t'indiquer le " +

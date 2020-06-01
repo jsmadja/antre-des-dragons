@@ -20,14 +20,14 @@ public class Chapter2 extends GoNextChapter {
                 "â votre grande surprise, l'épée déclare docilement : bonjour, Pip. " +
                 "Dans un état proche de l'ébahissement, vous tendez la main et vous saisissez l'épée. " +
                 "Elle est parfaitement équilibrée, légère, mais certainement redoutable.\n" +
-                "—Ouaoh ! vous exclamez-vous, usant d'une expression peu courante à l'époque du roi " +
+                "— Ouaoh ! vous exclamez-vous, usant d'une expression peu courante à l'époque du roi " +
                 "Arthur. " +
                 "Mais Merlin semble la comprendre.\n" +
-                "—Ouaoh, comme tu dis ! commente-t-il. Quand tu te serviras de cette épée, il te " +
+                "— Ouaoh, comme tu dis ! commente-t-il. Quand tu te serviras de cette épée, il te " +
                 "suffira d'obtenir un 4 avec tes deux dés pour frapper un adversaire. Ça fait partie de la " +
                 "magie. Et ce n'est pas tout : tu pourras ajouter 5 points aux Points de Dommage que tu " +
                 "lui causeras. Ça aussi, ça fait partie de la magie.\n" +
-                "—vous avez E.J. bien en main ? Alors, rendez-vous au [4]";
+                "— Vous avez E.J. bien en main ? Alors, rendez-vous au [4]";
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Chapter57 extends MultipleFightChapter {
                 "reste guère que des ruines. Des murs croulants, ou près de s'écrouler. Et pourtant, les " +
                 "lieux, sauf erreur, sont encore habités. venant vers vous, le visage dissimulé derrière le " +
                 "volumineux capuchon de leurs volumineuses robes noires, six Moines s'approchent. " +
-                "Comptez-les. Celui quj marche en tête porte une bannière brodée fixée au bout d'une " +
+                "Comptez-les. Celui qui marche en tête porte une bannière brodée fixée au bout d'une " +
                 "longue hampe. Vous levez les yeux vers la bannière. Elle est ornée d'une tête de mort " +
                 "couleur or. Le suivant porte un encensoir dans lequel il doit brûler des vieilles " +
                 "chaussettes, à en juger par la puanteur qui s'en dégage. Ils se tournent dans votre " +

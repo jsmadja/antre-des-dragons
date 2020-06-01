@@ -14,13 +14,13 @@ public class Chapter90 extends ManualChoiceChapter {
 
     @Override
     public String getText() {
-        return "Ll était évident que vous alliez prendre ce risque. Le passage tournicote dans tous les " +
-                "sens. Comme il est trés étroit et bas de plafond, vous êtes la plupart du temps plié en  " +
+        return "Il était évident que vous alliez prendre ce risque. Le passage tournicote dans tous les " +
+                "sens. Comme il est très étroit et bas de plafond, vous êtes la plupart du temps plié en  " +
                 "deux et vos coudes raclent les parois. Vous finissez par atteindre une impasse, où vous " +
                 "butez contre un mur nu. Ce passage ne peut pas se terminer ainsi ! Non, bien sûr, c'est " +
                 "impossible. Vous tàtonnez contre le mur jusqu'à ce que vous trouviez à nouveau un " +
                 "drôle de petit bouton et, quand vous le tournez, le mur tout entier pivote dans un long " +
-                "grincement. (N'est-ce pas excitant ?) Vous vous apprêtez à avancer quand E.J. " +
+                "grincement. (N'est-ce pas excitant ?). Vous vous apprêtez à avancer quand E.J. " +
                 "chuchote :\n" +
                 "N'entre pas là-dedans ! Vous hésitez.\n" +
                 "Pourquoi pas ? chuchotez-vous à votre tour.\n" +

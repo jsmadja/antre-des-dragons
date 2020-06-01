@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static fr.jsmadja.antredesdragons.core.book.Book.COUVERTURE;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -63,7 +64,7 @@ public class Pip extends Entity {
     private ChapterNumber previousChapter;
     private final List<SpellBook> usedSpellsInCurrentChapter = new ArrayList<>();
     @Getter
-    private final Set<AdventureMap> maps = new HashSet<>();
+    private final Set<AdventureMap> maps = new TreeSet<>();
 
     private ChapterNumber currentChapterNumber = chapter(COUVERTURE);
     @Getter
@@ -241,7 +242,7 @@ public class Pip extends Entity {
             return FAILURE;
         }
         if (this.canUse(spell) && this.roll2Dices().isGreaterThan(Roll.roll(6))) {
-            this.logSpell(this.getName() + " utilise le sort " + spell.name());
+            this.logSpell("utilise le sort " + spell.name());
             spell.getSpell().onCast(this);
             this.wounds(spell.getSpell().getDamagePoints().getDamagePoints());
             this.spellUsages.increment(spell);

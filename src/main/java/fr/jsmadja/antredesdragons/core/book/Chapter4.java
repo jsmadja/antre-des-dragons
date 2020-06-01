@@ -13,8 +13,8 @@ public class Chapter4 extends GoNextChapter {
 
     @Override
     public String getText() {
-        return "-C'est tout ? demandez-vous en fronçant les sourcils.\n" +
-                "-Mais non, répond Merlin. Ne sois pas si impatient. Parfois, tu rencontreras " +
+        return "- C'est tout ? demandez-vous en fronçant les sourcils.\n" +
+                "- Mais non, répond Merlin. Ne sois pas si impatient. Parfois, tu rencontreras " +
                 "des créatures qui te paraîtront dangereuses, mais qui en fait ne le seront " +
                 "peut-être pas autant qu'elles en auront l'air. Pour le savoir, tu lanceras une " +
                 "fois un dé pour chacune d'elles, et trois fois un dé pour toi. Si le total des " +
@@ -37,27 +37,27 @@ public class Chapter4 extends GoNextChapter {
                 "dormir à mon époque. De toute façon, tu seras certainement trop occupé à " +
                 "combattre pour le faire et donc, tu vas avoir besoin d’un solide équipement, " +
                 "d'armes...\n" +
-                "-Et de la magie ! ajoutez-vous vivement, vous demandant dans quelle " +
+                "- Et de la magie ! ajoutez-vous vivement, vous demandant dans quelle " +
                 "invraisemblable situation vous vous trouvez.\n" +
-                "-Et de la magie. Car sans magie, tu n'irais pas bien loin contre un Dragon de " +
+                "- Et de la magie. Car sans magie, tu n'irais pas bien loin contre un Dragon de " +
                 "Bronze. Tiens, prends ceci. Et des plis de sa robe, il sort un parchemin qu'il " +
                 "vous tend et que vous déroulez. Comme tous les parchemins de Merlin, il est " +
                 "constellé de toutes sortes de taches. Vous espériez qu'il s'agissait de quelque " +
                 "chose de magique, mais ce n'est pas le cas. néanmoins, votre nom est écrit " +
                 "dessus, interloqué, vous levez les yeux vers Merlin.\n" +
-                "-Qu'est-ce que c'est ?\n" +
+                "- Qu'est-ce que c'est ?\n" +
                 "Il semble gêné, et évite votre regard.\n" +
-                "-Une liste de courses... quelques objets dont tu pourrais avoir besoin.\n" +
-                "-Mais pourquoi le prix est-il indiqué auprès de chacun d'eux ?\n" +
+                "- Une liste de courses... quelques objets dont tu pourrais avoir besoin.\n" +
+                "- Mais pourquoi le prix est-il indiqué auprès de chacun d'eux ?\n" +
                 "Merlin toussotte.\n" +
-                "-Tu vas être obligé d'acheter ton propre matériel, je le crains. Comme le roi " +
+                "- Tu vas être obligé d'acheter ton propre matériel, je le crains. Comme le roi " +
                 "risque de me supprimer ma pension, je ne peux me permettre de t'équiper.\n" +
-                "-Mais je n'ai pas d'argent ! protestez-vous.\n" +
-                "—Tout à fait exact, acquiesce Merlin. Et cela aurait pu être un vrai problème si je ne " +
+                "- Mais je n'ai pas d'argent ! protestez-vous.\n" +
+                "— Tout à fait exact, acquiesce Merlin. Et cela aurait pu être un vrai problème si je ne " +
                 "l'avais prévu. Il se dirige vers un petit placard en cristal qu il ouvre, et dont il sort " +
                 "deux cubes transparents qui, constatez-vous en les regardant de plus près, sont des " +
                 "dés.\n" +
-                "—Des dés magiques, précise-t-il d'un ton bref,ils transforment l'enthousiasme en " +
+                "— Des dés magiques, précise-t-il d'un ton bref,ils transforment l'enthousiasme en " +
                 "argent. Je ne peux les utiliser moi-même, car il ne me reste plus guère d'enthousiasme " +
                 "depuis qu'Arthur a évoqué le sort qu'il réserve à ma pension. Mais un intrépide aven" +
                 "turier comme toi doit déborder d'enthousiasme. Prends-les, et jette-les à terre d'une " +
@@ -91,10 +91,10 @@ public class Chapter4 extends GoNextChapter {
                 "nourriture. à moins que vous n'envisagiez de vous débrouiller en cours de route. Mais " +
                 "vous êtes tout à fait libre de choisir ce qui vous semblera le plus utile. Et n'oubliez pas " +
                 "de noter tous vos achats dans la case correspondante de votre Feuille d'Aventure.\n" +
-                "—Alors, voyons voir, dit Merlin. Tordre est en nous ?... euh... tout est en ordre ?\n" +
+                "— Alors, voyons voir, dit Merlin. Tordre est en nous ?... euh... tout est en ordre ?\n" +
                 "Dans son impatience à vous voir partir (ce qui lui permettra de s'occuper de sa " +
                 "pension), il s'est mis à bafouiller.\n" +
-                "—Je crois que oui, répondez-vous sans conviction. Sauf que je ne vois pas vraiment " +
+                "— Je crois que oui, répondez-vous sans conviction. Sauf que je ne vois pas vraiment " +
                 "où aller...\n" +
                 "— Ne t'inquiète pas pour cela, coupe Merlin. J'ai suivi ce stupide monstre sur ma boule " +
                 "de cristal, et je sais où il se cache. Dans l'Antre du Dragon. Parfaitement logique, en " +
@@ -108,7 +108,7 @@ public class Chapter4 extends GoNextChapter {
                 "carte.\n" +
                 "— Vous aviez dit que vous alliez m'apprendre la magie, lui rappelez-vous " +
                 "carrément.\n" +
-                "—La magie ! s'exclame Merlin en se frappant le front d'une claque retentissante. " +
+                "— La magie ! s'exclame Merlin en se frappant le front d'une claque retentissante. " +
                 "Mais oui, la magie Bien sûr! Heureusement que tu me l'as rappelé Sans un peu de " +
                 "magie, tu ne ferais pas de vieux os dans l'Antre du Dragon. " +
                 "Se prenant les pieds dans l'ourlet de sa longue robe, il se précipite (dans son " +
@@ -135,7 +135,7 @@ public class Chapter4 extends GoNextChapter {
                 "Mais à part le sortilège INVISIBILITÉ, tous les sortilèges peuvent être " +
                 "utilisés en tous lieux et en toutes circonstances. N'oubliez-pas de bien tenir à " +
                 "jour votre feuille d'Aventure, en rayant ceux que vous aurez utilises. " +
-                "—Voilà, dit Merlin. Voilà ta magie, tes sortilèges N'oublie pas que tu ne peux utiliser " +
+                "— Voilà, dit Merlin. Voilà ta magie, tes sortilèges N'oublie pas que tu ne peux utiliser " +
                 "chacun d'entre eux que trois fois seulement, à moins, bien entendu, que tu n'en " +
                 "découvres un autre au cours de ta mission. C'est possible ; alors, sois attentif. Après " +
                 "tout,! la magie est assez simple, à la condition de toujours* avoir en tête une règle " +
@@ -193,7 +193,7 @@ public class Chapter4 extends GoNextChapter {
                 "Choisissez un itinéraire, et suivez-le jusqu'à ce que vous arriviez à une section " +
                 "numérotée. Et rendez-vous à la séquence portant ce numéro. N’oubliez pas d'emporter " +
                 "votre équipement et vos armes (ainsi que vos sortilèges !) Sur la carte, vous avez " +
-                "remarqué que l'entrée de l'Antre du Dragon n' est pas indiquée. Peut-être parce qu'elle " +
+                "remarqué que l'entrée de l'Antre du Dragon n'est pas indiquée. Peut-être parce qu'elle " +
                 "est secrète. Mais elle doit être là, quelque part, dans l'une de ces sections, par exemple. " +
                 "Il va falloir vous mettre en route pour la découvrir, Pip ! Car, où qu'elle soit...\n" +
                 "\n" +

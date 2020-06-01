@@ -31,19 +31,19 @@ public class Chapter39 extends Chapter {
                 "arriver à l'Antre du Dragon ? Ou, par ailleurs, si vous pouvez m'indiquer un moyen de " +
                 "sortir de ce village.\n" +
                 "Il opine gravement de sa tête de Gnome.\n" +
-                "—Parmi toutes les questions que vous auriez pu poser, je peux vous proposer des " +
+                "— Parmi toutes les questions que vous auriez pu poser, je peux vous proposer des " +
                 "réponses à ces deux-là. Avez-vous de quoi les payer ?\n" +
-                "—Payer quoi ? demandez-vous.\n" +
-                "—Les réponses ! rugit le Gnome, furieux. Vous ne pensez quand même pas que je vais " +
+                "— Payer quoi ? demandez-vous.\n" +
+                "— Les réponses ! rugit le Gnome, furieux. Vous ne pensez quand même pas que je vais " +
                 "vous donner gratis des renseignements de cette valeur ?\n" +
                 "— Non, bien sûr, mentez-vous effrontément. Combien coûtent les réponses ?\n" +
-                "—Ça dépend, dit-il un peu calmé. Je suis, comprenez-vous, un Gnome à l'esprit " +
+                "— Ça dépend, dit-il un peu calmé. Je suis, comprenez-vous, un Gnome à l'esprit " +
                 "aventureux, et donc tout à fait prêt à laisser le hasard décider du prix. Là-dessus, il sort " +
                 "de sa poche deux dés tout à fait semblables aux vôtres.\n" +
-                "—Voulez-vous prendre la peine de les examiner? dit-il. Pour vous assurer qu'ils ne " +
+                "— Voulez-vous prendre la peine de les examiner? dit-il. Pour vous assurer qu'ils ne " +
                 "sont pas pipés ou trafiqués d'une façon quelconque ?\n" +
                 "Vous les examinez donc. On a beau être transporté à " +
-                "— l'ère de la Chevalerie, l'esprit chevaleresque ne vous oblige pas à vous laisser " +
+                "l'ère de la Chevalerie, l'esprit chevaleresque ne vous oblige pas à vous laisser " +
                 "arnaquer par un Gnome. Les dés, cependant, sont parfaitement normaux.\n" +
                 "Voyons, reprend le Gnome', vous désirez connaître le chemin jusqu'à l'Antre du " +
                 "Dragon. Disons que c'est la Question n° 1. Et vous voulez savoir comment on sort du " +

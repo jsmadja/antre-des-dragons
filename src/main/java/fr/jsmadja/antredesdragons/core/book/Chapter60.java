@@ -1,6 +1,6 @@
 package fr.jsmadja.antredesdragons.core.book;
 
-import fr.jsmadja.antredesdragons.core.chapters.Chapter;
+import fr.jsmadja.antredesdragons.core.chapters.GoNextChapter;
 import fr.jsmadja.antredesdragons.core.entities.Pip;
 import fr.jsmadja.antredesdragons.core.execution.Execution;
 import fr.jsmadja.antredesdragons.core.spellcasting.SpellBook;
@@ -9,7 +9,9 @@ import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.FIP;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellBook.HEP;
 import static fr.jsmadja.antredesdragons.core.spellcasting.SpellEffectResult.FAILURE;
 
-public class Chapter60 extends Chapter {
+public class Chapter60 extends GoNextChapter {
+    private int nextChapter = 14;
+
     @Override
     public String getText() {
         return "N'avez-vous rien de mieux à faire que de fixer le fond d'un puits, Pip ? " +
@@ -25,19 +27,26 @@ public class Chapter60 extends Chapter {
     }
 
     @Override
-    public Execution execute(Pip pip) {
-        if (pip.canUse(HEP)) {
-            return use(pip, HEP);
-        }
-        if (pip.canUse(FIP)) {
-            return use(pip, FIP);
-        }
-        return pip.goToChapter(14);
+    public int getNextChapter() {
+        return nextChapter;
     }
 
-    private Execution use(Pip pip, SpellBook spell) {
-        if (pip.use(spell) == FAILURE) return execute(pip);
-        pip.addExperiencePoints(1);
-        return pip.goToChapter(10);
+    @Override
+    public Execution execute(Pip pip) {
+        if (pip.canUse(HEP)) {
+            use(pip, HEP);
+        } else if (pip.canUse(FIP)) {
+            use(pip, FIP);
+        }
+        return super.execute(pip);
+    }
+
+    private void use(Pip pip, SpellBook spell) {
+        if (pip.use(spell) == FAILURE) {
+            this.execute(pip);
+        } else {
+            pip.addExperiencePoints(1);
+            this.nextChapter = 10;
+        }
     }
 }

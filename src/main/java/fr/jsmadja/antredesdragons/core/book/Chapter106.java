@@ -19,7 +19,7 @@ public class Chapter106 extends GoNextChapter {
 
     @Override
     public String getText() {
-        return "Quelle trouvaille ! Quelle trouvaille ! C'est une carte de Antre du Dragon ! Du " +
+        return "Quelle trouvaille ! Quelle trouvaille ! C'est une carte de l'Antre du Dragon ! Du " +
                 "moins, un fragment de carte. Quand vous atteindrez la caverne, si vous l'atteignez " +
                 "jamais, vous pourrez vous reporter à ce document pour trouver votre chemin. Il " +
                 "n'indique pas 1’entrée, mais il décrit le labyrinthe et peut en conséquence, vous " +

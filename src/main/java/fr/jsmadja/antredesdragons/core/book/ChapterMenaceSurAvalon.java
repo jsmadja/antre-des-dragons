@@ -121,8 +121,8 @@ public class ChapterMenaceSurAvalon extends GoNextChapter {
                 "partie par le fait que les Dragons de Bronze, d'après certaines indications, " +
                 "disposeraient d'un pouvoir magique. Rien d'étonnant donc à ce que l'Église les " +
                 "considère comme créatures échappées de l'Enfer.\n" +
-                "—Un Dragon de Bronze ! s'exclama le roi Arthur d'une voix altérée.\n" +
-                "—Échappé de l'Enfer, confirma sombrement le messager de l'Archevêque.\n" +
+                "— Un Dragon de Bronze ! s'exclama le roi Arthur d'une voix altérée.\n" +
+                "— Échappé de l'Enfer, confirma sombrement le messager de l'Archevêque.\n" +
                 "Sur quoi, les divers conflits qui couvaient à la cour explosèrent au grand jour, et tout le " +
                 "monde se mit à parler en même temps, à défaillir, à crier, à courir en tous sens, bref à " +
                 "réagir de mille façons à la nouvelle. Ce fut l'affolement. Le roi Arthur dut attendre que " +
@@ -173,7 +173,7 @@ public class ChapterMenaceSurAvalon extends GoNextChapter {
                 "parlé à la chapelle, ce qui tend à montrer que cela ne paye pas d'être toujours " +
                 "vertueux.) Et le seul objet qui fut trouvé, fut un vitrail représentant le Saint-Graal.  " +
                 "Comme ce vitrail avait été épargné contrairement à toute vraisemblance, la conclusion " +
-                "s'imposa que toutes ces destructions étaient l'œuvre du Démon —le Démon ne pouvant " +
+                "s'imposa que toutes ces destructions étaient l'œuvre du Démon — le Démon ne pouvant " +
                 "nuire à une chose aussi sacrée que le Saint-Graal.\n" +
                 "ce fut une catastrophe d'une ampleur presque inimaginable, et qu'un Dragon de " +
                 "Bronze en fut responsable ne faisait aucun doute. Si les deux jeunes moines n'avaient " +

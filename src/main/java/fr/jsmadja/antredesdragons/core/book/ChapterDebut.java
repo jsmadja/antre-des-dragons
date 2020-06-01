@@ -13,7 +13,7 @@ public class ChapterDebut extends GoNextChapter {
         return "L'Antre du Dragon est le deuxième volume de la serie intitulée La Quête du Graal. Un " +
                 "livre dont VOUS êtes le héros. Dans quelques pages, vous allez etre précipité à " +
                 "l'époque du roi Arthur, et des Chevaliers de la Table Ronde, dans le fabuleux " +
-                "Royaume d' Avalon terrorisé par des monstres épouvantables, sorciers aux pouvoirs " +
+                "Royaume d'Avalon terrorisé par des monstres épouvantables, sorciers aux pouvoirs " +
                 "immenses et des êtres malfaisants aux formes les plus répugnantes. C'est de camelot, " +
                 "où siège le roi Arthur entouré de sa cour, que partent les Chevaliers de la Table Ronde " +
                 "en quete de hauts faits à accomplir. Pourtant, c'est " +

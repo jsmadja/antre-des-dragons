@@ -41,7 +41,7 @@ public enum Item {
     SPARE_BOOTS("Bottes de rechange"),
     PARCHMENT("Parchemin"),
     PEN_AND_GOOSE_INK("Plume d'oie et encre en poudre"),
-    FOOD("Nourriture"),
+    FOOD("Nourriture", new Food()),
     COOKING_TOOLS("Ustensiles de cuisine"),
     HEALING_POTION("Potion curative", new HealingPotion(new Dice())),
     MINOTAUR_MAGICAL_LOCKED_SMALL_CHEST("Cassette du Minotaure à ouvrir après avoir vu Merlin (chapitre 143)"),

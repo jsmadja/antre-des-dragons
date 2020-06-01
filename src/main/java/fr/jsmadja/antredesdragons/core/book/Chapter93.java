@@ -27,7 +27,7 @@ public class Chapter93 extends ManualChoiceChapter {
                 "— Un petit conseil dit-il, et gratuit en plus. Il serait peut-être plus sûr de ne pas vous " +
                 "rendre à l'Antre du Dragon avant d'avoir exploré à fond le village de la Pierre-quiMue. C'est un endroit dangereux, je ne le sais que trop, mais quelque part y sont " +
                 "cachés un ou deux objets qui pourraient faire toute la différence entre la vie et la mort " +
-                "quand vous pénétrerez dans l' Antre. Votre vie et votre mort, s'entend.\n" +
+                "quand vous pénétrerez dans l'Antre. Votre vie et votre mort, s'entend.\n" +
                 "Mais quels sont ces objets et où vais-je les trouver ? vous exclamez-vous. Le Gnome " +
                 "secoue sa tête de gnome.\n" +
                 "Le roi Arthur lui-même ne posséderait pas suffisamment d'or dans le Trésor Royal " +
