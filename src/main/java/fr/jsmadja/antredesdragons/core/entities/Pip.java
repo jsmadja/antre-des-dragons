@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import static fr.jsmadja.antredesdragons.core.book.Book.COUVERTURE;
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -51,6 +52,9 @@ public class Pip extends Entity {
 
     private final List<SpellBook> spells = new ArrayList<>();
     private final Set<Skill> skills = new HashSet<>();
+
+    @Getter
+    private final String id;
 
     @Getter
     private SilverCoins silverCoins = SilverCoins.of(0);
@@ -85,6 +89,7 @@ public class Pip extends Entity {
 
     public Pip(Dice dice) {
         super("Pip", dice);
+        this.id = UUID.randomUUID().toString();
     }
 
     public void initialize() {

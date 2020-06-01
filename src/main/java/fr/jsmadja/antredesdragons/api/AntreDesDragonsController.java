@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
@@ -20,12 +22,13 @@ import static fr.jsmadja.antredesdragons.core.chapters.ChapterNumber.chapter;
 @RequestMapping(path = "/")
 public class AntreDesDragonsController {
 
-    public static Pip pip = new Pip(new Dice());
+    public static Map<String, Pip> pips = new HashMap<>();
 
     @RequestMapping(path = "")
     @ResponseBody
     public Step createNewRun() {
-        pip = new Pip(new Dice());
+        Pip pip = new Pip(new Dice());
+        addPipRun(pip);
         Chapter currentChapter = pip.getCurrentChapter();
         Execution execution = currentChapter.execute(pip);
         return Step.builder()
@@ -34,46 +37,62 @@ public class AntreDesDragonsController {
                 .build();
     }
 
-    @RequestMapping(path = "/chapter/{chapterNumber}")
-    public Step read(@PathVariable("chapterNumber") int chapterNumber) {
-        Execution execution = pip.goToChapter(chapter(chapterNumber));
-        return createStep(execution);
+    public void addPipRun(Pip pip) {
+        pips.put(pip.getId(), pip);
     }
 
-    @RequestMapping(path = "/inventory/healingItems/{healingItemName}:use")
-    public Step useHealingItem(@PathVariable("healingItemName") String healingItemName) {
+    @RequestMapping(path = "{pipId}/chapter/{chapterNumber}")
+    public Step read(@PathVariable("pipId") String pipId, @PathVariable("chapterNumber") int chapterNumber) {
+        Pip pip = getPipById(pipId);
+        Execution execution = pip.goToChapter(chapter(chapterNumber));
+        return createStep(pip, execution);
+    }
+
+    private Pip getPipById(String pipId) {
+        Pip pip = pips.get(pipId);
+        if (pip == null) {
+            throw new RuntimeException("Pip not found");
+        }
+        return pip;
+    }
+
+    @RequestMapping(path = "{pipId}/inventory/healingItems/{healingItemName}:use")
+    public Step useHealingItem(@PathVariable("pipId") String pipId, @PathVariable("healingItemName") String healingItemName) {
+        Pip pip = getPipById(pipId);
         Optional<HealingItem> healingItem = pip.getHealingItemByName(healingItemName);
         pip.getDiary().openNewPage();
-        healingItem.ifPresent(item -> pip.use(item));
+        healingItem.ifPresent(pip::use);
         return Step.builder()
                 .pip(pip)
                 .logEntries(pip.getCurrentChapterLogEntries().toList())
                 .build();
     }
 
-    @RequestMapping(path = "/inventory/items/{itemName}:equip")
-    public Step equipItem(@PathVariable("itemName") String itemName) {
+    @RequestMapping(path = "{pipId}/inventory/items/{itemName}:equip")
+    public Step equipItem(@PathVariable("pipId") String pipId, @PathVariable("itemName") String itemName) {
+        Pip pip = getPipById(pipId);
         Optional<Item> item = pip.getItemByName(itemName);
         pip.getDiary().openNewPage();
-        item.ifPresent(i -> pip.equip(i));
+        item.ifPresent(pip::equip);
         return Step.builder()
                 .pip(pip)
                 .logEntries(pip.getCurrentChapterLogEntries().toList())
                 .build();
     }
 
-    @RequestMapping(path = "/inventory/items/{itemName}:unequip")
-    public Step unequipItem(@PathVariable("itemName") String itemName) {
+    @RequestMapping(path = "{pipId}/inventory/items/{itemName}:unequip")
+    public Step unequipItem(@PathVariable("pipId") String pipId, @PathVariable("itemName") String itemName) {
+        Pip pip = getPipById(pipId);
         Optional<Item> item = pip.getItemByName(itemName);
         pip.getDiary().openNewPage();
-        item.ifPresent(i -> pip.unequip(i));
+        item.ifPresent(pip::unequip);
         return Step.builder()
                 .pip(pip)
                 .logEntries(pip.getCurrentChapterLogEntries().toList())
                 .build();
     }
 
-    private Step createStep(Execution execution) {
+    private Step createStep(Pip pip, Execution execution) {
         return Step.builder()
                 .pip(pip)
                 .foes(execution.getFoes())
@@ -82,10 +101,11 @@ public class AntreDesDragonsController {
                 .build();
     }
 
-    @RequestMapping(path = "/chapter/{chapterNumber}/questions/{questionId}/{answer}")
-    public Step answer(@PathVariable("chapterNumber") int chapterNumber, @PathVariable("questionId") String questionId, @PathVariable("answer") String answer) {
+    @RequestMapping(path = "{pipId}/chapter/{chapterNumber}/questions/{questionId}/{answer}")
+    public Step answer(@PathVariable("pipId") String pipId, @PathVariable("chapterNumber") int chapterNumber, @PathVariable("questionId") String questionId, @PathVariable("answer") String answer) {
+        Pip pip = getPipById(pipId);
         Execution execution = pip.goToChapter2WithAnswer(chapter(chapterNumber), questionId, Answer.of(answer));
-        return createStep(execution);
+        return createStep(pip, execution);
     }
 
 }

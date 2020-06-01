@@ -196,7 +196,6 @@ public class Chapter4 extends GoNextChapter {
                 "remarqué que l'entrée de l'Antre du Dragon n'est pas indiquée. Peut-être parce qu'elle " +
                 "est secrète. Mais elle doit être là, quelque part, dans l'une de ces sections, par exemple. " +
                 "Il va falloir vous mettre en route pour la découvrir, Pip ! Car, où qu'elle soit...\n" +
-                "\n" +
                 "L'aventure commence !";
     }
 
