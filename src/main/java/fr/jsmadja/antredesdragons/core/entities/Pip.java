@@ -353,4 +353,8 @@ public class Pip extends Entity {
     public boolean has(AdventureMap adventureMap) {
         return this.maps.contains(adventureMap);
     }
+
+    public void kill() {
+        this.setCurrentHealthPoints(0);
+    }
 }

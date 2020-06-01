@@ -44,6 +44,10 @@ public class AntreDesDragonsController {
     @RequestMapping(path = "{pipId}/chapter/{chapterNumber}")
     public Step read(@PathVariable("pipId") String pipId, @PathVariable("chapterNumber") int chapterNumber) {
         Pip pip = getPipById(pipId);
+        if (pip.isDead()) {
+            pip = new Pip(new Dice());
+            addPipRun(pip);
+        }
         Execution execution = pip.goToChapter(chapter(chapterNumber));
         return createStep(pip, execution);
     }
